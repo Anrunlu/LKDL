@@ -11,6 +11,7 @@ searchStat
 	| relYuanSearchExpr
 	| isaSearchExpr
 	| hasSearchExpr
+	| allRelSearchExpr
 	;
 
 noRelYuanSearchExpr: yuanList # searchYuan
@@ -25,6 +26,10 @@ isaSearchExpr: yuanList ATTR ISA # searchYuanIsa
 hasSearchExpr: yuanList ATTR HAS # searchYuanHas
 	;
 
+allRelSearchExpr
+	: yuanList ATTR ALL relAttrEqualList? # searchYuanAllRel
+	;
+
 cudYuanStat: noRelYuanCudExpr | relYuanCudExpr
 	;
 
@@ -37,6 +42,7 @@ relYuanCudExpr
 	: lhs = yuanList ATTR relExprList ADDEQ rhs = yuanList	# addYuanRel
 	| lhs = yuanList ATTR relExprList DELEQ rhs = yuanList	# delYuanRel
 	| lhs = yuanList ATTR relExprList ASSIGN rhs = yuanList	# updateYuanRel
+	| yuanList ATTR ALL relAttrAssignList					# updateYuanRelAttr
 	;
 
 relExprList
@@ -46,17 +52,25 @@ relExprList
 
 relExpr
 	: relExpr (ATTR relExpr) // 右递归，匹配链式关系
-	| ALL relAttrList
-	| ID relAttrList
+	| ID relAttrEqualList
+	| ID relAttrAssignList
 	| ID
 	;
 
-relAttrList
-	: OPEN_BRACKET relAttr (COMMA relAttr)* CLOSE_BRACKET
+relAttrEqualList
+	: OPEN_BRACKET relAttrEQ (COMMA relAttrEQ)* CLOSE_BRACKET
 	;
 
-relAttr
-	: lhs = ID (op = ASSIGN | op = EQ) rhs = (ID | INT | FLOAT) // 关系属性 op = ASSIGN 更新、添加 op = EQ 查询
+relAttrAssignList
+	: OPEN_BRACKET relAttrASSIGN (COMMA relAttrASSIGN)* CLOSE_BRACKET
+	;
+
+relAttrEQ
+	: lhs = ID EQ rhs = (ID | INT | FLOAT) // 关系属性查询
+	;
+
+relAttrASSIGN
+	: lhs = ID ASSIGN rhs = (ID | INT | FLOAT) // 关系属性更新、添加
 	;
 
 yuanList: ID | OPEN_PAREN ID ( COMMA ID)* CLOSE_PAREN

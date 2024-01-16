@@ -5,15 +5,19 @@ import {ParseTreeListener} from "antlr4";
 
 import { ProgContext } from "./LKDLParser";
 import { StatContext } from "./LKDLParser";
+import { SearchStatContext } from "./LKDLParser";
+import { SearchYuanContext } from "./LKDLParser";
+import { SearchYuanRelContext } from "./LKDLParser";
+import { SearchYuanIsaContext } from "./LKDLParser";
+import { SearchYuanHasContext } from "./LKDLParser";
 import { CudYuanStatContext } from "./LKDLParser";
 import { AddYuanContext } from "./LKDLParser";
 import { DelYuanContext } from "./LKDLParser";
 import { AddYuanRelContext } from "./LKDLParser";
 import { DelYuanRelContext } from "./LKDLParser";
 import { UpdateYuanRelContext } from "./LKDLParser";
-import { RelListContext } from "./LKDLParser";
+import { RelExprListContext } from "./LKDLParser";
 import { RelExprContext } from "./LKDLParser";
-import { RelSequenceContext } from "./LKDLParser";
 import { RelAttrListContext } from "./LKDLParser";
 import { RelAttrContext } from "./LKDLParser";
 import { YuanListContext } from "./LKDLParser";
@@ -44,6 +48,64 @@ export default class LKDLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitStat?: (ctx: StatContext) => void;
+	/**
+	 * Enter a parse tree produced by `LKDLParser.searchStat`.
+	 * @param ctx the parse tree
+	 */
+	enterSearchStat?: (ctx: SearchStatContext) => void;
+	/**
+	 * Exit a parse tree produced by `LKDLParser.searchStat`.
+	 * @param ctx the parse tree
+	 */
+	exitSearchStat?: (ctx: SearchStatContext) => void;
+	/**
+	 * Enter a parse tree produced by the `searchYuan`
+	 * labeled alternative in `LKDLParser.noRelYuanSearchExpr`.
+	 * @param ctx the parse tree
+	 */
+	enterSearchYuan?: (ctx: SearchYuanContext) => void;
+	/**
+	 * Exit a parse tree produced by the `searchYuan`
+	 * labeled alternative in `LKDLParser.noRelYuanSearchExpr`.
+	 * @param ctx the parse tree
+	 */
+	exitSearchYuan?: (ctx: SearchYuanContext) => void;
+	/**
+	 * Enter a parse tree produced by the `searchYuanRel`
+	 * labeled alternative in `LKDLParser.relYuanSearchExpr`.
+	 * @param ctx the parse tree
+	 */
+	enterSearchYuanRel?: (ctx: SearchYuanRelContext) => void;
+	/**
+	 * Exit a parse tree produced by the `searchYuanRel`
+	 * labeled alternative in `LKDLParser.relYuanSearchExpr`.
+	 * @param ctx the parse tree
+	 */
+	exitSearchYuanRel?: (ctx: SearchYuanRelContext) => void;
+	/**
+	 * Enter a parse tree produced by the `searchYuanIsa`
+	 * labeled alternative in `LKDLParser.isaSearchExpr`.
+	 * @param ctx the parse tree
+	 */
+	enterSearchYuanIsa?: (ctx: SearchYuanIsaContext) => void;
+	/**
+	 * Exit a parse tree produced by the `searchYuanIsa`
+	 * labeled alternative in `LKDLParser.isaSearchExpr`.
+	 * @param ctx the parse tree
+	 */
+	exitSearchYuanIsa?: (ctx: SearchYuanIsaContext) => void;
+	/**
+	 * Enter a parse tree produced by the `searchYuanHas`
+	 * labeled alternative in `LKDLParser.hasSearchExpr`.
+	 * @param ctx the parse tree
+	 */
+	enterSearchYuanHas?: (ctx: SearchYuanHasContext) => void;
+	/**
+	 * Exit a parse tree produced by the `searchYuanHas`
+	 * labeled alternative in `LKDLParser.hasSearchExpr`.
+	 * @param ctx the parse tree
+	 */
+	exitSearchYuanHas?: (ctx: SearchYuanHasContext) => void;
 	/**
 	 * Enter a parse tree produced by `LKDLParser.cudYuanStat`.
 	 * @param ctx the parse tree
@@ -115,15 +177,15 @@ export default class LKDLListener extends ParseTreeListener {
 	 */
 	exitUpdateYuanRel?: (ctx: UpdateYuanRelContext) => void;
 	/**
-	 * Enter a parse tree produced by `LKDLParser.relList`.
+	 * Enter a parse tree produced by `LKDLParser.relExprList`.
 	 * @param ctx the parse tree
 	 */
-	enterRelList?: (ctx: RelListContext) => void;
+	enterRelExprList?: (ctx: RelExprListContext) => void;
 	/**
-	 * Exit a parse tree produced by `LKDLParser.relList`.
+	 * Exit a parse tree produced by `LKDLParser.relExprList`.
 	 * @param ctx the parse tree
 	 */
-	exitRelList?: (ctx: RelListContext) => void;
+	exitRelExprList?: (ctx: RelExprListContext) => void;
 	/**
 	 * Enter a parse tree produced by `LKDLParser.relExpr`.
 	 * @param ctx the parse tree
@@ -134,16 +196,6 @@ export default class LKDLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitRelExpr?: (ctx: RelExprContext) => void;
-	/**
-	 * Enter a parse tree produced by `LKDLParser.relSequence`.
-	 * @param ctx the parse tree
-	 */
-	enterRelSequence?: (ctx: RelSequenceContext) => void;
-	/**
-	 * Exit a parse tree produced by `LKDLParser.relSequence`.
-	 * @param ctx the parse tree
-	 */
-	exitRelSequence?: (ctx: RelSequenceContext) => void;
 	/**
 	 * Enter a parse tree produced by `LKDLParser.relAttrList`.
 	 * @param ctx the parse tree

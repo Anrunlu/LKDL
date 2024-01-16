@@ -12,19 +12,19 @@
         "spaceBeforeAssignmentOperators": true,
         "tabWidth": 4,
         "useTab": true,
-        "alignColons": "none",
+        "alignColons": "hanging",
         "singleLineOverrulesHangingColon": true,
         "allowShortRulesOnASingleLine": true,
-        "alignSemicolons": "none",
+        "alignSemicolons": "hanging",
         "breakBeforeParens": false,
         "ruleInternalsOnSingleLine": false,
         "minEmptyLines": 0,
         "groupedAlignments": true,
         "alignFirstTokens": true,
         "alignLexerCommands": false,
-        "alignActions": false,
+        "alignActions": true,
         "alignLabels": true,
-        "alignTrailers": false
+        "alignTrailers": true
     },
     "antlr4.generation": {
         "mode": "none",

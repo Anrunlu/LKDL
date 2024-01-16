@@ -24,12 +24,15 @@ class MyTreeWalker extends LKDLListener {
   exitRelExpr = (ctx: RelExprContext) => {
     const attrList: any = [];
 
-    ctx._rhs?.relAttr_list().forEach((relAttr) => {
-      attrList.push((relAttr as any)["myRelAttr"]);
-    });
+    ctx
+      .relAttrList()
+      ?.relAttr_list()
+      .forEach((relAttr) => {
+        attrList.push((relAttr as any)["myRelAttr"]);
+      });
 
     const relNode = {
-      rel: ctx._lhs.getText(),
+      rel: ctx.ID()?.getText(),
       attr: attrList,
     };
 
@@ -66,7 +69,7 @@ class MyTreeWalker extends LKDLListener {
       heads,
       tails,
       op: "+=",
-      rel: (ctx.relList() as any)["myRelList"],
+      relList: (ctx.relExprList() as any)["myRelList"],
     };
 
     console.dir(res, { depth: 5 });
@@ -86,7 +89,7 @@ class MyTreeWalker extends LKDLListener {
       heads,
       tails,
       op: "-=",
-      rel: (ctx.relList() as any)["myRelList"],
+      relList: (ctx.relExprList() as any)["myRelList"],
     };
 
     console.dir(res, { depth: 5 });
