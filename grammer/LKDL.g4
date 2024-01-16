@@ -56,7 +56,11 @@ relAttrList
 	;
 
 relAttr
-	: lhs = ID (op = ASSIGN | op = EQ) rhs = (ID | INT | FLOAT) // 关系属性 op = ASSIGN 更新、添加 op = EQ 查询
+	: lhs = ID (op = ASSIGN | op = EQ) rhs = (
+		ID
+		| INT
+		| FLOAT
+	) // 关系属性 op = ASSIGN 更新、添加 op = EQ 查询
 	;
 
 yuanList: ID | OPEN_PAREN ID ( COMMA ID)* CLOSE_PAREN
