@@ -3,52 +3,40 @@ grammar LKDL;
 prog: stat* EOF
 	;
 
-stat: searchStat NEWLINE | cudYuanStat NEWLINE
+stat: searchStat NEWLINE | cudStat NEWLINE
 	;
 
 searchStat
-	: noRelYuanSearchExpr
-	| relYuanSearchExpr
-	| isaSearchExpr
-	| hasSearchExpr
-	;
+    : searchExpr ATTR ALL
+    | searchExpr ATTR HAS
+    | searchExpr ATTR ISA
+    | searchExpr
+    ;
 
-noRelYuanSearchExpr: yuanList # searchYuan
-	;
-
-relYuanSearchExpr: yuanList ATTR relExprList # searchYuanRel
-	;
-
-isaSearchExpr: yuanList ATTR ISA # searchYuanIsa
-	;
-
-hasSearchExpr: yuanList ATTR HAS # searchYuanHas
-	;
-
-cudYuanStat: noRelYuanCudExpr | relYuanCudExpr
-	;
-
-noRelYuanCudExpr
-	: ADDYUAN yuanList	# addYuan
+cudStat
+	: lhs = searchExpr ADDEQ rhs = searchExpr	# addYuanRel
+	| lhs = searchExpr DELEQ rhs = searchExpr	# delYuanRel
+	| lhs = searchExpr ASSIGN rhs = searchExpr	# updateYuanRel
+	| ADDYUAN yuanList	# addYuan
 	| DELYUAN yuanList	# delYuan
 	;
 
-relYuanCudExpr
-	: lhs = yuanList ATTR relExprList ADDEQ rhs = yuanList	# addYuanRel
-	| lhs = yuanList ATTR relExprList DELEQ rhs = yuanList	# delYuanRel
-	| lhs = yuanList ATTR relExprList ASSIGN rhs = yuanList	# updateYuanRel
-	;
+searchExpr
+    : yuanList ( ATTR relExprList )? ;
 
 relExprList
-	: relExpr
-	| OPEN_PAREN relExpr ( COMMA relExpr)* CLOSE_PAREN
+	: relExprSequnce
+	| OPEN_PAREN relExprSequnce ( COMMA relExprSequnce)* CLOSE_PAREN
 	;
 
+// 关系序列，一棵广度优先的树
+relExprSequnce
+    : relExpr ( ATTR relExpr)*
+    ;
+
 relExpr
-	: relExpr (ATTR relExpr) // 右递归，匹配链式关系
-	| ALL relAttrList
-	| ID relAttrList
-	| ID
+	: lhs = ALL rhs = relAttrList?
+	| lhs = ID rhs = relAttrList?
 	;
 
 relAttrList

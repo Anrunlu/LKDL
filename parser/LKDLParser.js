@@ -554,6 +554,7 @@ class LKDLParser extends antlr4_1.Parser {
                         {
                             {
                                 localctx = new RelExprContext(this, _parentctx, _parentState);
+                                localctx._lhs = _prevctx;
                                 this.pushNewRecursionContext(localctx, _startState, LKDLParser.RULE_relExpr);
                                 this.state = 118;
                                 if (!(this.precpred(this._ctx, 4))) {
@@ -563,7 +564,7 @@ class LKDLParser extends antlr4_1.Parser {
                                     this.state = 119;
                                     this.match(LKDLParser.ATTR);
                                     this.state = 120;
-                                    this.relExpr(0);
+                                    localctx._rhs = this.relExpr(0);
                                 }
                             }
                         }

@@ -636,6 +636,7 @@ export default class LKDLParser extends Parser {
 					{
 					{
 					localctx = new RelExprContext(this, _parentctx, _parentState);
+					localctx._lhs = _prevctx;
 					this.pushNewRecursionContext(localctx, _startState, LKDLParser.RULE_relExpr);
 					this.state = 118;
 					if (!(this.precpred(this._ctx, 4))) {
@@ -645,7 +646,7 @@ export default class LKDLParser extends Parser {
 					this.state = 119;
 					this.match(LKDLParser.ATTR);
 					this.state = 120;
-					this.relExpr(0);
+					localctx._rhs = this.relExpr(0);
 					}
 					}
 					}
@@ -1391,6 +1392,8 @@ export class RelExprListContext extends ParserRuleContext {
 
 
 export class RelExprContext extends ParserRuleContext {
+	public _lhs!: RelExprContext;
+	public _rhs!: RelExprContext;
 	constructor(parser?: LKDLParser, parent?: ParserRuleContext, invokingState?: number) {
 		super(parent, invokingState);
     	this.parser = parser;
