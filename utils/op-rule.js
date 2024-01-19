@@ -60,6 +60,7 @@ const rhsSearchSequnce = [
     ],
 ];
 function addYuanRel(lhsSearchSequnce, rhsSearchSequnce) {
+    console.log("rhsSearchSequnce", rhsSearchSequnce);
     // 所有变量
     const varSet = new Set();
     // 左边序列的终结变量集合
@@ -107,7 +108,6 @@ function addYuanRel(lhsSearchSequnce, rhsSearchSequnce) {
             tripleList.push(rhsTriple);
         });
     });
-    console.log("left", lhsTerminalVarSet);
     // 运算序列为两个序列的笛卡尔积，运算符为 = (赋值)
     lhsTerminalVarSet.forEach((lhsTerminalVar) => {
         rhsTerminalVarSet.forEach((rhsTerminalVar) => {

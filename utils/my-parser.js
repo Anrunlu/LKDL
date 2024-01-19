@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.parseSearchExprToSearchSequnce = void 0;
+const nanoid_1 = require("nanoid");
 const searchStat = {
     yuanList: ["张三"],
     relExprList: [
@@ -23,65 +24,84 @@ const searchStat = {
     ],
 };
 function parseSearchExprToSearchSequnce(searchStat) {
+    // 生成一个随机变量名前缀
+    const varNamePrefix = (0, nanoid_1.nanoid)(4);
     const searchSequnce = [];
     searchStat.yuanList.forEach((yuan, yuanIndex) => {
         const relExprList = searchStat.relExprList;
-        relExprList.forEach((relExprSequnce, relExprSequnceIndex) => {
+        // 如果不存在 relExprList 的情况
+        if (relExprList.length === 0) {
             const tripleSequnce = [];
-            // 目标 triples 格式：
-            // {head: "张三", rel: { relName: "朋友", relAttrList: [] }, tail: "$1", isTerminal: false, op: "get"}
-            // {head: "$1", rel: { relName: "同学", relAttrList: [] }, tail: "$2", isTerminal: true, op: "set"}
-            relExprSequnce.forEach((relExpr, relExprIndex) => {
-                const varNameFirst = "$" +
-                    ((yuanIndex + 1) * 100 +
-                        (relExprSequnceIndex + 1) * 10 +
-                        relExprIndex +
-                        1);
-                const varNameSecond = "$" +
-                    ((yuanIndex + 1) * 100 +
-                        (relExprSequnceIndex + 1) * 10 +
-                        relExprIndex +
-                        2);
-                let triple;
-                // 创建第一个 triple
-                // 如果只有一个 relExpr
-                if (relExprSequnce.length === 1) {
-                    triple = {
-                        head: yuan,
-                        rel: relExpr,
-                        tail: varNameFirst,
-                        isTerminal: true,
-                    };
-                }
-                else if (relExprIndex === 0) {
-                    triple = {
-                        head: yuan,
-                        rel: relExpr,
-                        tail: varNameSecond,
-                        isTerminal: false,
-                    };
-                }
-                // 如果不是最后一个 relExpr
-                else if (relExprIndex !== relExprSequnce.length - 1) {
-                    triple = {
-                        head: varNameFirst,
-                        rel: relExpr,
-                        tail: varNameSecond,
-                        isTerminal: false,
-                    };
-                }
-                else {
-                    triple = {
-                        head: varNameFirst,
-                        rel: relExpr,
-                        tail: varNameSecond,
-                        isTerminal: true,
-                    };
-                }
-                tripleSequnce.push(triple);
-            });
+            const triple = {
+                head: yuan,
+                rel: { relName: "", relAttrList: [] },
+                tail: "",
+                isTerminal: true,
+                isYuan: true,
+            };
+            tripleSequnce.push(triple);
             searchSequnce.push(tripleSequnce);
-        });
+        }
+        else {
+            relExprList.forEach((relExprSequnce, relExprSequnceIndex) => {
+                const tripleSequnce = [];
+                // 目标 triples 格式：
+                // {head: "张三", rel: { relName: "朋友", relAttrList: [] }, tail: "$1", isTerminal: false, op: "get"}
+                // {head: "$1", rel: { relName: "同学", relAttrList: [] }, tail: "$2", isTerminal: true, op: "set"}
+                relExprSequnce.forEach((relExpr, relExprIndex) => {
+                    const varNameFirst = "$" +
+                        varNamePrefix +
+                        ((yuanIndex + 1) * 100 +
+                            (relExprSequnceIndex + 1) * 10 +
+                            relExprIndex +
+                            1);
+                    const varNameSecond = "$" +
+                        varNamePrefix +
+                        ((yuanIndex + 1) * 100 +
+                            (relExprSequnceIndex + 1) * 10 +
+                            relExprIndex +
+                            2);
+                    let triple;
+                    // 创建第一个 triple
+                    // 如果只有一个 relExpr
+                    if (relExprSequnce.length === 1) {
+                        triple = {
+                            head: yuan,
+                            rel: relExpr,
+                            tail: varNameFirst,
+                            isTerminal: true,
+                        };
+                    }
+                    else if (relExprIndex === 0) {
+                        triple = {
+                            head: yuan,
+                            rel: relExpr,
+                            tail: varNameSecond,
+                            isTerminal: false,
+                        };
+                    }
+                    // 如果不是最后一个 relExpr
+                    else if (relExprIndex !== relExprSequnce.length - 1) {
+                        triple = {
+                            head: varNameFirst,
+                            rel: relExpr,
+                            tail: varNameSecond,
+                            isTerminal: false,
+                        };
+                    }
+                    else {
+                        triple = {
+                            head: varNameFirst,
+                            rel: relExpr,
+                            tail: varNameSecond,
+                            isTerminal: true,
+                        };
+                    }
+                    tripleSequnce.push(triple);
+                });
+                searchSequnce.push(tripleSequnce);
+            });
+        }
     });
     return searchSequnce;
 }
