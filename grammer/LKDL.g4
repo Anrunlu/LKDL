@@ -7,32 +7,31 @@ stat: searchStat NEWLINE | cudStat NEWLINE
 	;
 
 searchStat
-    : searchExpr ATTR ALL
-    | searchExpr ATTR HAS
-    | searchExpr ATTR ISA
-    | searchExpr
-    ;
+	: searchExpr ATTR ALL
+	| searchExpr ATTR HAS
+	| searchExpr ATTR ISA
+	| searchExpr
+	;
 
 cudStat
 	: lhs = searchExpr ADDEQ rhs = searchExpr	# addYuanRel
 	| lhs = searchExpr DELEQ rhs = searchExpr	# delYuanRel
 	| lhs = searchExpr ASSIGN rhs = searchExpr	# updateYuanRel
-	| ADDYUAN yuanList	# addYuan
-	| DELYUAN yuanList	# delYuan
+	| ADDYUAN yuanList							# addYuan
+	| DELYUAN yuanList							# delYuan
 	;
 
-searchExpr
-    : yuanList ( ATTR relExprList )? ;
+searchExpr: yuanList ( ATTR relExprList)?
+	;
 
 relExprList
 	: relExprSequnce
-	| OPEN_PAREN relExprSequnce ( COMMA relExprSequnce)* CLOSE_PAREN
+	| OPEN_PAREN relExprSequnce (COMMA relExprSequnce)* CLOSE_PAREN
 	;
 
 // 关系序列，一棵广度优先的树
-relExprSequnce
-    : relExpr ( ATTR relExpr)*
-    ;
+relExprSequnce: relExpr ( ATTR relExpr)*
+	;
 
 relExpr
 	: lhs = ALL rhs = relAttrList?
