@@ -31,5 +31,7 @@
         "listeners": true,
         "visitors": false,
         "language": "TypeScript",
-    }
+    },
+    // tab size
+    "editor.tabSize": 2,
 }

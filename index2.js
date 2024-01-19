@@ -7,7 +7,12 @@ const antlr4_1 = require("antlr4");
 const LKDLLexer_1 = __importDefault(require("./parser/LKDLLexer"));
 const LKDLParser_1 = __importDefault(require("./parser/LKDLParser"));
 const LKDLListener_1 = __importDefault(require("./parser/LKDLListener"));
-const input = `张三.(朋友.同学, 老乡.同学.老乡[距离==1公里, 时间==10年].老乡) += 李四.朋友;`;
+const my_parser_1 = require("./utils/my-parser");
+const op_rule_1 = require("./utils/op-rule");
+// const input = `张三.(朋友.同学, 老乡.同学.老乡[距离==1公里, 时间==10年].老乡) += 李四.朋友;`;
+// const input = `张三.老乡.朋友.同学 += 李四.朋友;`;
+// TODO: 这个边界情况未处理，即 += 的右边是直接的元列表，不需要搜索的情况
+const input = `张三.(朋友, 老乡) += 李四;`;
 const chars = new antlr4_1.CharStream(input);
 const lexer = new LKDLLexer_1.default(chars);
 const tokens = new antlr4_1.CommonTokenStream(lexer);
@@ -88,14 +93,11 @@ class MyTreeWalker extends LKDLListener_1.default {
         this.exitAddYuanRel = (ctx) => {
             const head = ctx.searchExpr(0)["mySearchExpr"];
             const tail = ctx.searchExpr(1)["mySearchExpr"];
-            const op = "+=";
-            const addYuanRel = {
-                head,
-                tail,
-                op,
-            };
-            ctx["myAddYuanRel"] = addYuanRel;
-            console.dir(addYuanRel, { depth: Infinity });
+            const lhsSearchSequnce = (0, my_parser_1.parseSearchExprToSearchSequnce)(head);
+            const rhsSearchSequnce = (0, my_parser_1.parseSearchExprToSearchSequnce)(tail);
+            const res = (0, op_rule_1.addYuanRel)(lhsSearchSequnce, rhsSearchSequnce);
+            ctx["myAddYuanRel"] = res;
+            console.dir(res, { depth: Infinity });
         };
     }
 }

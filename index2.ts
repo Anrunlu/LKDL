@@ -11,8 +11,13 @@ import LKDLParser, {
   YuanListContext,
 } from "./parser/LKDLParser";
 import LKDLListener from "./parser/LKDLListener";
+import { parseSearchExprToSearchSequnce } from "./utils/my-parser";
+import { addYuanRel } from "./utils/op-rule";
 
-const input = `张三.(朋友.同学, 老乡.同学.老乡[距离==1公里, 时间==10年].老乡) += 李四.朋友;`;
+// const input = `张三.(朋友.同学, 老乡.同学.老乡[距离==1公里, 时间==10年].老乡) += 李四.朋友;`;
+// const input = `张三.老乡.朋友.同学 += 李四.朋友;`;
+// TODO: 这个边界情况未处理，即 += 的右边是直接的元列表，不需要搜索的情况
+const input = `张三.(朋友, 老乡) += 李四;`;
 const chars = new CharStream(input);
 const lexer = new LKDLLexer(chars);
 const tokens = new CommonTokenStream(lexer);
@@ -115,17 +120,15 @@ class MyTreeWalker extends LKDLListener {
   exitAddYuanRel = (ctx: AddYuanRelContext) => {
     const head = (ctx.searchExpr(0) as any)["mySearchExpr"];
     const tail = (ctx.searchExpr(1) as any)["mySearchExpr"];
-    const op = "+=";
 
-    const addYuanRel = {
-      head,
-      tail,
-      op,
-    };
+    const lhsSearchSequnce = parseSearchExprToSearchSequnce(head);
+    const rhsSearchSequnce = parseSearchExprToSearchSequnce(tail);
 
-    (ctx as any)["myAddYuanRel"] = addYuanRel;
+    const res = addYuanRel(lhsSearchSequnce, rhsSearchSequnce);
 
-    console.dir(addYuanRel, { depth: Infinity });
+    (ctx as any)["myAddYuanRel"] = res;
+
+    console.dir(res, { depth: Infinity });
   };
 }
 
