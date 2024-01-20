@@ -59,8 +59,6 @@ const rhsSearchSequnce = [
 ];
 
 export function addYuanRel(lhsSearchSequnce: any, rhsSearchSequnce: any) {
-  console.log("rhsSearchSequnce", rhsSearchSequnce);
-
   // 所有变量
   const varSet = new Set();
   // 左边序列的终结变量集合
@@ -105,7 +103,9 @@ export function addYuanRel(lhsSearchSequnce: any, rhsSearchSequnce: any) {
         varSet.add(rhsTriple.tail);
       }
 
-      if (rhsTriple.isTerminal) {
+      if (rhsTriple.isTerminal && rhsTriple.isYuan) {
+        rhsTerminalVarSet.add(rhsTriple.head);
+      } else if (rhsTriple.isTerminal) {
         rhsTerminalVarSet.add(rhsTriple.tail);
       }
 
