@@ -1,5 +1,21 @@
 import { OP, VAR_PREFIX } from "./const";
 
+// 添加删除元
+export function runCudYuan(yuanList: [], op: OP) {
+  const result: any = [];
+
+  yuanList.forEach((yuan: any) => {
+    const res = {
+      yuan,
+      op: op,
+    };
+    result.push(res);
+  });
+
+  console.dir(result, { depth: Infinity });
+}
+
+// 添加删除三元组
 export function runCudYuanRel(excuteFormatData: any) {
   const tripleList = excuteFormatData.tripleList;
   const resultSequnce = excuteFormatData.resultSequnce;
@@ -22,8 +38,6 @@ export function runCudYuanRel(excuteFormatData: any) {
       varObj[res[0]].push(res[2]);
     }
   });
-
-  console.log(varObj);
 
   // 遍历元组列表并根据 op 执行相关操作
   tripleList.forEach((tripleObj: any, index: any) => {
@@ -61,38 +75,46 @@ export function runCudYuanRel(excuteFormatData: any) {
   console.dir(result, { depth: Infinity });
 }
 
-export function runCudYuan(yuanList: [], op: OP) {
-  const result: any = [];
-
-  yuanList.forEach((yuan: any) => {
-    const res = {
-      yuan,
-      op: op,
-    };
-    result.push(res);
-  });
-
-  console.dir(result, { depth: Infinity });
-}
-
 export function runSearch(excuteFormatData: any) {
   const tripleList = excuteFormatData.tripleList;
   const resultSequnce = excuteFormatData.resultSequnce;
 
-  const result: any = [];
+  const resultTmp: any = [];
 
-  // 创建变量集合
-  const varObj: any = {};
-  excuteFormatData.varSet.forEach((item: any) => {
-    varObj[item] = [];
+  // 遍历元组列表，得到三元组
+  tripleList.forEach((tripleObj: any, index: any) => {
+    const head = tripleObj.head;
+    const rel = tripleObj.rel.relName;
+    const tail = tripleObj.tail;
+
+    const res = {
+      head,
+      rel,
+      tail,
+      relAttrList: tripleObj.rel.relAttrList,
+      isYuan: tripleObj.isYuan ? true : false,
+      isTerminal: tripleObj.isTerminal ? true : false,
+    };
+    resultTmp.push(res);
   });
 
-  // 从 resultSequnce 搜索可以直接赋值的变量
+  // 根据 resultSequnce 中的结果，替换变量
   resultSequnce.forEach((res: any) => {
-    // 如果右操作数不是变量，
-    if (!res[2].startsWith(VAR_PREFIX)) {
-      // 将右操作数赋值给左操作数
-      varObj[res[0]].push(res[2]);
-    }
+    resultTmp.forEach((item: any) => {
+      if (item.head === res[0]) {
+        item.head = res[2];
+      }
+      if (item.tail === res[0]) {
+        item.tail = res[2];
+      }
+    });
   });
+
+  // 删除 result 中是终端节点且是元的节点
+  const result = resultTmp.filter(
+    (res: any) => !(res.isTerminal && res.isYuan)
+  );
+
+  // console.log(resultSequnce);
+  console.dir(result, { depth: Infinity });
 }

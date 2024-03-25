@@ -18,7 +18,7 @@ import LKDLParser, {
 import LKDLListener from "./parser/LKDLListener";
 import { parseSearchExprToSearchSequnce } from "./utils/my-parser";
 import { parseSequnceToExcuteFormat } from "./utils/op-rule";
-import { runCudYuan, runCudYuanRel } from "./excutor";
+import { runCudYuan, runCudYuanRel, runSearch } from "./excutor";
 import { OP } from "./const";
 
 // const input = `张三.(朋友.同学, 老乡.同学.老乡[距离==1公里, 时间==10年].老乡) += 李四.朋友;`;
@@ -31,11 +31,11 @@ import { OP } from "./const";
 // const input = `小王.has;`;
 // const input = "张三.朋友[程度=1, 时间=2024年03月22日] += 李四;";
 // const input = `张三.（朋友，老乡）+=李四.朋友；`;
-// const input = `张三.朋友[程度=1] += (李四, 王五);`;
+// const input = `张三.朋友 += (李四, 王五);`;
 // const input = `张三.朋友 -= (李四, 王五);`;
 // const input = `元 += (张三, 李四, 王五);`;
-const input = `张三.朋友==$A;`;
-// const input = `张三.朋友==$A && $A.国籍==中国;`;
+// const input = `战狼.演员 == $A && $A.国籍 == 中国;`;
+const input = `张三.朋友==$A && $A.国籍==中国;`;
 const chars = new CharStream(input);
 const lexer = new LKDLLexer(chars);
 const tokens = new CommonTokenStream(lexer);
@@ -200,9 +200,7 @@ class MyTreeWalker extends LKDLListener {
       OP.GET
     );
 
-    console.dir(res, { depth: Infinity });
-
-    runCudYuanRel(res);
+    runSearch(res);
   };
 
   exitStat = (ctx: StatContext) => {
