@@ -17,62 +17,66 @@ import LKDLListener from "./LKDLListener.js";
 type int = number;
 
 export default class LKDLParser extends Parser {
-	public static readonly ADDYUAN = 1;
-	public static readonly DELYUAN = 2;
-	public static readonly NEWLINE = 3;
-	public static readonly LINECOMMENT = 4;
-	public static readonly BLOCKCOMMENT = 5;
-	public static readonly ASSIGN = 6;
-	public static readonly EQ = 7;
-	public static readonly ATTR = 8;
-	public static readonly ADD = 9;
-	public static readonly SUB = 10;
-	public static readonly COMMA = 11;
-	public static readonly OPEN_BRACKET = 12;
-	public static readonly CLOSE_BRACKET = 13;
-	public static readonly OPEN_PAREN = 14;
-	public static readonly CLOSE_PAREN = 15;
-	public static readonly ADDEQ = 16;
-	public static readonly DELEQ = 17;
-	public static readonly RULEDEF = 18;
-	public static readonly ISA = 19;
-	public static readonly HAS = 20;
-	public static readonly ALL = 21;
-	public static readonly INT = 22;
-	public static readonly FLOAT = 23;
-	public static readonly ID = 24;
-	public static readonly WS = 25;
+	public static readonly T__0 = 1;
+	public static readonly YUAN = 2;
+	public static readonly RULE = 3;
+	public static readonly NEWLINE = 4;
+	public static readonly LINECOMMENT = 5;
+	public static readonly BLOCKCOMMENT = 6;
+	public static readonly ASSIGN = 7;
+	public static readonly EQ = 8;
+	public static readonly AND = 9;
+	public static readonly ATTR = 10;
+	public static readonly ADD = 11;
+	public static readonly SUB = 12;
+	public static readonly COMMA = 13;
+	public static readonly OPEN_BRACKET = 14;
+	public static readonly CLOSE_BRACKET = 15;
+	public static readonly OPEN_PAREN = 16;
+	public static readonly CLOSE_PAREN = 17;
+	public static readonly ADDEQ = 18;
+	public static readonly DELEQ = 19;
+	public static readonly RULEDEF = 20;
+	public static readonly ISA = 21;
+	public static readonly HAS = 22;
+	public static readonly ALL = 23;
+	public static readonly INT = 24;
+	public static readonly FLOAT = 25;
+	public static readonly ID = 26;
+	public static readonly WS = 27;
 	public static readonly EOF = Token.EOF;
 	public static readonly RULE_prog = 0;
 	public static readonly RULE_stat = 1;
 	public static readonly RULE_searchStat = 2;
 	public static readonly RULE_cudStat = 3;
-	public static readonly RULE_searchExpr = 4;
-	public static readonly RULE_relExprList = 5;
-	public static readonly RULE_relExprSequnce = 6;
-	public static readonly RULE_relExpr = 7;
-	public static readonly RULE_relAttrList = 8;
-	public static readonly RULE_relAttr = 9;
-	public static readonly RULE_yuanList = 10;
-	public static readonly literalNames: (string | null)[] = [ null, "'\\u5143+='", 
-                                                            "'\\u5143-='", 
+	public static readonly RULE_cudRuleStat = 4;
+	public static readonly RULE_searchExpr = 5;
+	public static readonly RULE_relExprList = 6;
+	public static readonly RULE_relExprSequnce = 7;
+	public static readonly RULE_relExpr = 8;
+	public static readonly RULE_relAttrList = 9;
+	public static readonly RULE_relAttr = 10;
+	public static readonly RULE_yuanList = 11;
+	public static readonly literalNames: (string | null)[] = [ null, "'|'", 
+                                                            null, null, 
                                                             null, null, 
                                                             null, "'='", 
-                                                            "'=='", "'.'", 
-                                                            "'+'", "'-'", 
+                                                            "'=='", null, 
+                                                            "'.'", "'+'", 
+                                                            "'-'", null, 
                                                             null, null, 
                                                             null, null, 
-                                                            null, "'+='", 
-                                                            "'-='", "':='" ];
-	public static readonly symbolicNames: (string | null)[] = [ null, "ADDYUAN", 
-                                                             "DELYUAN", 
+                                                            "'+='", "'-='", 
+                                                            "':='" ];
+	public static readonly symbolicNames: (string | null)[] = [ null, null, 
+                                                             "YUAN", "RULE", 
                                                              "NEWLINE", 
                                                              "LINECOMMENT", 
                                                              "BLOCKCOMMENT", 
                                                              "ASSIGN", "EQ", 
-                                                             "ATTR", "ADD", 
-                                                             "SUB", "COMMA", 
-                                                             "OPEN_BRACKET", 
+                                                             "AND", "ATTR", 
+                                                             "ADD", "SUB", 
+                                                             "COMMA", "OPEN_BRACKET", 
                                                              "CLOSE_BRACKET", 
                                                              "OPEN_PAREN", 
                                                              "CLOSE_PAREN", 
@@ -84,8 +88,9 @@ export default class LKDLParser extends Parser {
                                                              "WS" ];
 	// tslint:disable:no-trailing-whitespace
 	public static readonly ruleNames: string[] = [
-		"prog", "stat", "searchStat", "cudStat", "searchExpr", "relExprList", 
-		"relExprSequnce", "relExpr", "relAttrList", "relAttr", "yuanList",
+		"prog", "stat", "searchStat", "cudStat", "cudRuleStat", "searchExpr", 
+		"relExprList", "relExprSequnce", "relExpr", "relAttrList", "relAttr", 
+		"yuanList",
 	];
 	public get grammarFileName(): string { return "LKDL.g4"; }
 	public get literalNames(): (string | null)[] { return LKDLParser.literalNames; }
@@ -109,21 +114,21 @@ export default class LKDLParser extends Parser {
 		try {
 			this.enterOuterAlt(localctx, 1);
 			{
-			this.state = 25;
+			this.state = 27;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			while ((((_la) & ~0x1F) === 0 && ((1 << _la) & 16793606) !== 0)) {
+			while ((((_la) & ~0x1F) === 0 && ((1 << _la) & 67174412) !== 0)) {
 				{
 				{
-				this.state = 22;
+				this.state = 24;
 				this.stat();
 				}
 				}
-				this.state = 27;
+				this.state = 29;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			}
-			this.state = 28;
+			this.state = 30;
 			this.match(LKDLParser.EOF);
 			}
 		}
@@ -145,25 +150,51 @@ export default class LKDLParser extends Parser {
 	public stat(): StatContext {
 		let localctx: StatContext = new StatContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 2, LKDLParser.RULE_stat);
+		let _la: number;
 		try {
-			this.state = 36;
+			this.state = 48;
 			this._errHandler.sync(this);
-			switch ( this._interp.adaptivePredict(this._input, 1, this._ctx) ) {
+			switch ( this._interp.adaptivePredict(this._input, 2, this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(localctx, 1);
 				{
-				this.state = 30;
+				this.state = 32;
 				this.searchStat();
-				this.state = 31;
+				this.state = 37;
+				this._errHandler.sync(this);
+				_la = this._input.LA(1);
+				while (_la===9) {
+					{
+					{
+					this.state = 33;
+					this.match(LKDLParser.AND);
+					this.state = 34;
+					this.searchStat();
+					}
+					}
+					this.state = 39;
+					this._errHandler.sync(this);
+					_la = this._input.LA(1);
+				}
+				this.state = 40;
 				this.match(LKDLParser.NEWLINE);
 				}
 				break;
 			case 2:
 				this.enterOuterAlt(localctx, 2);
 				{
-				this.state = 33;
+				this.state = 42;
 				this.cudStat();
-				this.state = 34;
+				this.state = 43;
+				this.match(LKDLParser.NEWLINE);
+				}
+				break;
+			case 3:
+				this.enterOuterAlt(localctx, 3);
+				{
+				this.state = 45;
+				this.cudRuleStat();
+				this.state = 46;
 				this.match(LKDLParser.NEWLINE);
 				}
 				break;
@@ -188,46 +219,57 @@ export default class LKDLParser extends Parser {
 		let localctx: SearchStatContext = new SearchStatContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 4, LKDLParser.RULE_searchStat);
 		try {
-			this.state = 51;
+			this.state = 67;
 			this._errHandler.sync(this);
-			switch ( this._interp.adaptivePredict(this._input, 2, this._ctx) ) {
+			switch ( this._interp.adaptivePredict(this._input, 3, this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(localctx, 1);
 				{
-				this.state = 38;
+				this.state = 50;
 				this.searchExpr();
-				this.state = 39;
+				this.state = 51;
 				this.match(LKDLParser.ATTR);
-				this.state = 40;
+				this.state = 52;
 				this.match(LKDLParser.ALL);
 				}
 				break;
 			case 2:
 				this.enterOuterAlt(localctx, 2);
 				{
-				this.state = 42;
+				this.state = 54;
 				this.searchExpr();
-				this.state = 43;
+				this.state = 55;
 				this.match(LKDLParser.ATTR);
-				this.state = 44;
+				this.state = 56;
 				this.match(LKDLParser.HAS);
 				}
 				break;
 			case 3:
 				this.enterOuterAlt(localctx, 3);
 				{
-				this.state = 46;
+				this.state = 58;
 				this.searchExpr();
-				this.state = 47;
+				this.state = 59;
 				this.match(LKDLParser.ATTR);
-				this.state = 48;
+				this.state = 60;
 				this.match(LKDLParser.ISA);
 				}
 				break;
 			case 4:
 				this.enterOuterAlt(localctx, 4);
 				{
-				this.state = 50;
+				this.state = 62;
+				localctx._lhs = this.searchExpr();
+				this.state = 63;
+				this.match(LKDLParser.EQ);
+				this.state = 64;
+				localctx._rhs = this.searchExpr();
+				}
+				break;
+			case 5:
+				this.enterOuterAlt(localctx, 5);
+				{
+				this.state = 66;
 				this.searchExpr();
 				}
 				break;
@@ -252,18 +294,18 @@ export default class LKDLParser extends Parser {
 		let localctx: CudStatContext = new CudStatContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 6, LKDLParser.RULE_cudStat);
 		try {
-			this.state = 69;
+			this.state = 87;
 			this._errHandler.sync(this);
-			switch ( this._interp.adaptivePredict(this._input, 3, this._ctx) ) {
+			switch ( this._interp.adaptivePredict(this._input, 4, this._ctx) ) {
 			case 1:
 				localctx = new AddYuanRelContext(this, localctx);
 				this.enterOuterAlt(localctx, 1);
 				{
-				this.state = 53;
+				this.state = 69;
 				(localctx as AddYuanRelContext)._lhs = this.searchExpr();
-				this.state = 54;
+				this.state = 70;
 				this.match(LKDLParser.ADDEQ);
-				this.state = 55;
+				this.state = 71;
 				(localctx as AddYuanRelContext)._rhs = this.searchExpr();
 				}
 				break;
@@ -271,11 +313,11 @@ export default class LKDLParser extends Parser {
 				localctx = new DelYuanRelContext(this, localctx);
 				this.enterOuterAlt(localctx, 2);
 				{
-				this.state = 57;
+				this.state = 73;
 				(localctx as DelYuanRelContext)._lhs = this.searchExpr();
-				this.state = 58;
+				this.state = 74;
 				this.match(LKDLParser.DELEQ);
-				this.state = 59;
+				this.state = 75;
 				(localctx as DelYuanRelContext)._rhs = this.searchExpr();
 				}
 				break;
@@ -283,11 +325,11 @@ export default class LKDLParser extends Parser {
 				localctx = new UpdateYuanRelContext(this, localctx);
 				this.enterOuterAlt(localctx, 3);
 				{
-				this.state = 61;
+				this.state = 77;
 				(localctx as UpdateYuanRelContext)._lhs = this.searchExpr();
-				this.state = 62;
+				this.state = 78;
 				this.match(LKDLParser.ASSIGN);
-				this.state = 63;
+				this.state = 79;
 				(localctx as UpdateYuanRelContext)._rhs = this.searchExpr();
 				}
 				break;
@@ -295,9 +337,11 @@ export default class LKDLParser extends Parser {
 				localctx = new AddYuanContext(this, localctx);
 				this.enterOuterAlt(localctx, 4);
 				{
-				this.state = 65;
-				this.match(LKDLParser.ADDYUAN);
-				this.state = 66;
+				this.state = 81;
+				this.match(LKDLParser.YUAN);
+				this.state = 82;
+				this.match(LKDLParser.ADDEQ);
+				this.state = 83;
 				this.yuanList();
 				}
 				break;
@@ -305,9 +349,141 @@ export default class LKDLParser extends Parser {
 				localctx = new DelYuanContext(this, localctx);
 				this.enterOuterAlt(localctx, 5);
 				{
-				this.state = 67;
-				this.match(LKDLParser.DELYUAN);
-				this.state = 68;
+				this.state = 84;
+				this.match(LKDLParser.YUAN);
+				this.state = 85;
+				this.match(LKDLParser.DELEQ);
+				this.state = 86;
+				this.yuanList();
+				}
+				break;
+			}
+		}
+		catch (re) {
+			if (re instanceof RecognitionException) {
+				localctx.exception = re;
+				this._errHandler.reportError(this, re);
+				this._errHandler.recover(this, re);
+			} else {
+				throw re;
+			}
+		}
+		finally {
+			this.exitRule();
+		}
+		return localctx;
+	}
+	// @RuleVersion(0)
+	public cudRuleStat(): CudRuleStatContext {
+		let localctx: CudRuleStatContext = new CudRuleStatContext(this, this._ctx, this.state);
+		this.enterRule(localctx, 8, LKDLParser.RULE_cudRuleStat);
+		let _la: number;
+		try {
+			this.state = 128;
+			this._errHandler.sync(this);
+			switch ( this._interp.adaptivePredict(this._input, 9, this._ctx) ) {
+			case 1:
+				this.enterOuterAlt(localctx, 1);
+				{
+				this.state = 89;
+				this.match(LKDLParser.RULE);
+				this.state = 90;
+				this.match(LKDLParser.ADDEQ);
+				this.state = 91;
+				this.match(LKDLParser.ID);
+				this.state = 92;
+				this.match(LKDLParser.T__0);
+				this.state = 94;
+				this._errHandler.sync(this);
+				_la = this._input.LA(1);
+				if (_la===16 || _la===26) {
+					{
+					this.state = 93;
+					this.searchStat();
+					}
+				}
+
+				this.state = 96;
+				this.match(LKDLParser.RULEDEF);
+				this.state = 97;
+				this.searchStat();
+				this.state = 102;
+				this._errHandler.sync(this);
+				_la = this._input.LA(1);
+				while (_la===9) {
+					{
+					{
+					this.state = 98;
+					this.match(LKDLParser.AND);
+					this.state = 99;
+					this.searchStat();
+					}
+					}
+					this.state = 104;
+					this._errHandler.sync(this);
+					_la = this._input.LA(1);
+				}
+				}
+				break;
+			case 2:
+				this.enterOuterAlt(localctx, 2);
+				{
+				this.state = 105;
+				this.match(LKDLParser.RULE);
+				this.state = 106;
+				this.match(LKDLParser.DELEQ);
+				this.state = 107;
+				this.match(LKDLParser.ID);
+				this.state = 108;
+				this.match(LKDLParser.T__0);
+				this.state = 110;
+				this._errHandler.sync(this);
+				_la = this._input.LA(1);
+				if (_la===16 || _la===26) {
+					{
+					this.state = 109;
+					this.searchStat();
+					}
+				}
+
+				this.state = 112;
+				this.match(LKDLParser.RULEDEF);
+				this.state = 113;
+				this.searchStat();
+				this.state = 118;
+				this._errHandler.sync(this);
+				_la = this._input.LA(1);
+				while (_la===9) {
+					{
+					{
+					this.state = 114;
+					this.match(LKDLParser.AND);
+					this.state = 115;
+					this.searchStat();
+					}
+					}
+					this.state = 120;
+					this._errHandler.sync(this);
+					_la = this._input.LA(1);
+				}
+				}
+				break;
+			case 3:
+				this.enterOuterAlt(localctx, 3);
+				{
+				this.state = 121;
+				this.match(LKDLParser.RULE);
+				this.state = 122;
+				this.match(LKDLParser.ADDEQ);
+				this.state = 123;
+				this.match(LKDLParser.ID);
+				this.state = 124;
+				this.match(LKDLParser.T__0);
+				this.state = 125;
+				this.match(LKDLParser.ID);
+				this.state = 126;
+				this.match(LKDLParser.RULEDEF);
+				this.state = 127;
 				this.yuanList();
 				}
 				break;
@@ -330,20 +506,20 @@ export default class LKDLParser extends Parser {
 	// @RuleVersion(0)
 	public searchExpr(): SearchExprContext {
 		let localctx: SearchExprContext = new SearchExprContext(this, this._ctx, this.state);
-		this.enterRule(localctx, 8, LKDLParser.RULE_searchExpr);
+		this.enterRule(localctx, 10, LKDLParser.RULE_searchExpr);
 		try {
 			this.enterOuterAlt(localctx, 1);
 			{
-			this.state = 71;
+			this.state = 130;
 			this.yuanList();
-			this.state = 74;
+			this.state = 133;
 			this._errHandler.sync(this);
-			switch ( this._interp.adaptivePredict(this._input, 4, this._ctx) ) {
+			switch ( this._interp.adaptivePredict(this._input, 10, this._ctx) ) {
 			case 1:
 				{
-				this.state = 72;
+				this.state = 131;
 				this.match(LKDLParser.ATTR);
-				this.state = 73;
+				this.state = 132;
 				this.relExprList();
 				}
 				break;
@@ -367,44 +543,45 @@ export default class LKDLParser extends Parser {
 	// @RuleVersion(0)
 	public relExprList(): RelExprListContext {
 		let localctx: RelExprListContext = new RelExprListContext(this, this._ctx, this.state);
-		this.enterRule(localctx, 10, LKDLParser.RULE_relExprList);
+		this.enterRule(localctx, 12, LKDLParser.RULE_relExprList);
 		let _la: number;
 		try {
-			this.state = 88;
+			this.state = 147;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
-			case 21:
-			case 24:
+			case 22:
+			case 23:
+			case 26:
 				this.enterOuterAlt(localctx, 1);
 				{
-				this.state = 76;
+				this.state = 135;
 				this.relExprSequnce();
 				}
 				break;
-			case 14:
+			case 16:
 				this.enterOuterAlt(localctx, 2);
 				{
-				this.state = 77;
+				this.state = 136;
 				this.match(LKDLParser.OPEN_PAREN);
-				this.state = 78;
+				this.state = 137;
 				this.relExprSequnce();
-				this.state = 83;
+				this.state = 142;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-				while (_la===11) {
+				while (_la===13) {
 					{
 					{
-					this.state = 79;
+					this.state = 138;
 					this.match(LKDLParser.COMMA);
-					this.state = 80;
+					this.state = 139;
 					this.relExprSequnce();
 					}
 					}
-					this.state = 85;
+					this.state = 144;
 					this._errHandler.sync(this);
 					_la = this._input.LA(1);
 				}
-				this.state = 86;
+				this.state = 145;
 				this.match(LKDLParser.CLOSE_PAREN);
 				}
 				break;
@@ -429,30 +606,30 @@ export default class LKDLParser extends Parser {
 	// @RuleVersion(0)
 	public relExprSequnce(): RelExprSequnceContext {
 		let localctx: RelExprSequnceContext = new RelExprSequnceContext(this, this._ctx, this.state);
-		this.enterRule(localctx, 12, LKDLParser.RULE_relExprSequnce);
+		this.enterRule(localctx, 14, LKDLParser.RULE_relExprSequnce);
 		try {
 			let _alt: number;
 			this.enterOuterAlt(localctx, 1);
 			{
-			this.state = 90;
+			this.state = 149;
 			this.relExpr();
-			this.state = 95;
+			this.state = 154;
 			this._errHandler.sync(this);
-			_alt = this._interp.adaptivePredict(this._input, 7, this._ctx);
+			_alt = this._interp.adaptivePredict(this._input, 13, this._ctx);
 			while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER) {
 				if (_alt === 1) {
 					{
 					{
-					this.state = 91;
+					this.state = 150;
 					this.match(LKDLParser.ATTR);
-					this.state = 92;
+					this.state = 151;
 					this.relExpr();
 					}
 					}
 				}
-				this.state = 97;
+				this.state = 156;
 				this._errHandler.sync(this);
-				_alt = this._interp.adaptivePredict(this._input, 7, this._ctx);
+				_alt = this._interp.adaptivePredict(this._input, 13, this._ctx);
 			}
 			}
 		}
@@ -473,44 +650,51 @@ export default class LKDLParser extends Parser {
 	// @RuleVersion(0)
 	public relExpr(): RelExprContext {
 		let localctx: RelExprContext = new RelExprContext(this, this._ctx, this.state);
-		this.enterRule(localctx, 14, LKDLParser.RULE_relExpr);
+		this.enterRule(localctx, 16, LKDLParser.RULE_relExpr);
 		let _la: number;
 		try {
-			this.state = 106;
+			this.state = 166;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
-			case 21:
+			case 23:
 				this.enterOuterAlt(localctx, 1);
 				{
-				this.state = 98;
+				this.state = 157;
 				localctx._lhs = this.match(LKDLParser.ALL);
-				this.state = 100;
+				this.state = 159;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-				if (_la===12) {
+				if (_la===14) {
 					{
-					this.state = 99;
+					this.state = 158;
 					localctx._rhs = this.relAttrList();
 					}
 				}
 
 				}
 				break;
-			case 24:
+			case 26:
 				this.enterOuterAlt(localctx, 2);
 				{
-				this.state = 102;
+				this.state = 161;
 				localctx._lhs = this.match(LKDLParser.ID);
-				this.state = 104;
+				this.state = 163;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-				if (_la===12) {
+				if (_la===14) {
 					{
-					this.state = 103;
+					this.state = 162;
 					localctx._rhs = this.relAttrList();
 					}
 				}
 
+				}
+				break;
+			case 22:
+				this.enterOuterAlt(localctx, 3);
+				{
+				this.state = 165;
+				localctx._lhs = this.match(LKDLParser.HAS);
 				}
 				break;
 			default:
@@ -534,32 +718,32 @@ export default class LKDLParser extends Parser {
 	// @RuleVersion(0)
 	public relAttrList(): RelAttrListContext {
 		let localctx: RelAttrListContext = new RelAttrListContext(this, this._ctx, this.state);
-		this.enterRule(localctx, 16, LKDLParser.RULE_relAttrList);
+		this.enterRule(localctx, 18, LKDLParser.RULE_relAttrList);
 		let _la: number;
 		try {
 			this.enterOuterAlt(localctx, 1);
 			{
-			this.state = 108;
+			this.state = 168;
 			this.match(LKDLParser.OPEN_BRACKET);
-			this.state = 109;
+			this.state = 169;
 			this.relAttr();
-			this.state = 114;
+			this.state = 174;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			while (_la===11) {
+			while (_la===13) {
 				{
 				{
-				this.state = 110;
+				this.state = 170;
 				this.match(LKDLParser.COMMA);
-				this.state = 111;
+				this.state = 171;
 				this.relAttr();
 				}
 				}
-				this.state = 116;
+				this.state = 176;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			}
-			this.state = 117;
+			this.state = 177;
 			this.match(LKDLParser.CLOSE_BRACKET);
 			}
 		}
@@ -580,35 +764,35 @@ export default class LKDLParser extends Parser {
 	// @RuleVersion(0)
 	public relAttr(): RelAttrContext {
 		let localctx: RelAttrContext = new RelAttrContext(this, this._ctx, this.state);
-		this.enterRule(localctx, 18, LKDLParser.RULE_relAttr);
+		this.enterRule(localctx, 20, LKDLParser.RULE_relAttr);
 		let _la: number;
 		try {
 			this.enterOuterAlt(localctx, 1);
 			{
-			this.state = 119;
+			this.state = 179;
 			localctx._lhs = this.match(LKDLParser.ID);
-			this.state = 122;
+			this.state = 182;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
-			case 6:
+			case 7:
 				{
-				this.state = 120;
+				this.state = 180;
 				localctx._op = this.match(LKDLParser.ASSIGN);
 				}
 				break;
-			case 7:
+			case 8:
 				{
-				this.state = 121;
+				this.state = 181;
 				localctx._op = this.match(LKDLParser.EQ);
 				}
 				break;
 			default:
 				throw new NoViableAltException(this);
 			}
-			this.state = 124;
+			this.state = 184;
 			localctx._rhs = this._input.LT(1);
 			_la = this._input.LA(1);
-			if(!((((_la) & ~0x1F) === 0 && ((1 << _la) & 29360128) !== 0))) {
+			if(!((((_la) & ~0x1F) === 0 && ((1 << _la) & 117440512) !== 0))) {
 			    localctx._rhs = this._errHandler.recoverInline(this);
 			}
 			else {
@@ -634,43 +818,43 @@ export default class LKDLParser extends Parser {
 	// @RuleVersion(0)
 	public yuanList(): YuanListContext {
 		let localctx: YuanListContext = new YuanListContext(this, this._ctx, this.state);
-		this.enterRule(localctx, 20, LKDLParser.RULE_yuanList);
+		this.enterRule(localctx, 22, LKDLParser.RULE_yuanList);
 		let _la: number;
 		try {
-			this.state = 137;
+			this.state = 197;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
-			case 24:
+			case 26:
 				this.enterOuterAlt(localctx, 1);
 				{
-				this.state = 126;
+				this.state = 186;
 				this.match(LKDLParser.ID);
 				}
 				break;
-			case 14:
+			case 16:
 				this.enterOuterAlt(localctx, 2);
 				{
-				this.state = 127;
+				this.state = 187;
 				this.match(LKDLParser.OPEN_PAREN);
-				this.state = 128;
+				this.state = 188;
 				this.match(LKDLParser.ID);
-				this.state = 133;
+				this.state = 193;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-				while (_la===11) {
+				while (_la===13) {
 					{
 					{
-					this.state = 129;
+					this.state = 189;
 					this.match(LKDLParser.COMMA);
-					this.state = 130;
+					this.state = 190;
 					this.match(LKDLParser.ID);
 					}
 					}
-					this.state = 135;
+					this.state = 195;
 					this._errHandler.sync(this);
 					_la = this._input.LA(1);
 				}
-				this.state = 136;
+				this.state = 196;
 				this.match(LKDLParser.CLOSE_PAREN);
 				}
 				break;
@@ -693,49 +877,69 @@ export default class LKDLParser extends Parser {
 		return localctx;
 	}
 
-	public static readonly _serializedATN: number[] = [4,1,25,140,2,0,7,0,2,
+	public static readonly _serializedATN: number[] = [4,1,27,200,2,0,7,0,2,
 	1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,7,7,2,8,7,8,2,9,7,9,2,
-	10,7,10,1,0,5,0,24,8,0,10,0,12,0,27,9,0,1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,
-	3,1,37,8,1,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,3,2,52,8,
-	2,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,3,3,70,
-	8,3,1,4,1,4,1,4,3,4,75,8,4,1,5,1,5,1,5,1,5,1,5,5,5,82,8,5,10,5,12,5,85,
-	9,5,1,5,1,5,3,5,89,8,5,1,6,1,6,1,6,5,6,94,8,6,10,6,12,6,97,9,6,1,7,1,7,
-	3,7,101,8,7,1,7,1,7,3,7,105,8,7,3,7,107,8,7,1,8,1,8,1,8,1,8,5,8,113,8,8,
-	10,8,12,8,116,9,8,1,8,1,8,1,9,1,9,1,9,3,9,123,8,9,1,9,1,9,1,10,1,10,1,10,
-	1,10,1,10,5,10,132,8,10,10,10,12,10,135,9,10,1,10,3,10,138,8,10,1,10,0,
-	0,11,0,2,4,6,8,10,12,14,16,18,20,0,1,1,0,22,24,148,0,25,1,0,0,0,2,36,1,
-	0,0,0,4,51,1,0,0,0,6,69,1,0,0,0,8,71,1,0,0,0,10,88,1,0,0,0,12,90,1,0,0,
-	0,14,106,1,0,0,0,16,108,1,0,0,0,18,119,1,0,0,0,20,137,1,0,0,0,22,24,3,2,
-	1,0,23,22,1,0,0,0,24,27,1,0,0,0,25,23,1,0,0,0,25,26,1,0,0,0,26,28,1,0,0,
-	0,27,25,1,0,0,0,28,29,5,0,0,1,29,1,1,0,0,0,30,31,3,4,2,0,31,32,5,3,0,0,
-	32,37,1,0,0,0,33,34,3,6,3,0,34,35,5,3,0,0,35,37,1,0,0,0,36,30,1,0,0,0,36,
-	33,1,0,0,0,37,3,1,0,0,0,38,39,3,8,4,0,39,40,5,8,0,0,40,41,5,21,0,0,41,52,
-	1,0,0,0,42,43,3,8,4,0,43,44,5,8,0,0,44,45,5,20,0,0,45,52,1,0,0,0,46,47,
-	3,8,4,0,47,48,5,8,0,0,48,49,5,19,0,0,49,52,1,0,0,0,50,52,3,8,4,0,51,38,
-	1,0,0,0,51,42,1,0,0,0,51,46,1,0,0,0,51,50,1,0,0,0,52,5,1,0,0,0,53,54,3,
-	8,4,0,54,55,5,16,0,0,55,56,3,8,4,0,56,70,1,0,0,0,57,58,3,8,4,0,58,59,5,
-	17,0,0,59,60,3,8,4,0,60,70,1,0,0,0,61,62,3,8,4,0,62,63,5,6,0,0,63,64,3,
-	8,4,0,64,70,1,0,0,0,65,66,5,1,0,0,66,70,3,20,10,0,67,68,5,2,0,0,68,70,3,
-	20,10,0,69,53,1,0,0,0,69,57,1,0,0,0,69,61,1,0,0,0,69,65,1,0,0,0,69,67,1,
-	0,0,0,70,7,1,0,0,0,71,74,3,20,10,0,72,73,5,8,0,0,73,75,3,10,5,0,74,72,1,
-	0,0,0,74,75,1,0,0,0,75,9,1,0,0,0,76,89,3,12,6,0,77,78,5,14,0,0,78,83,3,
-	12,6,0,79,80,5,11,0,0,80,82,3,12,6,0,81,79,1,0,0,0,82,85,1,0,0,0,83,81,
-	1,0,0,0,83,84,1,0,0,0,84,86,1,0,0,0,85,83,1,0,0,0,86,87,5,15,0,0,87,89,
-	1,0,0,0,88,76,1,0,0,0,88,77,1,0,0,0,89,11,1,0,0,0,90,95,3,14,7,0,91,92,
-	5,8,0,0,92,94,3,14,7,0,93,91,1,0,0,0,94,97,1,0,0,0,95,93,1,0,0,0,95,96,
-	1,0,0,0,96,13,1,0,0,0,97,95,1,0,0,0,98,100,5,21,0,0,99,101,3,16,8,0,100,
-	99,1,0,0,0,100,101,1,0,0,0,101,107,1,0,0,0,102,104,5,24,0,0,103,105,3,16,
-	8,0,104,103,1,0,0,0,104,105,1,0,0,0,105,107,1,0,0,0,106,98,1,0,0,0,106,
-	102,1,0,0,0,107,15,1,0,0,0,108,109,5,12,0,0,109,114,3,18,9,0,110,111,5,
-	11,0,0,111,113,3,18,9,0,112,110,1,0,0,0,113,116,1,0,0,0,114,112,1,0,0,0,
-	114,115,1,0,0,0,115,117,1,0,0,0,116,114,1,0,0,0,117,118,5,13,0,0,118,17,
-	1,0,0,0,119,122,5,24,0,0,120,123,5,6,0,0,121,123,5,7,0,0,122,120,1,0,0,
-	0,122,121,1,0,0,0,123,124,1,0,0,0,124,125,7,0,0,0,125,19,1,0,0,0,126,138,
-	5,24,0,0,127,128,5,14,0,0,128,133,5,24,0,0,129,130,5,11,0,0,130,132,5,24,
-	0,0,131,129,1,0,0,0,132,135,1,0,0,0,133,131,1,0,0,0,133,134,1,0,0,0,134,
-	136,1,0,0,0,135,133,1,0,0,0,136,138,5,15,0,0,137,126,1,0,0,0,137,127,1,
-	0,0,0,138,21,1,0,0,0,15,25,36,51,69,74,83,88,95,100,104,106,114,122,133,
-	137];
+	10,7,10,2,11,7,11,1,0,5,0,26,8,0,10,0,12,0,29,9,0,1,0,1,0,1,1,1,1,1,1,5,
+	1,36,8,1,10,1,12,1,39,9,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,1,49,8,1,1,
+	2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,3,2,68,
+	8,2,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,
+	1,3,3,3,88,8,3,1,4,1,4,1,4,1,4,1,4,3,4,95,8,4,1,4,1,4,1,4,1,4,5,4,101,8,
+	4,10,4,12,4,104,9,4,1,4,1,4,1,4,1,4,1,4,3,4,111,8,4,1,4,1,4,1,4,1,4,5,4,
+	117,8,4,10,4,12,4,120,9,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,3,4,129,8,4,1,5,1,
+	5,1,5,3,5,134,8,5,1,6,1,6,1,6,1,6,1,6,5,6,141,8,6,10,6,12,6,144,9,6,1,6,
+	1,6,3,6,148,8,6,1,7,1,7,1,7,5,7,153,8,7,10,7,12,7,156,9,7,1,8,1,8,3,8,160,
+	8,8,1,8,1,8,3,8,164,8,8,1,8,3,8,167,8,8,1,9,1,9,1,9,1,9,5,9,173,8,9,10,
+	9,12,9,176,9,9,1,9,1,9,1,10,1,10,1,10,3,10,183,8,10,1,10,1,10,1,11,1,11,
+	1,11,1,11,1,11,5,11,192,8,11,10,11,12,11,195,9,11,1,11,3,11,198,8,11,1,
+	11,0,0,12,0,2,4,6,8,10,12,14,16,18,20,22,0,1,1,0,24,26,217,0,27,1,0,0,0,
+	2,48,1,0,0,0,4,67,1,0,0,0,6,87,1,0,0,0,8,128,1,0,0,0,10,130,1,0,0,0,12,
+	147,1,0,0,0,14,149,1,0,0,0,16,166,1,0,0,0,18,168,1,0,0,0,20,179,1,0,0,0,
+	22,197,1,0,0,0,24,26,3,2,1,0,25,24,1,0,0,0,26,29,1,0,0,0,27,25,1,0,0,0,
+	27,28,1,0,0,0,28,30,1,0,0,0,29,27,1,0,0,0,30,31,5,0,0,1,31,1,1,0,0,0,32,
+	37,3,4,2,0,33,34,5,9,0,0,34,36,3,4,2,0,35,33,1,0,0,0,36,39,1,0,0,0,37,35,
+	1,0,0,0,37,38,1,0,0,0,38,40,1,0,0,0,39,37,1,0,0,0,40,41,5,4,0,0,41,49,1,
+	0,0,0,42,43,3,6,3,0,43,44,5,4,0,0,44,49,1,0,0,0,45,46,3,8,4,0,46,47,5,4,
+	0,0,47,49,1,0,0,0,48,32,1,0,0,0,48,42,1,0,0,0,48,45,1,0,0,0,49,3,1,0,0,
+	0,50,51,3,10,5,0,51,52,5,10,0,0,52,53,5,23,0,0,53,68,1,0,0,0,54,55,3,10,
+	5,0,55,56,5,10,0,0,56,57,5,22,0,0,57,68,1,0,0,0,58,59,3,10,5,0,59,60,5,
+	10,0,0,60,61,5,21,0,0,61,68,1,0,0,0,62,63,3,10,5,0,63,64,5,8,0,0,64,65,
+	3,10,5,0,65,68,1,0,0,0,66,68,3,10,5,0,67,50,1,0,0,0,67,54,1,0,0,0,67,58,
+	1,0,0,0,67,62,1,0,0,0,67,66,1,0,0,0,68,5,1,0,0,0,69,70,3,10,5,0,70,71,5,
+	18,0,0,71,72,3,10,5,0,72,88,1,0,0,0,73,74,3,10,5,0,74,75,5,19,0,0,75,76,
+	3,10,5,0,76,88,1,0,0,0,77,78,3,10,5,0,78,79,5,7,0,0,79,80,3,10,5,0,80,88,
+	1,0,0,0,81,82,5,2,0,0,82,83,5,18,0,0,83,88,3,22,11,0,84,85,5,2,0,0,85,86,
+	5,19,0,0,86,88,3,22,11,0,87,69,1,0,0,0,87,73,1,0,0,0,87,77,1,0,0,0,87,81,
+	1,0,0,0,87,84,1,0,0,0,88,7,1,0,0,0,89,90,5,3,0,0,90,91,5,18,0,0,91,92,5,
+	26,0,0,92,94,5,1,0,0,93,95,3,4,2,0,94,93,1,0,0,0,94,95,1,0,0,0,95,96,1,
+	0,0,0,96,97,5,20,0,0,97,102,3,4,2,0,98,99,5,9,0,0,99,101,3,4,2,0,100,98,
+	1,0,0,0,101,104,1,0,0,0,102,100,1,0,0,0,102,103,1,0,0,0,103,129,1,0,0,0,
+	104,102,1,0,0,0,105,106,5,3,0,0,106,107,5,19,0,0,107,108,5,26,0,0,108,110,
+	5,1,0,0,109,111,3,4,2,0,110,109,1,0,0,0,110,111,1,0,0,0,111,112,1,0,0,0,
+	112,113,5,20,0,0,113,118,3,4,2,0,114,115,5,9,0,0,115,117,3,4,2,0,116,114,
+	1,0,0,0,117,120,1,0,0,0,118,116,1,0,0,0,118,119,1,0,0,0,119,129,1,0,0,0,
+	120,118,1,0,0,0,121,122,5,3,0,0,122,123,5,18,0,0,123,124,5,26,0,0,124,125,
+	5,1,0,0,125,126,5,26,0,0,126,127,5,20,0,0,127,129,3,22,11,0,128,89,1,0,
+	0,0,128,105,1,0,0,0,128,121,1,0,0,0,129,9,1,0,0,0,130,133,3,22,11,0,131,
+	132,5,10,0,0,132,134,3,12,6,0,133,131,1,0,0,0,133,134,1,0,0,0,134,11,1,
+	0,0,0,135,148,3,14,7,0,136,137,5,16,0,0,137,142,3,14,7,0,138,139,5,13,0,
+	0,139,141,3,14,7,0,140,138,1,0,0,0,141,144,1,0,0,0,142,140,1,0,0,0,142,
+	143,1,0,0,0,143,145,1,0,0,0,144,142,1,0,0,0,145,146,5,17,0,0,146,148,1,
+	0,0,0,147,135,1,0,0,0,147,136,1,0,0,0,148,13,1,0,0,0,149,154,3,16,8,0,150,
+	151,5,10,0,0,151,153,3,16,8,0,152,150,1,0,0,0,153,156,1,0,0,0,154,152,1,
+	0,0,0,154,155,1,0,0,0,155,15,1,0,0,0,156,154,1,0,0,0,157,159,5,23,0,0,158,
+	160,3,18,9,0,159,158,1,0,0,0,159,160,1,0,0,0,160,167,1,0,0,0,161,163,5,
+	26,0,0,162,164,3,18,9,0,163,162,1,0,0,0,163,164,1,0,0,0,164,167,1,0,0,0,
+	165,167,5,22,0,0,166,157,1,0,0,0,166,161,1,0,0,0,166,165,1,0,0,0,167,17,
+	1,0,0,0,168,169,5,14,0,0,169,174,3,20,10,0,170,171,5,13,0,0,171,173,3,20,
+	10,0,172,170,1,0,0,0,173,176,1,0,0,0,174,172,1,0,0,0,174,175,1,0,0,0,175,
+	177,1,0,0,0,176,174,1,0,0,0,177,178,5,15,0,0,178,19,1,0,0,0,179,182,5,26,
+	0,0,180,183,5,7,0,0,181,183,5,8,0,0,182,180,1,0,0,0,182,181,1,0,0,0,183,
+	184,1,0,0,0,184,185,7,0,0,0,185,21,1,0,0,0,186,198,5,26,0,0,187,188,5,16,
+	0,0,188,193,5,26,0,0,189,190,5,13,0,0,190,192,5,26,0,0,191,189,1,0,0,0,
+	192,195,1,0,0,0,193,191,1,0,0,0,193,194,1,0,0,0,194,196,1,0,0,0,195,193,
+	1,0,0,0,196,198,5,17,0,0,197,186,1,0,0,0,197,187,1,0,0,0,198,23,1,0,0,0,
+	21,27,37,48,67,87,94,102,110,118,128,133,142,147,154,159,163,166,174,182,
+	193,197];
 
 	private static __ATN: ATN;
 	public static get _ATN(): ATN {
@@ -786,14 +990,26 @@ export class StatContext extends ParserRuleContext {
 		super(parent, invokingState);
     	this.parser = parser;
 	}
-	public searchStat(): SearchStatContext {
-		return this.getTypedRuleContext(SearchStatContext, 0) as SearchStatContext;
+	public searchStat_list(): SearchStatContext[] {
+		return this.getTypedRuleContexts(SearchStatContext) as SearchStatContext[];
+	}
+	public searchStat(i: number): SearchStatContext {
+		return this.getTypedRuleContext(SearchStatContext, i) as SearchStatContext;
 	}
 	public NEWLINE(): TerminalNode {
 		return this.getToken(LKDLParser.NEWLINE, 0);
 	}
+	public AND_list(): TerminalNode[] {
+	    	return this.getTokens(LKDLParser.AND);
+	}
+	public AND(i: number): TerminalNode {
+		return this.getToken(LKDLParser.AND, i);
+	}
 	public cudStat(): CudStatContext {
 		return this.getTypedRuleContext(CudStatContext, 0) as CudStatContext;
+	}
+	public cudRuleStat(): CudRuleStatContext {
+		return this.getTypedRuleContext(CudRuleStatContext, 0) as CudRuleStatContext;
 	}
     public get ruleIndex(): number {
     	return LKDLParser.RULE_stat;
@@ -812,12 +1028,17 @@ export class StatContext extends ParserRuleContext {
 
 
 export class SearchStatContext extends ParserRuleContext {
+	public _lhs!: SearchExprContext;
+	public _rhs!: SearchExprContext;
 	constructor(parser?: LKDLParser, parent?: ParserRuleContext, invokingState?: number) {
 		super(parent, invokingState);
     	this.parser = parser;
 	}
-	public searchExpr(): SearchExprContext {
-		return this.getTypedRuleContext(SearchExprContext, 0) as SearchExprContext;
+	public searchExpr_list(): SearchExprContext[] {
+		return this.getTypedRuleContexts(SearchExprContext) as SearchExprContext[];
+	}
+	public searchExpr(i: number): SearchExprContext {
+		return this.getTypedRuleContext(SearchExprContext, i) as SearchExprContext;
 	}
 	public ATTR(): TerminalNode {
 		return this.getToken(LKDLParser.ATTR, 0);
@@ -830,6 +1051,9 @@ export class SearchStatContext extends ParserRuleContext {
 	}
 	public ISA(): TerminalNode {
 		return this.getToken(LKDLParser.ISA, 0);
+	}
+	public EQ(): TerminalNode {
+		return this.getToken(LKDLParser.EQ, 0);
 	}
     public get ruleIndex(): number {
     	return LKDLParser.RULE_searchStat;
@@ -864,8 +1088,11 @@ export class DelYuanContext extends CudStatContext {
 		super(parser, ctx.parentCtx, ctx.invokingState);
 		super.copyFrom(ctx);
 	}
-	public DELYUAN(): TerminalNode {
-		return this.getToken(LKDLParser.DELYUAN, 0);
+	public YUAN(): TerminalNode {
+		return this.getToken(LKDLParser.YUAN, 0);
+	}
+	public DELEQ(): TerminalNode {
+		return this.getToken(LKDLParser.DELEQ, 0);
 	}
 	public yuanList(): YuanListContext {
 		return this.getTypedRuleContext(YuanListContext, 0) as YuanListContext;
@@ -886,8 +1113,11 @@ export class AddYuanContext extends CudStatContext {
 		super(parser, ctx.parentCtx, ctx.invokingState);
 		super.copyFrom(ctx);
 	}
-	public ADDYUAN(): TerminalNode {
-		return this.getToken(LKDLParser.ADDYUAN, 0);
+	public YUAN(): TerminalNode {
+		return this.getToken(LKDLParser.YUAN, 0);
+	}
+	public ADDEQ(): TerminalNode {
+		return this.getToken(LKDLParser.ADDEQ, 0);
 	}
 	public yuanList(): YuanListContext {
 		return this.getTypedRuleContext(YuanListContext, 0) as YuanListContext;
@@ -981,6 +1211,60 @@ export class UpdateYuanRelContext extends CudStatContext {
 	public exitRule(listener: LKDLListener): void {
 	    if(listener.exitUpdateYuanRel) {
 	 		listener.exitUpdateYuanRel(this);
+		}
+	}
+}
+
+
+export class CudRuleStatContext extends ParserRuleContext {
+	constructor(parser?: LKDLParser, parent?: ParserRuleContext, invokingState?: number) {
+		super(parent, invokingState);
+    	this.parser = parser;
+	}
+	public RULE(): TerminalNode {
+		return this.getToken(LKDLParser.RULE, 0);
+	}
+	public ADDEQ(): TerminalNode {
+		return this.getToken(LKDLParser.ADDEQ, 0);
+	}
+	public ID_list(): TerminalNode[] {
+	    	return this.getTokens(LKDLParser.ID);
+	}
+	public ID(i: number): TerminalNode {
+		return this.getToken(LKDLParser.ID, i);
+	}
+	public RULEDEF(): TerminalNode {
+		return this.getToken(LKDLParser.RULEDEF, 0);
+	}
+	public searchStat_list(): SearchStatContext[] {
+		return this.getTypedRuleContexts(SearchStatContext) as SearchStatContext[];
+	}
+	public searchStat(i: number): SearchStatContext {
+		return this.getTypedRuleContext(SearchStatContext, i) as SearchStatContext;
+	}
+	public AND_list(): TerminalNode[] {
+	    	return this.getTokens(LKDLParser.AND);
+	}
+	public AND(i: number): TerminalNode {
+		return this.getToken(LKDLParser.AND, i);
+	}
+	public DELEQ(): TerminalNode {
+		return this.getToken(LKDLParser.DELEQ, 0);
+	}
+	public yuanList(): YuanListContext {
+		return this.getTypedRuleContext(YuanListContext, 0) as YuanListContext;
+	}
+    public get ruleIndex(): number {
+    	return LKDLParser.RULE_cudRuleStat;
+	}
+	public enterRule(listener: LKDLListener): void {
+	    if(listener.enterCudRuleStat) {
+	 		listener.enterCudRuleStat(this);
+		}
+	}
+	public exitRule(listener: LKDLListener): void {
+	    if(listener.exitCudRuleStat) {
+	 		listener.exitCudRuleStat(this);
 		}
 	}
 }
@@ -1103,6 +1387,9 @@ export class RelExprContext extends ParserRuleContext {
 	}
 	public ID(): TerminalNode {
 		return this.getToken(LKDLParser.ID, 0);
+	}
+	public HAS(): TerminalNode {
+		return this.getToken(LKDLParser.HAS, 0);
 	}
     public get ruleIndex(): number {
     	return LKDLParser.RULE_relExpr;

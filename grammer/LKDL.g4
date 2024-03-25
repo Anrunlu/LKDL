@@ -3,13 +3,17 @@ grammar LKDL;
 prog: stat* EOF
 	;
 
-stat: searchStat NEWLINE | cudStat NEWLINE
+stat
+	: searchStat (AND searchStat)* NEWLINE
+	| cudStat NEWLINE
+	| cudRuleStat NEWLINE
 	;
 
 searchStat
 	: searchExpr ATTR ALL
 	| searchExpr ATTR HAS
 	| searchExpr ATTR ISA
+	| lhs = searchExpr EQ rhs = searchExpr
 	| searchExpr
 	;
 
@@ -17,11 +21,22 @@ cudStat
 	: lhs = searchExpr ADDEQ rhs = searchExpr	# addYuanRel
 	| lhs = searchExpr DELEQ rhs = searchExpr	# delYuanRel
 	| lhs = searchExpr ASSIGN rhs = searchExpr	# updateYuanRel
-	| ADDYUAN yuanList							# addYuan
-	| DELYUAN yuanList							# delYuan
+	| YUAN ADDEQ yuanList						# addYuan
+	| YUAN DELEQ yuanList						# delYuan
 	;
 
-searchExpr: yuanList ( ATTR relExprList)?
+cudRuleStat
+	: RULE ADDEQ ID '|' searchStat? RULEDEF searchStat (
+		AND searchStat
+	)*
+	| RULE DELEQ ID '|' searchStat? RULEDEF searchStat (
+		AND searchStat
+	)*
+	| RULE ADDEQ ID '|' ID RULEDEF yuanList
+	;
+
+searchExpr
+	: yuanList (ATTR relExprList)?
 	;
 
 relExprList
@@ -36,6 +51,7 @@ relExprSequnce: relExpr ( ATTR relExpr)*
 relExpr
 	: lhs = ALL rhs = relAttrList?
 	| lhs = ID rhs = relAttrList?
+	| lhs = HAS
 	;
 
 relAttrList
@@ -53,9 +69,9 @@ relAttr
 yuanList: ID | OPEN_PAREN ID ( COMMA ID)* CLOSE_PAREN
 	;
 
-ADDYUAN: '元+='
+YUAN: '元' | 'y'
 	;
-DELYUAN: '元-='
+RULE: '规则' | 'rule' | 'r'
 	;
 // 定义换行符
 NEWLINE: ';' | '；'
@@ -65,9 +81,13 @@ LINECOMMENT: '//' ~[\r\n]* -> skip
 	;
 BLOCKCOMMENT: '/*' .*? '*/' -> skip
 	;
+
+
 ASSIGN: '='
 	;
 EQ: '=='
+	;
+AND: '&&' | 'and'
 	;
 ATTR: '.'
 	;
@@ -130,6 +150,8 @@ fragment ENTITY
 		| '【'
 		| ']'
 		| '】'
+		| '&'
+		| '|'
 	)
 	;
 
@@ -138,5 +160,6 @@ fragment BACKTICK: '`'
 
 ID: ENTITY+
 	;
+
 WS: [ \t\r\n]+ -> skip
 	;

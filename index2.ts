@@ -1,24 +1,41 @@
 import { CharStream, CommonTokenStream, ParseTreeWalker } from "antlr4";
 import LKDLLexer from "./parser/LKDLLexer";
 import LKDLParser, {
+  AddYuanContext,
   AddYuanRelContext,
+  DelYuanContext,
+  DelYuanRelContext,
   RelAttrContext,
   RelAttrListContext,
   RelExprContext,
   RelExprListContext,
   RelExprSequnceContext,
   SearchExprContext,
+  SearchStatContext,
+  StatContext,
   YuanListContext,
 } from "./parser/LKDLParser";
 import LKDLListener from "./parser/LKDLListener";
 import { parseSearchExprToSearchSequnce } from "./utils/my-parser";
-import { addYuanRel } from "./utils/op-rule";
+import { parseSequnceToExcuteFormat } from "./utils/op-rule";
+import { runCudYuan, runCudYuanRel } from "./excutor";
+import { OP } from "./const";
 
-// const input = `张三.(朋友.同学, 老乡.同学.老乡[$show=false, 距离==1公里, 时间==10年].老乡) += 李四.朋友;`;
+// const input = `张三.(朋友.同学, 老乡.同学.老乡[距离==1公里, 时间==10年].老乡) += 李四.朋友;`;
 // const input = `张三.老乡.朋友.同学 += 李四.朋友;`;
 // const input = `张三.(朋友, 老乡) += (王五, 李四).(朋友.同学, 老乡.老乡)`;
-const input = `张三.(朋友, 老乡) += (李四, 王五).朋友;`;
+// const input = `张三.朋友 += （李四，王五）;`;
 // const input = `小王.朋友+=$2;`;
+// const input = `张三.朋友.老乡.导演    -=   （李四，王五）;`;
+// const input = `小王.(朋友,家人);`;
+// const input = `小王.has;`;
+// const input = "张三.朋友[程度=1, 时间=2024年03月22日] += 李四;";
+// const input = `张三.（朋友，老乡）+=李四.朋友；`;
+// const input = `张三.朋友[程度=1] += (李四, 王五);`;
+// const input = `张三.朋友 -= (李四, 王五);`;
+// const input = `元 += (张三, 李四, 王五);`;
+const input = `张三.朋友==$A;`;
+// const input = `张三.朋友==$A && $A.国籍==中国;`;
 const chars = new CharStream(input);
 const lexer = new LKDLLexer(chars);
 const tokens = new CommonTokenStream(lexer);
@@ -37,7 +54,7 @@ class MyTreeWalker extends LKDLListener {
     (ctx as any)["myYuanList"] = yuanList;
   };
 
-  // 退出 relAttr（关系属性） 时，将 relAttr 存入 ctx 中
+  // 退出 relAttr（关系属性）
   exitRelAttr = (ctx: RelAttrContext) => {
     const attr = ctx._lhs.text;
     const val = ctx._rhs.text;
@@ -52,7 +69,7 @@ class MyTreeWalker extends LKDLListener {
     (ctx as any)["myRelAttr"] = relAttr;
   };
 
-  // 退出 exitRelAttrList（关系属性列表） 时，将 relAttrList 存入 ctx 中
+  // 退出 exitRelAttrList（关系属性列表）
   exitRelAttrList = (ctx: RelAttrListContext) => {
     const relAttrList: any = [];
 
@@ -63,7 +80,7 @@ class MyTreeWalker extends LKDLListener {
     (ctx as any)["myRelAttrList"] = relAttrList;
   };
 
-  // 退出 relExpr（关系表达式） 时，将 relExpr 存入 ctx 中
+  // 退出 relExpr（关系表达式）
   exitRelExpr = (ctx: RelExprContext) => {
     // 第一个孩子一定是 relName（关系名）
     const relName = ctx._lhs.text;
@@ -79,7 +96,7 @@ class MyTreeWalker extends LKDLListener {
     (ctx as any)["myRelExpr"] = relExpr;
   };
 
-  // 退出 relExprSequnce（关系表达式序列） 时，将 relExprSequnce 存入 ctx 中
+  // 退出 relExprSequnce（关系表达式序列）
   exitRelExprSequnce = (ctx: RelExprSequnceContext) => {
     const relExprSequnce: any = [];
 
@@ -90,7 +107,7 @@ class MyTreeWalker extends LKDLListener {
     (ctx as any)["myRelExprSequnce"] = relExprSequnce;
   };
 
-  // 退出 relExprList（关系表达式列表） 时，将 relExprList 存入 ctx 中
+  // 退出 relExprList（关系表达式列表）
   exitRelExprList = (ctx: RelExprListContext) => {
     const relExprList: any = [];
 
@@ -101,7 +118,7 @@ class MyTreeWalker extends LKDLListener {
     (ctx as any)["myRelExprList"] = relExprList;
   };
 
-  // 退出 searchExpr（搜索表达式） 时，将 searchExpr 存入 ctx 中
+  // 退出 searchExpr（搜索表达式）
   exitSearchExpr = (ctx: SearchExprContext) => {
     const yuanList = (ctx.yuanList() as any)["myYuanList"];
 
@@ -118,6 +135,7 @@ class MyTreeWalker extends LKDLListener {
     (ctx as any)["mySearchExpr"] = searchExpr;
   };
 
+  // 退出 addYuanRel（添加元关系）
   exitAddYuanRel = (ctx: AddYuanRelContext) => {
     const head = (ctx.searchExpr(0) as any)["mySearchExpr"];
     const tail = (ctx.searchExpr(1) as any)["mySearchExpr"];
@@ -125,11 +143,70 @@ class MyTreeWalker extends LKDLListener {
     const lhsSearchSequnce = parseSearchExprToSearchSequnce(head);
     const rhsSearchSequnce = parseSearchExprToSearchSequnce(tail);
 
-    const res = addYuanRel(lhsSearchSequnce, rhsSearchSequnce);
+    const res = parseSequnceToExcuteFormat(
+      lhsSearchSequnce,
+      rhsSearchSequnce,
+      OP.ADD
+    );
 
     (ctx as any)["myAddYuanRel"] = res;
 
+    runCudYuanRel(res);
+  };
+
+  // 退出 delYuanRel （删除元关系）
+  exitDelYuanRel = (ctx: DelYuanRelContext) => {
+    const head = (ctx.searchExpr(0) as any)["mySearchExpr"];
+    const tail = (ctx.searchExpr(1) as any)["mySearchExpr"];
+
+    const lhsSearchSequnce = parseSearchExprToSearchSequnce(head);
+    const rhsSearchSequnce = parseSearchExprToSearchSequnce(tail);
+
+    const res = parseSequnceToExcuteFormat(
+      lhsSearchSequnce,
+      rhsSearchSequnce,
+      OP.DEL
+    );
+
+    (ctx as any)["myDelYuanRel"] = res;
+
+    runCudYuanRel(res);
+  };
+
+  // 退出 addYuan （添加元）
+  exitAddYuan = (ctx: AddYuanContext) => {
+    const yuanList = (ctx.yuanList() as any)["myYuanList"];
+
+    runCudYuan(yuanList, OP.ADD);
+  };
+
+  // 退出 delYuan （删除元）
+  exitDelYuan = (ctx: DelYuanContext) => {
+    const yuanList = (ctx.yuanList() as any)["myYuanList"];
+
+    runCudYuan(yuanList, OP.DEL);
+  };
+
+  exitSearchStat = (ctx: SearchStatContext) => {
+    const head = (ctx.searchExpr(0) as any)["mySearchExpr"];
+    const tail = (ctx.searchExpr(1) as any)["mySearchExpr"];
+
+    const lhsSearchSequnce = parseSearchExprToSearchSequnce(head);
+    const rhsSearchSequnce = parseSearchExprToSearchSequnce(tail);
+
+    const res = parseSequnceToExcuteFormat(
+      lhsSearchSequnce,
+      rhsSearchSequnce,
+      OP.GET
+    );
+
     console.dir(res, { depth: Infinity });
+
+    runCudYuanRel(res);
+  };
+
+  exitStat = (ctx: StatContext) => {
+    console.log(ctx.getText(), "执行完毕");
   };
 }
 

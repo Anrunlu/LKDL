@@ -1,4 +1,5 @@
 import { nanoid } from "nanoid";
+import { VAR_PREFIX } from "../const";
 
 const searchStat = {
   yuanList: ["张三"],
@@ -57,7 +58,7 @@ export function parseSearchExprToSearchSequnce(searchStat: any): any[] {
 
           relExprSequnce.forEach((relExpr: any, relExprIndex: number) => {
             const varNameFirst =
-              "$" +
+              VAR_PREFIX +
               varNamePrefix +
               ((yuanIndex + 1) * 100 +
                 (relExprSequnceIndex + 1) * 10 +
@@ -65,7 +66,7 @@ export function parseSearchExprToSearchSequnce(searchStat: any): any[] {
                 1);
 
             const varNameSecond =
-              "$" +
+              VAR_PREFIX +
               varNamePrefix +
               ((yuanIndex + 1) * 100 +
                 (relExprSequnceIndex + 1) * 10 +

@@ -11,6 +11,7 @@ import { DelYuanRelContext } from "./LKDLParser";
 import { UpdateYuanRelContext } from "./LKDLParser";
 import { AddYuanContext } from "./LKDLParser";
 import { DelYuanContext } from "./LKDLParser";
+import { CudRuleStatContext } from "./LKDLParser";
 import { SearchExprContext } from "./LKDLParser";
 import { RelExprListContext } from "./LKDLParser";
 import { RelExprSequnceContext } from "./LKDLParser";
@@ -115,6 +116,16 @@ export default class LKDLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitDelYuan?: (ctx: DelYuanContext) => void;
+	/**
+	 * Enter a parse tree produced by `LKDLParser.cudRuleStat`.
+	 * @param ctx the parse tree
+	 */
+	enterCudRuleStat?: (ctx: CudRuleStatContext) => void;
+	/**
+	 * Exit a parse tree produced by `LKDLParser.cudRuleStat`.
+	 * @param ctx the parse tree
+	 */
+	exitCudRuleStat?: (ctx: CudRuleStatContext) => void;
 	/**
 	 * Enter a parse tree produced by `LKDLParser.searchExpr`.
 	 * @param ctx the parse tree

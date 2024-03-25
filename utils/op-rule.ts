@@ -1,3 +1,5 @@
+import { OP, VAR_PREFIX } from "../const";
+
 const lhsSearchSequnce = [
   [
     {
@@ -58,7 +60,11 @@ const rhsSearchSequnce = [
   ],
 ];
 
-export function addYuanRel(lhsSearchSequnce: any, rhsSearchSequnce: any) {
+export function parseSequnceToExcuteFormat(
+  lhsSearchSequnce: any,
+  rhsSearchSequnce: any,
+  op: string
+) {
   // 所有变量
   const varSet = new Set();
   // 左边序列的终结变量集合
@@ -72,21 +78,21 @@ export function addYuanRel(lhsSearchSequnce: any, rhsSearchSequnce: any) {
 
   lhsSearchSequnce.forEach((lhsTripleSequnce: any) => {
     lhsTripleSequnce.forEach((lhsTriple: any) => {
-      if (lhsTriple.head.startsWith("$")) {
+      if (lhsTriple.head.startsWith(VAR_PREFIX)) {
         varSet.add(lhsTriple.head);
       }
 
-      if (lhsTriple.tail.startsWith("$")) {
+      if (lhsTriple.tail.startsWith(VAR_PREFIX)) {
         varSet.add(lhsTriple.tail);
       }
 
       if (lhsTriple.isTerminal) {
         lhsTerminalVarSet.add(lhsTriple.tail);
-        // 追加 op 属性为 "set"
-        lhsTriple.op = "set";
+        // 追加 op 属性
+        lhsTriple.op = op;
       } else {
         // 追加 op 属性为 "get"
-        lhsTriple.op = "get";
+        lhsTriple.op = OP.GET;
       }
 
       tripleList.push(lhsTriple);
@@ -95,11 +101,11 @@ export function addYuanRel(lhsSearchSequnce: any, rhsSearchSequnce: any) {
 
   rhsSearchSequnce.forEach((rhsTripleSequnce: any) => {
     rhsTripleSequnce.forEach((rhsTriple: any) => {
-      if (rhsTriple.head.startsWith("$")) {
+      if (rhsTriple.head.startsWith(VAR_PREFIX)) {
         varSet.add(rhsTriple.head);
       }
 
-      if (rhsTriple.tail.startsWith("$")) {
+      if (rhsTriple.tail.startsWith(VAR_PREFIX)) {
         varSet.add(rhsTriple.tail);
       }
 
@@ -111,7 +117,7 @@ export function addYuanRel(lhsSearchSequnce: any, rhsSearchSequnce: any) {
 
       // 追加 op 属性为 "get"
       // 因为赋值操作的右边的语句一定是查询语句，所以一定是 get
-      rhsTriple.op = "get";
+      rhsTriple.op = OP.GET;
 
       tripleList.push(rhsTriple);
     });
@@ -125,7 +131,7 @@ export function addYuanRel(lhsSearchSequnce: any, rhsSearchSequnce: any) {
   });
 
   return {
-    varSet,
+    varSet: Array.from(varSet),
     tripleList,
     resultSequnce,
   };
