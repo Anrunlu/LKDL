@@ -7,6 +7,7 @@ stat
 	: searchStat (AND searchStat)* NEWLINE
 	| cudStat NEWLINE
 	| cudRuleStat NEWLINE
+	| inferStat NEWLINE
 	;
 
 searchStat
@@ -31,9 +32,13 @@ cudRuleStat
 	)* # addRule
 	| RULE DELEQ nltext = ID '|' ruleHead = ID '|' searchStat? RULEDEF searchStat (
 		AND searchStat
-	)*										# delRule
+	)*															# delRule
 	| RULE ADDEQ nltext = ID '|' ruleHead = ID RULEDEF yuanList	# addAbsRule
 	| RULE DELEQ nltext = ID '|' ruleHead = ID RULEDEF yuanList	# delAbsRule
+	;
+
+inferStat
+	: INFER OPEN_BRACE searchStat* '---' .*? CLOSE_BRACE # infer
 	;
 
 searchExpr: yuanList (ATTR relExprList)?
@@ -59,11 +64,7 @@ relAttrList
 	;
 
 relAttr
-	: lhs = ID (op = ASSIGN | op = EQ) rhs = (
-		ID
-		| INT
-		| FLOAT
-	) // 关系属性 op = ASSIGN 更新、添加 op = EQ 查询
+	: lhs = ID (op = ASSIGN | op = EQ) rhs = ID // 关系属性 op = ASSIGN 更新、添加 op = EQ 查询
 	;
 
 yuanList: ID | OPEN_PAREN ID ( COMMA ID)* CLOSE_PAREN
@@ -72,6 +73,8 @@ yuanList: ID | OPEN_PAREN ID ( COMMA ID)* CLOSE_PAREN
 YUAN: '元' | 'y'
 	;
 RULE: '规则' | 'rule' | 'r'
+	;
+INFER: '推理' | 'infer' | 'i'
 	;
 // 定义换行符
 NEWLINE: ';' | '；'
@@ -104,6 +107,10 @@ OPEN_PAREN: '(' | '（'
 	;
 CLOSE_PAREN: ')' | '）'
 	;
+OPEN_BRACE: '{'
+	;
+CLOSE_BRACE: '}'
+	;
 ADDEQ: '+='
 	;
 DELEQ: '-='
@@ -117,10 +124,7 @@ HAS: [Hh][Aa][Ss]
 ALL: [Aa][Ll][Ll]
 	; // 不区分大小写的 'all'
 
-INT: '0' | ([1-9] [0-9]*)
-	;
-FLOAT: [0-9]+ '.' [0-9]+
-	; // 定义浮点数的词法规则
+//INT: '0' | ([1-9] [0-9]*) ; FLOAT: [0-9]+ '.' [0-9]+ ; // 定义浮点数的词法规则
 
 // 定义实体
 fragment ENTITY

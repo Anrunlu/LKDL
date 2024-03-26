@@ -117,5 +117,7 @@ export function runSearch(excuteFormatData: any) {
   );
 
   // console.log(resultSequnce);
-  console.dir(result, { depth: Infinity });
+  // console.dir(result, { depth: Infinity });
+
+  return result;
 }
