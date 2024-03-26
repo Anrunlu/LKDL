@@ -379,10 +379,11 @@ export default class LKDLParser extends Parser {
 		this.enterRule(localctx, 8, LKDLParser.RULE_cudRuleStat);
 		let _la: number;
 		try {
-			this.state = 128;
+			this.state = 132;
 			this._errHandler.sync(this);
 			switch ( this._interp.adaptivePredict(this._input, 9, this._ctx) ) {
 			case 1:
+				localctx = new AddRuleContext(this, localctx);
 				this.enterOuterAlt(localctx, 1);
 				{
 				this.state = 89;
@@ -390,100 +391,110 @@ export default class LKDLParser extends Parser {
 				this.state = 90;
 				this.match(LKDLParser.ADDEQ);
 				this.state = 91;
-				this.match(LKDLParser.ID);
+				(localctx as AddRuleContext)._nltext = this.match(LKDLParser.ID);
 				this.state = 92;
 				this.match(LKDLParser.T__0);
+				this.state = 93;
+				(localctx as AddRuleContext)._ruleHead = this.match(LKDLParser.ID);
 				this.state = 94;
+				this.match(LKDLParser.T__0);
+				this.state = 96;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 				if (_la===16 || _la===26) {
 					{
-					this.state = 93;
+					this.state = 95;
 					this.searchStat();
 					}
 				}
 
-				this.state = 96;
+				this.state = 98;
 				this.match(LKDLParser.RULEDEF);
-				this.state = 97;
+				this.state = 99;
 				this.searchStat();
-				this.state = 102;
+				this.state = 104;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 				while (_la===9) {
 					{
 					{
-					this.state = 98;
+					this.state = 100;
 					this.match(LKDLParser.AND);
-					this.state = 99;
+					this.state = 101;
 					this.searchStat();
 					}
 					}
-					this.state = 104;
+					this.state = 106;
 					this._errHandler.sync(this);
 					_la = this._input.LA(1);
 				}
 				}
 				break;
 			case 2:
+				localctx = new DelRuleContext(this, localctx);
 				this.enterOuterAlt(localctx, 2);
 				{
-				this.state = 105;
-				this.match(LKDLParser.RULE);
-				this.state = 106;
-				this.match(LKDLParser.DELEQ);
 				this.state = 107;
-				this.match(LKDLParser.ID);
+				this.match(LKDLParser.RULE);
 				this.state = 108;
-				this.match(LKDLParser.T__0);
+				this.match(LKDLParser.DELEQ);
+				this.state = 109;
+				(localctx as DelRuleContext)._nltext = this.match(LKDLParser.ID);
 				this.state = 110;
+				this.match(LKDLParser.T__0);
+				this.state = 111;
+				(localctx as DelRuleContext)._ruleHead = this.match(LKDLParser.ID);
+				this.state = 112;
+				this.match(LKDLParser.T__0);
+				this.state = 114;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 				if (_la===16 || _la===26) {
 					{
-					this.state = 109;
+					this.state = 113;
 					this.searchStat();
 					}
 				}
 
-				this.state = 112;
+				this.state = 116;
 				this.match(LKDLParser.RULEDEF);
-				this.state = 113;
+				this.state = 117;
 				this.searchStat();
-				this.state = 118;
+				this.state = 122;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 				while (_la===9) {
 					{
 					{
-					this.state = 114;
+					this.state = 118;
 					this.match(LKDLParser.AND);
-					this.state = 115;
+					this.state = 119;
 					this.searchStat();
 					}
 					}
-					this.state = 120;
+					this.state = 124;
 					this._errHandler.sync(this);
 					_la = this._input.LA(1);
 				}
 				}
 				break;
 			case 3:
+				localctx = new AddAbsRuleContext(this, localctx);
 				this.enterOuterAlt(localctx, 3);
 				{
-				this.state = 121;
-				this.match(LKDLParser.RULE);
-				this.state = 122;
-				this.match(LKDLParser.ADDEQ);
-				this.state = 123;
-				this.match(LKDLParser.ID);
-				this.state = 124;
-				this.match(LKDLParser.T__0);
 				this.state = 125;
-				this.match(LKDLParser.ID);
+				this.match(LKDLParser.RULE);
 				this.state = 126;
-				this.match(LKDLParser.RULEDEF);
+				this.match(LKDLParser.ADDEQ);
 				this.state = 127;
+				(localctx as AddAbsRuleContext)._nltext = this.match(LKDLParser.ID);
+				this.state = 128;
+				this.match(LKDLParser.T__0);
+				this.state = 129;
+				(localctx as AddAbsRuleContext)._ruleHead = this.match(LKDLParser.ID);
+				this.state = 130;
+				this.match(LKDLParser.RULEDEF);
+				this.state = 131;
 				this.yuanList();
 				}
 				break;
@@ -510,16 +521,16 @@ export default class LKDLParser extends Parser {
 		try {
 			this.enterOuterAlt(localctx, 1);
 			{
-			this.state = 130;
+			this.state = 134;
 			this.yuanList();
-			this.state = 133;
+			this.state = 137;
 			this._errHandler.sync(this);
 			switch ( this._interp.adaptivePredict(this._input, 10, this._ctx) ) {
 			case 1:
 				{
-				this.state = 131;
+				this.state = 135;
 				this.match(LKDLParser.ATTR);
-				this.state = 132;
+				this.state = 136;
 				this.relExprList();
 				}
 				break;
@@ -546,7 +557,7 @@ export default class LKDLParser extends Parser {
 		this.enterRule(localctx, 12, LKDLParser.RULE_relExprList);
 		let _la: number;
 		try {
-			this.state = 147;
+			this.state = 151;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
 			case 22:
@@ -554,34 +565,34 @@ export default class LKDLParser extends Parser {
 			case 26:
 				this.enterOuterAlt(localctx, 1);
 				{
-				this.state = 135;
+				this.state = 139;
 				this.relExprSequnce();
 				}
 				break;
 			case 16:
 				this.enterOuterAlt(localctx, 2);
 				{
-				this.state = 136;
+				this.state = 140;
 				this.match(LKDLParser.OPEN_PAREN);
-				this.state = 137;
+				this.state = 141;
 				this.relExprSequnce();
-				this.state = 142;
+				this.state = 146;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 				while (_la===13) {
 					{
 					{
-					this.state = 138;
+					this.state = 142;
 					this.match(LKDLParser.COMMA);
-					this.state = 139;
+					this.state = 143;
 					this.relExprSequnce();
 					}
 					}
-					this.state = 144;
+					this.state = 148;
 					this._errHandler.sync(this);
 					_la = this._input.LA(1);
 				}
-				this.state = 145;
+				this.state = 149;
 				this.match(LKDLParser.CLOSE_PAREN);
 				}
 				break;
@@ -611,23 +622,23 @@ export default class LKDLParser extends Parser {
 			let _alt: number;
 			this.enterOuterAlt(localctx, 1);
 			{
-			this.state = 149;
+			this.state = 153;
 			this.relExpr();
-			this.state = 154;
+			this.state = 158;
 			this._errHandler.sync(this);
 			_alt = this._interp.adaptivePredict(this._input, 13, this._ctx);
 			while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER) {
 				if (_alt === 1) {
 					{
 					{
-					this.state = 150;
+					this.state = 154;
 					this.match(LKDLParser.ATTR);
-					this.state = 151;
+					this.state = 155;
 					this.relExpr();
 					}
 					}
 				}
-				this.state = 156;
+				this.state = 160;
 				this._errHandler.sync(this);
 				_alt = this._interp.adaptivePredict(this._input, 13, this._ctx);
 			}
@@ -653,31 +664,14 @@ export default class LKDLParser extends Parser {
 		this.enterRule(localctx, 16, LKDLParser.RULE_relExpr);
 		let _la: number;
 		try {
-			this.state = 166;
+			this.state = 170;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
 			case 23:
 				this.enterOuterAlt(localctx, 1);
 				{
-				this.state = 157;
-				localctx._lhs = this.match(LKDLParser.ALL);
-				this.state = 159;
-				this._errHandler.sync(this);
-				_la = this._input.LA(1);
-				if (_la===14) {
-					{
-					this.state = 158;
-					localctx._rhs = this.relAttrList();
-					}
-				}
-
-				}
-				break;
-			case 26:
-				this.enterOuterAlt(localctx, 2);
-				{
 				this.state = 161;
-				localctx._lhs = this.match(LKDLParser.ID);
+				localctx._lhs = this.match(LKDLParser.ALL);
 				this.state = 163;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
@@ -690,10 +684,27 @@ export default class LKDLParser extends Parser {
 
 				}
 				break;
+			case 26:
+				this.enterOuterAlt(localctx, 2);
+				{
+				this.state = 165;
+				localctx._lhs = this.match(LKDLParser.ID);
+				this.state = 167;
+				this._errHandler.sync(this);
+				_la = this._input.LA(1);
+				if (_la===14) {
+					{
+					this.state = 166;
+					localctx._rhs = this.relAttrList();
+					}
+				}
+
+				}
+				break;
 			case 22:
 				this.enterOuterAlt(localctx, 3);
 				{
-				this.state = 165;
+				this.state = 169;
 				localctx._lhs = this.match(LKDLParser.HAS);
 				}
 				break;
@@ -723,27 +734,27 @@ export default class LKDLParser extends Parser {
 		try {
 			this.enterOuterAlt(localctx, 1);
 			{
-			this.state = 168;
+			this.state = 172;
 			this.match(LKDLParser.OPEN_BRACKET);
-			this.state = 169;
+			this.state = 173;
 			this.relAttr();
-			this.state = 174;
+			this.state = 178;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			while (_la===13) {
 				{
 				{
-				this.state = 170;
+				this.state = 174;
 				this.match(LKDLParser.COMMA);
-				this.state = 171;
+				this.state = 175;
 				this.relAttr();
 				}
 				}
-				this.state = 176;
+				this.state = 180;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			}
-			this.state = 177;
+			this.state = 181;
 			this.match(LKDLParser.CLOSE_BRACKET);
 			}
 		}
@@ -769,27 +780,27 @@ export default class LKDLParser extends Parser {
 		try {
 			this.enterOuterAlt(localctx, 1);
 			{
-			this.state = 179;
+			this.state = 183;
 			localctx._lhs = this.match(LKDLParser.ID);
-			this.state = 182;
+			this.state = 186;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
 			case 7:
 				{
-				this.state = 180;
+				this.state = 184;
 				localctx._op = this.match(LKDLParser.ASSIGN);
 				}
 				break;
 			case 8:
 				{
-				this.state = 181;
+				this.state = 185;
 				localctx._op = this.match(LKDLParser.EQ);
 				}
 				break;
 			default:
 				throw new NoViableAltException(this);
 			}
-			this.state = 184;
+			this.state = 188;
 			localctx._rhs = this._input.LT(1);
 			_la = this._input.LA(1);
 			if(!((((_la) & ~0x1F) === 0 && ((1 << _la) & 117440512) !== 0))) {
@@ -821,40 +832,40 @@ export default class LKDLParser extends Parser {
 		this.enterRule(localctx, 22, LKDLParser.RULE_yuanList);
 		let _la: number;
 		try {
-			this.state = 197;
+			this.state = 201;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
 			case 26:
 				this.enterOuterAlt(localctx, 1);
 				{
-				this.state = 186;
+				this.state = 190;
 				this.match(LKDLParser.ID);
 				}
 				break;
 			case 16:
 				this.enterOuterAlt(localctx, 2);
 				{
-				this.state = 187;
+				this.state = 191;
 				this.match(LKDLParser.OPEN_PAREN);
-				this.state = 188;
+				this.state = 192;
 				this.match(LKDLParser.ID);
-				this.state = 193;
+				this.state = 197;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 				while (_la===13) {
 					{
 					{
-					this.state = 189;
+					this.state = 193;
 					this.match(LKDLParser.COMMA);
-					this.state = 190;
+					this.state = 194;
 					this.match(LKDLParser.ID);
 					}
 					}
-					this.state = 195;
+					this.state = 199;
 					this._errHandler.sync(this);
 					_la = this._input.LA(1);
 				}
-				this.state = 196;
+				this.state = 200;
 				this.match(LKDLParser.CLOSE_PAREN);
 				}
 				break;
@@ -877,69 +888,70 @@ export default class LKDLParser extends Parser {
 		return localctx;
 	}
 
-	public static readonly _serializedATN: number[] = [4,1,27,200,2,0,7,0,2,
+	public static readonly _serializedATN: number[] = [4,1,27,204,2,0,7,0,2,
 	1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,7,7,2,8,7,8,2,9,7,9,2,
 	10,7,10,2,11,7,11,1,0,5,0,26,8,0,10,0,12,0,29,9,0,1,0,1,0,1,1,1,1,1,1,5,
 	1,36,8,1,10,1,12,1,39,9,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,1,49,8,1,1,
 	2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,3,2,68,
 	8,2,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,
-	1,3,3,3,88,8,3,1,4,1,4,1,4,1,4,1,4,3,4,95,8,4,1,4,1,4,1,4,1,4,5,4,101,8,
-	4,10,4,12,4,104,9,4,1,4,1,4,1,4,1,4,1,4,3,4,111,8,4,1,4,1,4,1,4,1,4,5,4,
-	117,8,4,10,4,12,4,120,9,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,3,4,129,8,4,1,5,1,
-	5,1,5,3,5,134,8,5,1,6,1,6,1,6,1,6,1,6,5,6,141,8,6,10,6,12,6,144,9,6,1,6,
-	1,6,3,6,148,8,6,1,7,1,7,1,7,5,7,153,8,7,10,7,12,7,156,9,7,1,8,1,8,3,8,160,
-	8,8,1,8,1,8,3,8,164,8,8,1,8,3,8,167,8,8,1,9,1,9,1,9,1,9,5,9,173,8,9,10,
-	9,12,9,176,9,9,1,9,1,9,1,10,1,10,1,10,3,10,183,8,10,1,10,1,10,1,11,1,11,
-	1,11,1,11,1,11,5,11,192,8,11,10,11,12,11,195,9,11,1,11,3,11,198,8,11,1,
-	11,0,0,12,0,2,4,6,8,10,12,14,16,18,20,22,0,1,1,0,24,26,217,0,27,1,0,0,0,
-	2,48,1,0,0,0,4,67,1,0,0,0,6,87,1,0,0,0,8,128,1,0,0,0,10,130,1,0,0,0,12,
-	147,1,0,0,0,14,149,1,0,0,0,16,166,1,0,0,0,18,168,1,0,0,0,20,179,1,0,0,0,
-	22,197,1,0,0,0,24,26,3,2,1,0,25,24,1,0,0,0,26,29,1,0,0,0,27,25,1,0,0,0,
-	27,28,1,0,0,0,28,30,1,0,0,0,29,27,1,0,0,0,30,31,5,0,0,1,31,1,1,0,0,0,32,
-	37,3,4,2,0,33,34,5,9,0,0,34,36,3,4,2,0,35,33,1,0,0,0,36,39,1,0,0,0,37,35,
-	1,0,0,0,37,38,1,0,0,0,38,40,1,0,0,0,39,37,1,0,0,0,40,41,5,4,0,0,41,49,1,
-	0,0,0,42,43,3,6,3,0,43,44,5,4,0,0,44,49,1,0,0,0,45,46,3,8,4,0,46,47,5,4,
-	0,0,47,49,1,0,0,0,48,32,1,0,0,0,48,42,1,0,0,0,48,45,1,0,0,0,49,3,1,0,0,
-	0,50,51,3,10,5,0,51,52,5,10,0,0,52,53,5,23,0,0,53,68,1,0,0,0,54,55,3,10,
-	5,0,55,56,5,10,0,0,56,57,5,22,0,0,57,68,1,0,0,0,58,59,3,10,5,0,59,60,5,
-	10,0,0,60,61,5,21,0,0,61,68,1,0,0,0,62,63,3,10,5,0,63,64,5,8,0,0,64,65,
-	3,10,5,0,65,68,1,0,0,0,66,68,3,10,5,0,67,50,1,0,0,0,67,54,1,0,0,0,67,58,
-	1,0,0,0,67,62,1,0,0,0,67,66,1,0,0,0,68,5,1,0,0,0,69,70,3,10,5,0,70,71,5,
-	18,0,0,71,72,3,10,5,0,72,88,1,0,0,0,73,74,3,10,5,0,74,75,5,19,0,0,75,76,
-	3,10,5,0,76,88,1,0,0,0,77,78,3,10,5,0,78,79,5,7,0,0,79,80,3,10,5,0,80,88,
-	1,0,0,0,81,82,5,2,0,0,82,83,5,18,0,0,83,88,3,22,11,0,84,85,5,2,0,0,85,86,
-	5,19,0,0,86,88,3,22,11,0,87,69,1,0,0,0,87,73,1,0,0,0,87,77,1,0,0,0,87,81,
-	1,0,0,0,87,84,1,0,0,0,88,7,1,0,0,0,89,90,5,3,0,0,90,91,5,18,0,0,91,92,5,
-	26,0,0,92,94,5,1,0,0,93,95,3,4,2,0,94,93,1,0,0,0,94,95,1,0,0,0,95,96,1,
-	0,0,0,96,97,5,20,0,0,97,102,3,4,2,0,98,99,5,9,0,0,99,101,3,4,2,0,100,98,
-	1,0,0,0,101,104,1,0,0,0,102,100,1,0,0,0,102,103,1,0,0,0,103,129,1,0,0,0,
-	104,102,1,0,0,0,105,106,5,3,0,0,106,107,5,19,0,0,107,108,5,26,0,0,108,110,
-	5,1,0,0,109,111,3,4,2,0,110,109,1,0,0,0,110,111,1,0,0,0,111,112,1,0,0,0,
-	112,113,5,20,0,0,113,118,3,4,2,0,114,115,5,9,0,0,115,117,3,4,2,0,116,114,
-	1,0,0,0,117,120,1,0,0,0,118,116,1,0,0,0,118,119,1,0,0,0,119,129,1,0,0,0,
-	120,118,1,0,0,0,121,122,5,3,0,0,122,123,5,18,0,0,123,124,5,26,0,0,124,125,
-	5,1,0,0,125,126,5,26,0,0,126,127,5,20,0,0,127,129,3,22,11,0,128,89,1,0,
-	0,0,128,105,1,0,0,0,128,121,1,0,0,0,129,9,1,0,0,0,130,133,3,22,11,0,131,
-	132,5,10,0,0,132,134,3,12,6,0,133,131,1,0,0,0,133,134,1,0,0,0,134,11,1,
-	0,0,0,135,148,3,14,7,0,136,137,5,16,0,0,137,142,3,14,7,0,138,139,5,13,0,
-	0,139,141,3,14,7,0,140,138,1,0,0,0,141,144,1,0,0,0,142,140,1,0,0,0,142,
-	143,1,0,0,0,143,145,1,0,0,0,144,142,1,0,0,0,145,146,5,17,0,0,146,148,1,
-	0,0,0,147,135,1,0,0,0,147,136,1,0,0,0,148,13,1,0,0,0,149,154,3,16,8,0,150,
-	151,5,10,0,0,151,153,3,16,8,0,152,150,1,0,0,0,153,156,1,0,0,0,154,152,1,
-	0,0,0,154,155,1,0,0,0,155,15,1,0,0,0,156,154,1,0,0,0,157,159,5,23,0,0,158,
-	160,3,18,9,0,159,158,1,0,0,0,159,160,1,0,0,0,160,167,1,0,0,0,161,163,5,
-	26,0,0,162,164,3,18,9,0,163,162,1,0,0,0,163,164,1,0,0,0,164,167,1,0,0,0,
-	165,167,5,22,0,0,166,157,1,0,0,0,166,161,1,0,0,0,166,165,1,0,0,0,167,17,
-	1,0,0,0,168,169,5,14,0,0,169,174,3,20,10,0,170,171,5,13,0,0,171,173,3,20,
-	10,0,172,170,1,0,0,0,173,176,1,0,0,0,174,172,1,0,0,0,174,175,1,0,0,0,175,
-	177,1,0,0,0,176,174,1,0,0,0,177,178,5,15,0,0,178,19,1,0,0,0,179,182,5,26,
-	0,0,180,183,5,7,0,0,181,183,5,8,0,0,182,180,1,0,0,0,182,181,1,0,0,0,183,
-	184,1,0,0,0,184,185,7,0,0,0,185,21,1,0,0,0,186,198,5,26,0,0,187,188,5,16,
-	0,0,188,193,5,26,0,0,189,190,5,13,0,0,190,192,5,26,0,0,191,189,1,0,0,0,
-	192,195,1,0,0,0,193,191,1,0,0,0,193,194,1,0,0,0,194,196,1,0,0,0,195,193,
-	1,0,0,0,196,198,5,17,0,0,197,186,1,0,0,0,197,187,1,0,0,0,198,23,1,0,0,0,
-	21,27,37,48,67,87,94,102,110,118,128,133,142,147,154,159,163,166,174,182,
-	193,197];
+	1,3,3,3,88,8,3,1,4,1,4,1,4,1,4,1,4,1,4,1,4,3,4,97,8,4,1,4,1,4,1,4,1,4,5,
+	4,103,8,4,10,4,12,4,106,9,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,3,4,115,8,4,1,4,
+	1,4,1,4,1,4,5,4,121,8,4,10,4,12,4,124,9,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,3,
+	4,133,8,4,1,5,1,5,1,5,3,5,138,8,5,1,6,1,6,1,6,1,6,1,6,5,6,145,8,6,10,6,
+	12,6,148,9,6,1,6,1,6,3,6,152,8,6,1,7,1,7,1,7,5,7,157,8,7,10,7,12,7,160,
+	9,7,1,8,1,8,3,8,164,8,8,1,8,1,8,3,8,168,8,8,1,8,3,8,171,8,8,1,9,1,9,1,9,
+	1,9,5,9,177,8,9,10,9,12,9,180,9,9,1,9,1,9,1,10,1,10,1,10,3,10,187,8,10,
+	1,10,1,10,1,11,1,11,1,11,1,11,1,11,5,11,196,8,11,10,11,12,11,199,9,11,1,
+	11,3,11,202,8,11,1,11,0,0,12,0,2,4,6,8,10,12,14,16,18,20,22,0,1,1,0,24,
+	26,221,0,27,1,0,0,0,2,48,1,0,0,0,4,67,1,0,0,0,6,87,1,0,0,0,8,132,1,0,0,
+	0,10,134,1,0,0,0,12,151,1,0,0,0,14,153,1,0,0,0,16,170,1,0,0,0,18,172,1,
+	0,0,0,20,183,1,0,0,0,22,201,1,0,0,0,24,26,3,2,1,0,25,24,1,0,0,0,26,29,1,
+	0,0,0,27,25,1,0,0,0,27,28,1,0,0,0,28,30,1,0,0,0,29,27,1,0,0,0,30,31,5,0,
+	0,1,31,1,1,0,0,0,32,37,3,4,2,0,33,34,5,9,0,0,34,36,3,4,2,0,35,33,1,0,0,
+	0,36,39,1,0,0,0,37,35,1,0,0,0,37,38,1,0,0,0,38,40,1,0,0,0,39,37,1,0,0,0,
+	40,41,5,4,0,0,41,49,1,0,0,0,42,43,3,6,3,0,43,44,5,4,0,0,44,49,1,0,0,0,45,
+	46,3,8,4,0,46,47,5,4,0,0,47,49,1,0,0,0,48,32,1,0,0,0,48,42,1,0,0,0,48,45,
+	1,0,0,0,49,3,1,0,0,0,50,51,3,10,5,0,51,52,5,10,0,0,52,53,5,23,0,0,53,68,
+	1,0,0,0,54,55,3,10,5,0,55,56,5,10,0,0,56,57,5,22,0,0,57,68,1,0,0,0,58,59,
+	3,10,5,0,59,60,5,10,0,0,60,61,5,21,0,0,61,68,1,0,0,0,62,63,3,10,5,0,63,
+	64,5,8,0,0,64,65,3,10,5,0,65,68,1,0,0,0,66,68,3,10,5,0,67,50,1,0,0,0,67,
+	54,1,0,0,0,67,58,1,0,0,0,67,62,1,0,0,0,67,66,1,0,0,0,68,5,1,0,0,0,69,70,
+	3,10,5,0,70,71,5,18,0,0,71,72,3,10,5,0,72,88,1,0,0,0,73,74,3,10,5,0,74,
+	75,5,19,0,0,75,76,3,10,5,0,76,88,1,0,0,0,77,78,3,10,5,0,78,79,5,7,0,0,79,
+	80,3,10,5,0,80,88,1,0,0,0,81,82,5,2,0,0,82,83,5,18,0,0,83,88,3,22,11,0,
+	84,85,5,2,0,0,85,86,5,19,0,0,86,88,3,22,11,0,87,69,1,0,0,0,87,73,1,0,0,
+	0,87,77,1,0,0,0,87,81,1,0,0,0,87,84,1,0,0,0,88,7,1,0,0,0,89,90,5,3,0,0,
+	90,91,5,18,0,0,91,92,5,26,0,0,92,93,5,1,0,0,93,94,5,26,0,0,94,96,5,1,0,
+	0,95,97,3,4,2,0,96,95,1,0,0,0,96,97,1,0,0,0,97,98,1,0,0,0,98,99,5,20,0,
+	0,99,104,3,4,2,0,100,101,5,9,0,0,101,103,3,4,2,0,102,100,1,0,0,0,103,106,
+	1,0,0,0,104,102,1,0,0,0,104,105,1,0,0,0,105,133,1,0,0,0,106,104,1,0,0,0,
+	107,108,5,3,0,0,108,109,5,19,0,0,109,110,5,26,0,0,110,111,5,1,0,0,111,112,
+	5,26,0,0,112,114,5,1,0,0,113,115,3,4,2,0,114,113,1,0,0,0,114,115,1,0,0,
+	0,115,116,1,0,0,0,116,117,5,20,0,0,117,122,3,4,2,0,118,119,5,9,0,0,119,
+	121,3,4,2,0,120,118,1,0,0,0,121,124,1,0,0,0,122,120,1,0,0,0,122,123,1,0,
+	0,0,123,133,1,0,0,0,124,122,1,0,0,0,125,126,5,3,0,0,126,127,5,18,0,0,127,
+	128,5,26,0,0,128,129,5,1,0,0,129,130,5,26,0,0,130,131,5,20,0,0,131,133,
+	3,22,11,0,132,89,1,0,0,0,132,107,1,0,0,0,132,125,1,0,0,0,133,9,1,0,0,0,
+	134,137,3,22,11,0,135,136,5,10,0,0,136,138,3,12,6,0,137,135,1,0,0,0,137,
+	138,1,0,0,0,138,11,1,0,0,0,139,152,3,14,7,0,140,141,5,16,0,0,141,146,3,
+	14,7,0,142,143,5,13,0,0,143,145,3,14,7,0,144,142,1,0,0,0,145,148,1,0,0,
+	0,146,144,1,0,0,0,146,147,1,0,0,0,147,149,1,0,0,0,148,146,1,0,0,0,149,150,
+	5,17,0,0,150,152,1,0,0,0,151,139,1,0,0,0,151,140,1,0,0,0,152,13,1,0,0,0,
+	153,158,3,16,8,0,154,155,5,10,0,0,155,157,3,16,8,0,156,154,1,0,0,0,157,
+	160,1,0,0,0,158,156,1,0,0,0,158,159,1,0,0,0,159,15,1,0,0,0,160,158,1,0,
+	0,0,161,163,5,23,0,0,162,164,3,18,9,0,163,162,1,0,0,0,163,164,1,0,0,0,164,
+	171,1,0,0,0,165,167,5,26,0,0,166,168,3,18,9,0,167,166,1,0,0,0,167,168,1,
+	0,0,0,168,171,1,0,0,0,169,171,5,22,0,0,170,161,1,0,0,0,170,165,1,0,0,0,
+	170,169,1,0,0,0,171,17,1,0,0,0,172,173,5,14,0,0,173,178,3,20,10,0,174,175,
+	5,13,0,0,175,177,3,20,10,0,176,174,1,0,0,0,177,180,1,0,0,0,178,176,1,0,
+	0,0,178,179,1,0,0,0,179,181,1,0,0,0,180,178,1,0,0,0,181,182,5,15,0,0,182,
+	19,1,0,0,0,183,186,5,26,0,0,184,187,5,7,0,0,185,187,5,8,0,0,186,184,1,0,
+	0,0,186,185,1,0,0,0,187,188,1,0,0,0,188,189,7,0,0,0,189,21,1,0,0,0,190,
+	202,5,26,0,0,191,192,5,16,0,0,192,197,5,26,0,0,193,194,5,13,0,0,194,196,
+	5,26,0,0,195,193,1,0,0,0,196,199,1,0,0,0,197,195,1,0,0,0,197,198,1,0,0,
+	0,198,200,1,0,0,0,199,197,1,0,0,0,200,202,5,17,0,0,201,190,1,0,0,0,201,
+	191,1,0,0,0,202,23,1,0,0,0,21,27,37,48,67,87,96,104,114,122,132,137,146,
+	151,158,163,167,170,178,186,197,201];
 
 	private static __ATN: ATN;
 	public static get _ATN(): ATN {
@@ -1221,17 +1233,25 @@ export class CudRuleStatContext extends ParserRuleContext {
 		super(parent, invokingState);
     	this.parser = parser;
 	}
+    public get ruleIndex(): number {
+    	return LKDLParser.RULE_cudRuleStat;
+	}
+	public copyFrom(ctx: CudRuleStatContext): void {
+		super.copyFrom(ctx);
+	}
+}
+export class AddRuleContext extends CudRuleStatContext {
+	public _nltext!: Token;
+	public _ruleHead!: Token;
+	constructor(parser: LKDLParser, ctx: CudRuleStatContext) {
+		super(parser, ctx.parentCtx, ctx.invokingState);
+		super.copyFrom(ctx);
+	}
 	public RULE(): TerminalNode {
 		return this.getToken(LKDLParser.RULE, 0);
 	}
 	public ADDEQ(): TerminalNode {
 		return this.getToken(LKDLParser.ADDEQ, 0);
-	}
-	public ID_list(): TerminalNode[] {
-	    	return this.getTokens(LKDLParser.ID);
-	}
-	public ID(i: number): TerminalNode {
-		return this.getToken(LKDLParser.ID, i);
 	}
 	public RULEDEF(): TerminalNode {
 		return this.getToken(LKDLParser.RULEDEF, 0);
@@ -1242,29 +1262,107 @@ export class CudRuleStatContext extends ParserRuleContext {
 	public searchStat(i: number): SearchStatContext {
 		return this.getTypedRuleContext(SearchStatContext, i) as SearchStatContext;
 	}
+	public ID_list(): TerminalNode[] {
+	    	return this.getTokens(LKDLParser.ID);
+	}
+	public ID(i: number): TerminalNode {
+		return this.getToken(LKDLParser.ID, i);
+	}
 	public AND_list(): TerminalNode[] {
 	    	return this.getTokens(LKDLParser.AND);
 	}
 	public AND(i: number): TerminalNode {
 		return this.getToken(LKDLParser.AND, i);
 	}
+	public enterRule(listener: LKDLListener): void {
+	    if(listener.enterAddRule) {
+	 		listener.enterAddRule(this);
+		}
+	}
+	public exitRule(listener: LKDLListener): void {
+	    if(listener.exitAddRule) {
+	 		listener.exitAddRule(this);
+		}
+	}
+}
+export class DelRuleContext extends CudRuleStatContext {
+	public _nltext!: Token;
+	public _ruleHead!: Token;
+	constructor(parser: LKDLParser, ctx: CudRuleStatContext) {
+		super(parser, ctx.parentCtx, ctx.invokingState);
+		super.copyFrom(ctx);
+	}
+	public RULE(): TerminalNode {
+		return this.getToken(LKDLParser.RULE, 0);
+	}
 	public DELEQ(): TerminalNode {
 		return this.getToken(LKDLParser.DELEQ, 0);
+	}
+	public RULEDEF(): TerminalNode {
+		return this.getToken(LKDLParser.RULEDEF, 0);
+	}
+	public searchStat_list(): SearchStatContext[] {
+		return this.getTypedRuleContexts(SearchStatContext) as SearchStatContext[];
+	}
+	public searchStat(i: number): SearchStatContext {
+		return this.getTypedRuleContext(SearchStatContext, i) as SearchStatContext;
+	}
+	public ID_list(): TerminalNode[] {
+	    	return this.getTokens(LKDLParser.ID);
+	}
+	public ID(i: number): TerminalNode {
+		return this.getToken(LKDLParser.ID, i);
+	}
+	public AND_list(): TerminalNode[] {
+	    	return this.getTokens(LKDLParser.AND);
+	}
+	public AND(i: number): TerminalNode {
+		return this.getToken(LKDLParser.AND, i);
+	}
+	public enterRule(listener: LKDLListener): void {
+	    if(listener.enterDelRule) {
+	 		listener.enterDelRule(this);
+		}
+	}
+	public exitRule(listener: LKDLListener): void {
+	    if(listener.exitDelRule) {
+	 		listener.exitDelRule(this);
+		}
+	}
+}
+export class AddAbsRuleContext extends CudRuleStatContext {
+	public _nltext!: Token;
+	public _ruleHead!: Token;
+	constructor(parser: LKDLParser, ctx: CudRuleStatContext) {
+		super(parser, ctx.parentCtx, ctx.invokingState);
+		super.copyFrom(ctx);
+	}
+	public RULE(): TerminalNode {
+		return this.getToken(LKDLParser.RULE, 0);
+	}
+	public ADDEQ(): TerminalNode {
+		return this.getToken(LKDLParser.ADDEQ, 0);
+	}
+	public RULEDEF(): TerminalNode {
+		return this.getToken(LKDLParser.RULEDEF, 0);
 	}
 	public yuanList(): YuanListContext {
 		return this.getTypedRuleContext(YuanListContext, 0) as YuanListContext;
 	}
-    public get ruleIndex(): number {
-    	return LKDLParser.RULE_cudRuleStat;
+	public ID_list(): TerminalNode[] {
+	    	return this.getTokens(LKDLParser.ID);
+	}
+	public ID(i: number): TerminalNode {
+		return this.getToken(LKDLParser.ID, i);
 	}
 	public enterRule(listener: LKDLListener): void {
-	    if(listener.enterCudRuleStat) {
-	 		listener.enterCudRuleStat(this);
+	    if(listener.enterAddAbsRule) {
+	 		listener.enterAddAbsRule(this);
 		}
 	}
 	public exitRule(listener: LKDLListener): void {
-	    if(listener.exitCudRuleStat) {
-	 		listener.exitCudRuleStat(this);
+	    if(listener.exitAddAbsRule) {
+	 		listener.exitAddAbsRule(this);
 		}
 	}
 }

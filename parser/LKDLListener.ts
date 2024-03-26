@@ -11,7 +11,9 @@ import { DelYuanRelContext } from "./LKDLParser";
 import { UpdateYuanRelContext } from "./LKDLParser";
 import { AddYuanContext } from "./LKDLParser";
 import { DelYuanContext } from "./LKDLParser";
-import { CudRuleStatContext } from "./LKDLParser";
+import { AddRuleContext } from "./LKDLParser";
+import { DelRuleContext } from "./LKDLParser";
+import { AddAbsRuleContext } from "./LKDLParser";
 import { SearchExprContext } from "./LKDLParser";
 import { RelExprListContext } from "./LKDLParser";
 import { RelExprSequnceContext } from "./LKDLParser";
@@ -117,15 +119,41 @@ export default class LKDLListener extends ParseTreeListener {
 	 */
 	exitDelYuan?: (ctx: DelYuanContext) => void;
 	/**
-	 * Enter a parse tree produced by `LKDLParser.cudRuleStat`.
+	 * Enter a parse tree produced by the `addRule`
+	 * labeled alternative in `LKDLParser.cudRuleStat`.
 	 * @param ctx the parse tree
 	 */
-	enterCudRuleStat?: (ctx: CudRuleStatContext) => void;
+	enterAddRule?: (ctx: AddRuleContext) => void;
 	/**
-	 * Exit a parse tree produced by `LKDLParser.cudRuleStat`.
+	 * Exit a parse tree produced by the `addRule`
+	 * labeled alternative in `LKDLParser.cudRuleStat`.
 	 * @param ctx the parse tree
 	 */
-	exitCudRuleStat?: (ctx: CudRuleStatContext) => void;
+	exitAddRule?: (ctx: AddRuleContext) => void;
+	/**
+	 * Enter a parse tree produced by the `delRule`
+	 * labeled alternative in `LKDLParser.cudRuleStat`.
+	 * @param ctx the parse tree
+	 */
+	enterDelRule?: (ctx: DelRuleContext) => void;
+	/**
+	 * Exit a parse tree produced by the `delRule`
+	 * labeled alternative in `LKDLParser.cudRuleStat`.
+	 * @param ctx the parse tree
+	 */
+	exitDelRule?: (ctx: DelRuleContext) => void;
+	/**
+	 * Enter a parse tree produced by the `addAbsRule`
+	 * labeled alternative in `LKDLParser.cudRuleStat`.
+	 * @param ctx the parse tree
+	 */
+	enterAddAbsRule?: (ctx: AddAbsRuleContext) => void;
+	/**
+	 * Exit a parse tree produced by the `addAbsRule`
+	 * labeled alternative in `LKDLParser.cudRuleStat`.
+	 * @param ctx the parse tree
+	 */
+	exitAddAbsRule?: (ctx: AddAbsRuleContext) => void;
 	/**
 	 * Enter a parse tree produced by `LKDLParser.searchExpr`.
 	 * @param ctx the parse tree

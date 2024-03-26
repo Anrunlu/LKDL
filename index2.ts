@@ -1,8 +1,12 @@
 import { CharStream, CommonTokenStream, ParseTreeWalker } from "antlr4";
 import LKDLLexer from "./parser/LKDLLexer";
 import LKDLParser, {
+  AddAbsRuleContext,
+  AddRuleContext,
   AddYuanContext,
   AddYuanRelContext,
+  CudRuleStatContext,
+  DelRuleContext,
   DelYuanContext,
   DelYuanRelContext,
   RelAttrContext,
@@ -33,9 +37,14 @@ import { OP } from "./const";
 // const input = `张三.（朋友，老乡）+=李四.朋友；`;
 // const input = `张三.朋友 += (李四, 王五);`;
 // const input = `张三.朋友 -= (李四, 王五);`;
-// const input = `元 += (张三, 李四, 王五);`;
+// const input = `y += (张三, 李四, 王五);`;
 // const input = `战狼.演员 == $A && $A.国籍 == 中国;`;
-const input = `张三.朋友==$A && $A.国籍==中国;`;
+// const input = `张三.朋友==$A && $A.国籍==中国;`;
+// const input = `(张三,李四).朋友==$A;`;
+// const input = `(张三, 李四).朋友 == $A;`;
+// const input =
+//   "r +=`被称为“乐圣”的音乐家是谁？`|`被称为(乐圣)的(音乐家)是(C)`|:=C.职业==B&&C.称号==A;";
+const input = `规则 += 学生 | 学生 :=（姓名，性别，学号，年级，学院）；`;
 const chars = new CharStream(input);
 const lexer = new LKDLLexer(chars);
 const tokens = new CommonTokenStream(lexer);
@@ -201,6 +210,71 @@ class MyTreeWalker extends LKDLListener {
     );
 
     runSearch(res);
+  };
+
+  // 添加规则
+  exitAddRule = (ctx: AddRuleContext) => {
+    const ruleNLText = ctx._nltext.text.replace(/`/g, "");
+    const ruleHead = ctx._ruleHead.text.replace(/`/g, "");
+    const ruleBody = ctx
+      .searchStat_list()
+      .map((searchStat) => {
+        return searchStat.getText();
+      })
+      .join("&&");
+
+    const result = {
+      op: OP.ADD,
+      ruleNLText,
+      ruleHead,
+      ruleBody,
+    };
+
+    console.log(result);
+  };
+
+  // 删除规则
+  exitDelRule = (ctx: DelRuleContext) => {
+    const ruleNLText = ctx._nltext.text.replace(/`/g, "");
+    const ruleHead = ctx._ruleHead.text.replace(/`/g, "");
+    const ruleBody = ctx
+      .searchStat_list()
+      .map((searchStat) => {
+        return searchStat.getText();
+      })
+      .join("&&");
+
+    const result = {
+      op: OP.DEL,
+      ruleNLText,
+      ruleHead,
+      ruleBody,
+    };
+
+    console.log(result);
+  };
+
+  // 添加抽象规则
+  exitAddAbsRule = (ctx: AddAbsRuleContext) => {
+    const ruleNLText = ctx._nltext.text.replace(/`/g, "");
+    const ruleHead = ctx._ruleHead.text.replace(/`/g, "");
+
+    const ruleBody = ctx
+      .yuanList()
+      .ID_list()
+      .map((id) => {
+        return id.getText();
+      })
+      .join(",");
+
+    const result = {
+      op: OP.ADD,
+      ruleNLText,
+      ruleHead,
+      ruleBody,
+    };
+
+    console.log(result);
   };
 
   exitStat = (ctx: StatContext) => {

@@ -26,17 +26,16 @@ cudStat
 	;
 
 cudRuleStat
-	: RULE ADDEQ ID '|' searchStat? RULEDEF searchStat (
+	: RULE ADDEQ nltext = ID '|' ruleHead = ID '|' searchStat? RULEDEF searchStat (
 		AND searchStat
-	)*
-	| RULE DELEQ ID '|' searchStat? RULEDEF searchStat (
+	)* # addRule
+	| RULE DELEQ nltext = ID '|' ruleHead = ID '|' searchStat? RULEDEF searchStat (
 		AND searchStat
-	)*
-	| RULE ADDEQ ID '|' ID RULEDEF yuanList
+	)*										# delRule
+	| RULE ADDEQ nltext = ID '|' ruleHead = ID RULEDEF yuanList	# addAbsRule
 	;
 
-searchExpr
-	: yuanList (ATTR relExprList)?
+searchExpr: yuanList (ATTR relExprList)?
 	;
 
 relExprList
@@ -82,7 +81,6 @@ LINECOMMENT: '//' ~[\r\n]* -> skip
 BLOCKCOMMENT: '/*' .*? '*/' -> skip
 	;
 
-
 ASSIGN: '='
 	;
 EQ: '=='
@@ -125,7 +123,7 @@ FLOAT: [0-9]+ '.' [0-9]+
 
 // 定义实体
 fragment ENTITY
-	: '`' ~[`]* '`'			// 用反引号包裹的字符串，不包括反引号
+	: '`' ~[`|]* '`'		// 用反引号包裹的字符串，不包括 ` |
 	| '"' ~[ \t\r\n"]* '"'	// 或者引号包裹的字符串
 	| ~(
 		' '
@@ -152,6 +150,7 @@ fragment ENTITY
 		| '】'
 		| '&'
 		| '|'
+		| ':'
 	)
 	;
 
