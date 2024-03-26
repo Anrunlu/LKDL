@@ -33,6 +33,7 @@ cudRuleStat
 		AND searchStat
 	)*										# delRule
 	| RULE ADDEQ nltext = ID '|' ruleHead = ID RULEDEF yuanList	# addAbsRule
+	| RULE DELEQ nltext = ID '|' ruleHead = ID RULEDEF yuanList	# delAbsRule
 	;
 
 searchExpr: yuanList (ATTR relExprList)?
