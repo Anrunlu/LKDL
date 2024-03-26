@@ -15,8 +15,8 @@ export function runCudYuan(yuanList: [], op: OP) {
   console.dir(result, { depth: Infinity });
 }
 
-// 添加删除三元组
-export function runCudYuanRel(excuteFormatData: any) {
+// 添加删除多元组
+export function runCudTuple(excuteFormatData: any) {
   const tripleList = excuteFormatData.tripleList;
   const resultSequnce = excuteFormatData.resultSequnce;
 
@@ -75,6 +75,7 @@ export function runCudYuanRel(excuteFormatData: any) {
   console.dir(result, { depth: Infinity });
 }
 
+// 查询
 export function runSearch(excuteFormatData: any) {
   const tripleList = excuteFormatData.tripleList;
   const resultSequnce = excuteFormatData.resultSequnce;

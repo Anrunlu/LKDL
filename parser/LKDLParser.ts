@@ -298,39 +298,39 @@ export default class LKDLParser extends Parser {
 			this._errHandler.sync(this);
 			switch ( this._interp.adaptivePredict(this._input, 4, this._ctx) ) {
 			case 1:
-				localctx = new AddYuanRelContext(this, localctx);
+				localctx = new AddTupleContext(this, localctx);
 				this.enterOuterAlt(localctx, 1);
 				{
 				this.state = 69;
-				(localctx as AddYuanRelContext)._lhs = this.searchExpr();
+				(localctx as AddTupleContext)._lhs = this.searchExpr();
 				this.state = 70;
 				this.match(LKDLParser.ADDEQ);
 				this.state = 71;
-				(localctx as AddYuanRelContext)._rhs = this.searchExpr();
+				(localctx as AddTupleContext)._rhs = this.searchExpr();
 				}
 				break;
 			case 2:
-				localctx = new DelYuanRelContext(this, localctx);
+				localctx = new DelTupleContext(this, localctx);
 				this.enterOuterAlt(localctx, 2);
 				{
 				this.state = 73;
-				(localctx as DelYuanRelContext)._lhs = this.searchExpr();
+				(localctx as DelTupleContext)._lhs = this.searchExpr();
 				this.state = 74;
 				this.match(LKDLParser.DELEQ);
 				this.state = 75;
-				(localctx as DelYuanRelContext)._rhs = this.searchExpr();
+				(localctx as DelTupleContext)._rhs = this.searchExpr();
 				}
 				break;
 			case 3:
-				localctx = new UpdateYuanRelContext(this, localctx);
+				localctx = new UpdateTupleContext(this, localctx);
 				this.enterOuterAlt(localctx, 3);
 				{
 				this.state = 77;
-				(localctx as UpdateYuanRelContext)._lhs = this.searchExpr();
+				(localctx as UpdateTupleContext)._lhs = this.searchExpr();
 				this.state = 78;
 				this.match(LKDLParser.ASSIGN);
 				this.state = 79;
-				(localctx as UpdateYuanRelContext)._rhs = this.searchExpr();
+				(localctx as UpdateTupleContext)._rhs = this.searchExpr();
 				}
 				break;
 			case 4:
@@ -1142,6 +1142,33 @@ export class DelYuanContext extends CudStatContext {
 		}
 	}
 }
+export class DelTupleContext extends CudStatContext {
+	public _lhs!: SearchExprContext;
+	public _rhs!: SearchExprContext;
+	constructor(parser: LKDLParser, ctx: CudStatContext) {
+		super(parser, ctx.parentCtx, ctx.invokingState);
+		super.copyFrom(ctx);
+	}
+	public DELEQ(): TerminalNode {
+		return this.getToken(LKDLParser.DELEQ, 0);
+	}
+	public searchExpr_list(): SearchExprContext[] {
+		return this.getTypedRuleContexts(SearchExprContext) as SearchExprContext[];
+	}
+	public searchExpr(i: number): SearchExprContext {
+		return this.getTypedRuleContext(SearchExprContext, i) as SearchExprContext;
+	}
+	public enterRule(listener: LKDLListener): void {
+	    if(listener.enterDelTuple) {
+	 		listener.enterDelTuple(this);
+		}
+	}
+	public exitRule(listener: LKDLListener): void {
+	    if(listener.exitDelTuple) {
+	 		listener.exitDelTuple(this);
+		}
+	}
+}
 export class AddYuanContext extends CudStatContext {
 	constructor(parser: LKDLParser, ctx: CudStatContext) {
 		super(parser, ctx.parentCtx, ctx.invokingState);
@@ -1167,61 +1194,7 @@ export class AddYuanContext extends CudStatContext {
 		}
 	}
 }
-export class AddYuanRelContext extends CudStatContext {
-	public _lhs!: SearchExprContext;
-	public _rhs!: SearchExprContext;
-	constructor(parser: LKDLParser, ctx: CudStatContext) {
-		super(parser, ctx.parentCtx, ctx.invokingState);
-		super.copyFrom(ctx);
-	}
-	public ADDEQ(): TerminalNode {
-		return this.getToken(LKDLParser.ADDEQ, 0);
-	}
-	public searchExpr_list(): SearchExprContext[] {
-		return this.getTypedRuleContexts(SearchExprContext) as SearchExprContext[];
-	}
-	public searchExpr(i: number): SearchExprContext {
-		return this.getTypedRuleContext(SearchExprContext, i) as SearchExprContext;
-	}
-	public enterRule(listener: LKDLListener): void {
-	    if(listener.enterAddYuanRel) {
-	 		listener.enterAddYuanRel(this);
-		}
-	}
-	public exitRule(listener: LKDLListener): void {
-	    if(listener.exitAddYuanRel) {
-	 		listener.exitAddYuanRel(this);
-		}
-	}
-}
-export class DelYuanRelContext extends CudStatContext {
-	public _lhs!: SearchExprContext;
-	public _rhs!: SearchExprContext;
-	constructor(parser: LKDLParser, ctx: CudStatContext) {
-		super(parser, ctx.parentCtx, ctx.invokingState);
-		super.copyFrom(ctx);
-	}
-	public DELEQ(): TerminalNode {
-		return this.getToken(LKDLParser.DELEQ, 0);
-	}
-	public searchExpr_list(): SearchExprContext[] {
-		return this.getTypedRuleContexts(SearchExprContext) as SearchExprContext[];
-	}
-	public searchExpr(i: number): SearchExprContext {
-		return this.getTypedRuleContext(SearchExprContext, i) as SearchExprContext;
-	}
-	public enterRule(listener: LKDLListener): void {
-	    if(listener.enterDelYuanRel) {
-	 		listener.enterDelYuanRel(this);
-		}
-	}
-	public exitRule(listener: LKDLListener): void {
-	    if(listener.exitDelYuanRel) {
-	 		listener.exitDelYuanRel(this);
-		}
-	}
-}
-export class UpdateYuanRelContext extends CudStatContext {
+export class UpdateTupleContext extends CudStatContext {
 	public _lhs!: SearchExprContext;
 	public _rhs!: SearchExprContext;
 	constructor(parser: LKDLParser, ctx: CudStatContext) {
@@ -1238,13 +1211,40 @@ export class UpdateYuanRelContext extends CudStatContext {
 		return this.getTypedRuleContext(SearchExprContext, i) as SearchExprContext;
 	}
 	public enterRule(listener: LKDLListener): void {
-	    if(listener.enterUpdateYuanRel) {
-	 		listener.enterUpdateYuanRel(this);
+	    if(listener.enterUpdateTuple) {
+	 		listener.enterUpdateTuple(this);
 		}
 	}
 	public exitRule(listener: LKDLListener): void {
-	    if(listener.exitUpdateYuanRel) {
-	 		listener.exitUpdateYuanRel(this);
+	    if(listener.exitUpdateTuple) {
+	 		listener.exitUpdateTuple(this);
+		}
+	}
+}
+export class AddTupleContext extends CudStatContext {
+	public _lhs!: SearchExprContext;
+	public _rhs!: SearchExprContext;
+	constructor(parser: LKDLParser, ctx: CudStatContext) {
+		super(parser, ctx.parentCtx, ctx.invokingState);
+		super.copyFrom(ctx);
+	}
+	public ADDEQ(): TerminalNode {
+		return this.getToken(LKDLParser.ADDEQ, 0);
+	}
+	public searchExpr_list(): SearchExprContext[] {
+		return this.getTypedRuleContexts(SearchExprContext) as SearchExprContext[];
+	}
+	public searchExpr(i: number): SearchExprContext {
+		return this.getTypedRuleContext(SearchExprContext, i) as SearchExprContext;
+	}
+	public enterRule(listener: LKDLListener): void {
+	    if(listener.enterAddTuple) {
+	 		listener.enterAddTuple(this);
+		}
+	}
+	public exitRule(listener: LKDLListener): void {
+	    if(listener.exitAddTuple) {
+	 		listener.exitAddTuple(this);
 		}
 	}
 }

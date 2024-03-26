@@ -18,9 +18,9 @@ searchStat
 	;
 
 cudStat
-	: lhs = searchExpr ADDEQ rhs = searchExpr	# addYuanRel
-	| lhs = searchExpr DELEQ rhs = searchExpr	# delYuanRel
-	| lhs = searchExpr ASSIGN rhs = searchExpr	# updateYuanRel
+	: lhs = searchExpr ADDEQ rhs = searchExpr	# addTuple
+	| lhs = searchExpr DELEQ rhs = searchExpr	# delTuple
+	| lhs = searchExpr ASSIGN rhs = searchExpr	# updateTuple
 	| YUAN ADDEQ yuanList						# addYuan
 	| YUAN DELEQ yuanList						# delYuan
 	;

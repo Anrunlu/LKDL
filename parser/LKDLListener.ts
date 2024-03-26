@@ -6,9 +6,9 @@ import {ParseTreeListener} from "antlr4";
 import { ProgContext } from "./LKDLParser";
 import { StatContext } from "./LKDLParser";
 import { SearchStatContext } from "./LKDLParser";
-import { AddYuanRelContext } from "./LKDLParser";
-import { DelYuanRelContext } from "./LKDLParser";
-import { UpdateYuanRelContext } from "./LKDLParser";
+import { AddTupleContext } from "./LKDLParser";
+import { DelTupleContext } from "./LKDLParser";
+import { UpdateTupleContext } from "./LKDLParser";
 import { AddYuanContext } from "./LKDLParser";
 import { DelYuanContext } from "./LKDLParser";
 import { AddRuleContext } from "./LKDLParser";
@@ -60,41 +60,41 @@ export default class LKDLListener extends ParseTreeListener {
 	 */
 	exitSearchStat?: (ctx: SearchStatContext) => void;
 	/**
-	 * Enter a parse tree produced by the `addYuanRel`
+	 * Enter a parse tree produced by the `addTuple`
 	 * labeled alternative in `LKDLParser.cudStat`.
 	 * @param ctx the parse tree
 	 */
-	enterAddYuanRel?: (ctx: AddYuanRelContext) => void;
+	enterAddTuple?: (ctx: AddTupleContext) => void;
 	/**
-	 * Exit a parse tree produced by the `addYuanRel`
+	 * Exit a parse tree produced by the `addTuple`
 	 * labeled alternative in `LKDLParser.cudStat`.
 	 * @param ctx the parse tree
 	 */
-	exitAddYuanRel?: (ctx: AddYuanRelContext) => void;
+	exitAddTuple?: (ctx: AddTupleContext) => void;
 	/**
-	 * Enter a parse tree produced by the `delYuanRel`
+	 * Enter a parse tree produced by the `delTuple`
 	 * labeled alternative in `LKDLParser.cudStat`.
 	 * @param ctx the parse tree
 	 */
-	enterDelYuanRel?: (ctx: DelYuanRelContext) => void;
+	enterDelTuple?: (ctx: DelTupleContext) => void;
 	/**
-	 * Exit a parse tree produced by the `delYuanRel`
+	 * Exit a parse tree produced by the `delTuple`
 	 * labeled alternative in `LKDLParser.cudStat`.
 	 * @param ctx the parse tree
 	 */
-	exitDelYuanRel?: (ctx: DelYuanRelContext) => void;
+	exitDelTuple?: (ctx: DelTupleContext) => void;
 	/**
-	 * Enter a parse tree produced by the `updateYuanRel`
+	 * Enter a parse tree produced by the `updateTuple`
 	 * labeled alternative in `LKDLParser.cudStat`.
 	 * @param ctx the parse tree
 	 */
-	enterUpdateYuanRel?: (ctx: UpdateYuanRelContext) => void;
+	enterUpdateTuple?: (ctx: UpdateTupleContext) => void;
 	/**
-	 * Exit a parse tree produced by the `updateYuanRel`
+	 * Exit a parse tree produced by the `updateTuple`
 	 * labeled alternative in `LKDLParser.cudStat`.
 	 * @param ctx the parse tree
 	 */
-	exitUpdateYuanRel?: (ctx: UpdateYuanRelContext) => void;
+	exitUpdateTuple?: (ctx: UpdateTupleContext) => void;
 	/**
 	 * Enter a parse tree produced by the `addYuan`
 	 * labeled alternative in `LKDLParser.cudStat`.
