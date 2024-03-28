@@ -8,6 +8,7 @@ import LKDLParser, {
   DelTupleContext,
   DelYuanContext,
   InferContext,
+  QaContext,
   RelAttrContext,
   RelAttrListContext,
   RelExprContext,
@@ -276,9 +277,35 @@ export class LKDLTreeWalker extends LKDLListener {
 
     result.tuples = tuples;
 
-    const ss = ctx.getText();
+    // 匹配 conditionText，以 --- 为分隔符的后半部分
+    const conditionText = ctx
+      .getText()
+      .split("---")[1]
+      .trim()
+      .replace(/}/g, "");
 
-    console.log(ss);
+    const conditionArray = conditionText.split(";").filter((item) => item);
+
+    result.conditions = conditionArray;
+
+    console.dir(result, { depth: Infinity });
+  };
+
+  // 语义问答
+  exitQa = (ctx: QaContext) => {
+    const text = ctx.ID().getText().replace(/`/g, "");
+
+    // 使用正则检测text中是否有()，如果有，则是 with rule_head 查询，否则是自然语言查询
+    const reg = /\(.*\)/;
+    const isWithRuleHead = reg.test(text);
+
+    const result: any = {};
+
+    if (isWithRuleHead) {
+      result.ruleHead = text;
+    } else {
+      result.ruleNLText = text;
+    }
 
     console.log(result);
   };

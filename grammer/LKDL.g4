@@ -8,6 +8,7 @@ stat
 	| cudStat NEWLINE
 	| cudRuleStat NEWLINE
 	| inferStat NEWLINE
+	| qaStat NEWLINE
 	;
 
 searchStat
@@ -40,6 +41,10 @@ cudRuleStat
 inferStat
 	: INFER OPEN_BRACE searchStat* '---' .*? CLOSE_BRACE # infer
 	;
+
+qaStat
+    : QUESTION_MARK ID # qa
+    ;
 
 searchExpr: yuanList (ATTR relExprList)?
 	;
@@ -117,6 +122,8 @@ DELEQ: '-='
 	;
 RULEDEF: ':='
 	;
+QUESTION_MARK: '?' | '？'
+    ;
 ISA: [Ii][Ss][Aa]
 	; // 不区分大小写的 'isa'
 HAS: [Hh][Aa][Ss]
@@ -156,6 +163,8 @@ fragment ENTITY
 		| '&'
 		| '|'
 		| ':'
+		| '?'
+		| '？'
 	)
 	;
 
