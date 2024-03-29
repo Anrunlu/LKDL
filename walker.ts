@@ -25,6 +25,14 @@ import { runCudYuan, runCudTuple, runSearch } from "./excutor";
 import { OP } from "./const";
 
 export class LKDLTreeWalker extends LKDLListener {
+  // 保存解析结果
+  private result: any = [];
+
+  // 获取结果
+  getResult = () => {
+    return this.result;
+  };
+
   // 退出 yuanList（元列表） 时，将 yuanList 存入 ctx 中
   exitYuanList = (ctx: YuanListContext) => {
     const yuanList: string[] = [];
@@ -133,7 +141,14 @@ export class LKDLTreeWalker extends LKDLListener {
 
     (ctx as any)["LKDLAddYuanRel"] = res;
 
-    runCudTuple(res);
+    const data = runCudTuple(res);
+
+    const result = {
+      op: "addTuple",
+      data,
+    };
+
+    this.result.push(result);
   };
 
   // 删除多元组
@@ -152,21 +167,42 @@ export class LKDLTreeWalker extends LKDLListener {
 
     (ctx as any)["myDelYuanRel"] = res;
 
-    runCudTuple(res);
+    const data = runCudTuple(res);
+
+    const result = {
+      op: "delTuple",
+      data,
+    };
+
+    this.result.push(result);
   };
 
   // 退出 addYuan （添加元）
   exitAddYuan = (ctx: AddYuanContext) => {
     const yuanList = (ctx.yuanList() as any)["LKDLYuanList"];
 
-    runCudYuan(yuanList, OP.ADD);
+    const data = runCudYuan(yuanList, OP.ADD);
+
+    const result = {
+      op: "addYuan",
+      data,
+    };
+
+    this.result.push(result);
   };
 
   // 退出 delYuan （删除元）
   exitDelYuan = (ctx: DelYuanContext) => {
     const yuanList = (ctx.yuanList() as any)["LKDLYuanList"];
 
-    runCudYuan(yuanList, OP.DEL);
+    const data = runCudYuan(yuanList, OP.DEL);
+
+    const result = {
+      op: "delYuan",
+      data,
+    };
+
+    this.result.push(result);
   };
 
   exitSearchStat = (ctx: SearchStatContext) => {
@@ -182,7 +218,16 @@ export class LKDLTreeWalker extends LKDLListener {
       OP.GET
     );
 
-    (ctx as any)["LKDLSearchStat"] = runSearch(res);
+    const data = runSearch(res);
+
+    (ctx as any)["LKDLSearchStat"] = data;
+
+    const result = {
+      op: "search",
+      data,
+    };
+
+    this.result.push(result);
   };
 
   // 添加规则
@@ -196,12 +241,19 @@ export class LKDLTreeWalker extends LKDLListener {
       })
       .join("&&");
 
-    const result = {
+    const data = {
       op: OP.ADD,
       ruleNLText,
       ruleHead,
       ruleBody,
     };
+
+    const result = {
+      op: "addRule",
+      data,
+    };
+
+    this.result.push(result);
   };
 
   // 删除规则
@@ -215,12 +267,19 @@ export class LKDLTreeWalker extends LKDLListener {
       })
       .join("&&");
 
-    const result = {
+    const data = {
       op: OP.DEL,
       ruleNLText,
       ruleHead,
       ruleBody,
     };
+
+    const result = {
+      op: "delRule",
+      data,
+    };
+
+    this.result.push(result);
   };
 
   // 添加抽象规则
@@ -236,12 +295,19 @@ export class LKDLTreeWalker extends LKDLListener {
       })
       .join(",");
 
-    const result = {
+    const data = {
       op: OP.ADD,
       ruleNLText,
       ruleHead,
       ruleBody,
     };
+
+    const result = {
+      op: "addAbsRule",
+      data,
+    };
+
+    this.result.push(result);
   };
 
   // 删除抽象规则
@@ -257,17 +323,24 @@ export class LKDLTreeWalker extends LKDLListener {
       })
       .join(",");
 
-    const result = {
+    const data = {
       op: OP.DEL,
       ruleNLText,
       ruleHead,
       ruleBody,
     };
+
+    const result = {
+      op: "delAbsRule",
+      data,
+    };
+
+    this.result.push(result);
   };
 
   // 推理
   exitInfer = (ctx: InferContext) => {
-    const result: any = {};
+    const data: any = {};
     const tuples: any = [];
 
     ctx.searchStat_list().forEach((searchStat) => {
@@ -275,7 +348,7 @@ export class LKDLTreeWalker extends LKDLListener {
       tuples.push(...s);
     });
 
-    result.tuples = tuples;
+    data.tuples = tuples;
 
     // 匹配 conditionText，以 --- 为分隔符的后半部分
     const conditionText = ctx
@@ -286,9 +359,14 @@ export class LKDLTreeWalker extends LKDLListener {
 
     const conditionArray = conditionText.split(";").filter((item) => item);
 
-    result.conditions = conditionArray;
+    data.conditions = conditionArray;
 
-    console.dir(result, { depth: Infinity });
+    const result = {
+      op: "infer",
+      data,
+    };
+
+    this.result.push(result);
   };
 
   // 语义问答
@@ -299,14 +377,21 @@ export class LKDLTreeWalker extends LKDLListener {
     const reg = /\(.*\)/;
     const isWithRuleHead = reg.test(text);
 
-    const result: any = {};
+    const data: any = {
+      op: "rule-search",
+    };
 
     if (isWithRuleHead) {
-      result.ruleHead = text;
+      data.ruleHead = text;
     } else {
-      result.ruleNLText = text;
+      data.ruleNLText = text;
     }
 
-    console.log(result);
+    const result = {
+      op: "qa",
+      data,
+    };
+
+    this.result.push(result);
   };
 }

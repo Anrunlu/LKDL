@@ -12,7 +12,9 @@ export function runCudYuan(yuanList: [], op: OP) {
     result.push(res);
   });
 
-  console.dir(result, { depth: Infinity });
+  // console.dir(result, { depth: Infinity });
+
+  return result;
 }
 
 // 添加删除多元组
@@ -72,7 +74,7 @@ export function runCudTuple(excuteFormatData: any) {
     }
   });
 
-  console.dir(result, { depth: Infinity });
+  return result;
 }
 
 // 查询
