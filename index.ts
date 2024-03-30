@@ -47,55 +47,55 @@ const input = `infer {
 // const input = "?`被称为“乐圣”的音乐家是谁？`;";
 // const input = "张三->李四;";
 
-// function test() {
-//   const chars = new CharStream(input);
-//   const lexer = new LKDLLexer(chars);
-//   const tokens = new CommonTokenStream(lexer);
-//   const parser = new LKDLParser(tokens);
-//   const tree = parser.prog();
+function test() {
+  const chars = new CharStream(input);
+  const lexer = new LKDLLexer(chars);
+  const tokens = new CommonTokenStream(lexer);
+  const parser = new LKDLParser(tokens);
+  const tree = parser.prog();
 
-//   const walker = new LKDLTreeWalker();
-//   ParseTreeWalker.DEFAULT.walk(walker, tree);
+  const walker = new LKDLTreeWalker();
+  ParseTreeWalker.DEFAULT.walk(walker, tree);
 
-//   const resultList = walker.getResult();
+  const resultList = walker.getResult();
 
-//   console.dir(resultList, { depth: Infinity });
-// }
-
-// test();
-
-function interactiveTest() {
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-    prompt: "lkdl> ",
-  });
-
-  function waitForInput() {
-    rl.question("lkdl>", (input) => {
-      const chars = new CharStream(input);
-      const lexer = new LKDLLexer(chars);
-      const tokens = new CommonTokenStream(lexer);
-      const parser = new LKDLParser(tokens);
-      const tree = parser.prog();
-
-      const walker = new LKDLTreeWalker();
-
-      ParseTreeWalker.DEFAULT.walk(walker, tree);
-
-      const result = walker.getResult();
-
-      console.dir(result, { depth: Infinity });
-
-      if (input.toLowerCase() === "exit") {
-        rl.close();
-      } else {
-        waitForInput();
-      }
-    });
-  }
-
-  waitForInput();
+  console.dir(resultList, { depth: Infinity });
 }
 
-interactiveTest();
+test();
+
+// function interactiveTest() {
+//   const rl = readline.createInterface({
+//     input: process.stdin,
+//     output: process.stdout,
+//     prompt: "lkdl> ",
+//   });
+
+//   function waitForInput() {
+//     rl.question("lkdl>", (input) => {
+//       const chars = new CharStream(input);
+//       const lexer = new LKDLLexer(chars);
+//       const tokens = new CommonTokenStream(lexer);
+//       const parser = new LKDLParser(tokens);
+//       const tree = parser.prog();
+
+//       const walker = new LKDLTreeWalker();
+
+//       ParseTreeWalker.DEFAULT.walk(walker, tree);
+
+//       const result = walker.getResult();
+
+//       console.dir(result, { depth: Infinity });
+
+//       if (input.toLowerCase() === "exit") {
+//         rl.close();
+//       } else {
+//         waitForInput();
+//       }
+//     });
+//   }
+
+//   waitForInput();
+// }
+
+// interactiveTest();

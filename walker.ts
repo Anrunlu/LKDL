@@ -377,10 +377,26 @@ export class LKDLTreeWalker extends LKDLListener {
 
     data.conditions = conditionArray;
 
+    // 统计所有 conditions 中的变量个数，使用 Set 去重
+    const varSet = new Set();
+
+    conditionArray.forEach((condition) => {
+      // 匹配所有$开头的字母和数字
+      const vars = condition.match(/\$[a-zA-Z0-9]+/g);
+
+      if (vars) {
+        vars.forEach((v) => {
+          varSet.add(v);
+        });
+      }
+    });
+
     const result = {
       op: "infer",
       data,
     };
+
+    data.round = varSet.size;
 
     this.resultList.push(result);
   };
