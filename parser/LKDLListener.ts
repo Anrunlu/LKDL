@@ -17,6 +17,7 @@ import { AddAbsRuleContext } from "./LKDLParser";
 import { DelAbsRuleContext } from "./LKDLParser";
 import { InferContext } from "./LKDLParser";
 import { QaContext } from "./LKDLParser";
+import { PathSearchStatContext } from "./LKDLParser";
 import { SearchExprContext } from "./LKDLParser";
 import { RelExprListContext } from "./LKDLParser";
 import { RelExprSequnceContext } from "./LKDLParser";
@@ -193,6 +194,16 @@ export default class LKDLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitQa?: (ctx: QaContext) => void;
+	/**
+	 * Enter a parse tree produced by `LKDLParser.pathSearchStat`.
+	 * @param ctx the parse tree
+	 */
+	enterPathSearchStat?: (ctx: PathSearchStatContext) => void;
+	/**
+	 * Exit a parse tree produced by `LKDLParser.pathSearchStat`.
+	 * @param ctx the parse tree
+	 */
+	exitPathSearchStat?: (ctx: PathSearchStatContext) => void;
 	/**
 	 * Enter a parse tree produced by `LKDLParser.searchExpr`.
 	 * @param ctx the parse tree

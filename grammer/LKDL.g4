@@ -9,6 +9,7 @@ stat
 	| cudRuleStat NEWLINE
 	| inferStat NEWLINE
 	| qaStat NEWLINE
+	| pathSearchStat NEWLINE
 	;
 
 searchStat
@@ -44,6 +45,10 @@ inferStat
 
 qaStat
     : QUESTION_MARK ID # qa
+    ;
+
+pathSearchStat
+    : ID '->' ID
     ;
 
 searchExpr: yuanList (ATTR relExprList)?

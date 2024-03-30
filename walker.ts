@@ -8,6 +8,7 @@ import LKDLParser, {
   DelTupleContext,
   DelYuanContext,
   InferContext,
+  PathSearchStatContext,
   QaContext,
   RelAttrContext,
   RelAttrListContext,
@@ -26,11 +27,11 @@ import { OP } from "./const";
 
 export class LKDLTreeWalker extends LKDLListener {
   // 保存解析结果
-  private result: any = [];
+  private resultList: any = [];
 
   // 获取结果
   getResult = () => {
-    return this.result;
+    return this.resultList;
   };
 
   // 退出 yuanList（元列表） 时，将 yuanList 存入 ctx 中
@@ -148,7 +149,7 @@ export class LKDLTreeWalker extends LKDLListener {
       data,
     };
 
-    this.result.push(result);
+    this.resultList.push(result);
   };
 
   // 删除多元组
@@ -174,7 +175,7 @@ export class LKDLTreeWalker extends LKDLListener {
       data,
     };
 
-    this.result.push(result);
+    this.resultList.push(result);
   };
 
   // 退出 addYuan （添加元）
@@ -188,7 +189,7 @@ export class LKDLTreeWalker extends LKDLListener {
       data,
     };
 
-    this.result.push(result);
+    this.resultList.push(result);
   };
 
   // 退出 delYuan （删除元）
@@ -202,7 +203,7 @@ export class LKDLTreeWalker extends LKDLListener {
       data,
     };
 
-    this.result.push(result);
+    this.resultList.push(result);
   };
 
   exitSearchStat = (ctx: SearchStatContext) => {
@@ -222,12 +223,27 @@ export class LKDLTreeWalker extends LKDLListener {
 
     (ctx as any)["LKDLSearchStat"] = data;
 
+    const parentCtxText = ctx.parentCtx?.getText();
+
+    // 如果 parentCtxText 包含 "推理" 或 "infer" 或 "i" 或 "rule" 或 "r" 或 "规则"，则不添加到 result 中
+
+    if (
+      parentCtxText?.includes("推理") ||
+      parentCtxText?.includes("infer") ||
+      parentCtxText?.includes("i") ||
+      parentCtxText?.includes("rule") ||
+      parentCtxText?.includes("r") ||
+      parentCtxText?.includes("规则")
+    ) {
+      return;
+    }
+
     const result = {
       op: "search",
       data,
     };
 
-    this.result.push(result);
+    this.resultList.push(result);
   };
 
   // 添加规则
@@ -253,7 +269,7 @@ export class LKDLTreeWalker extends LKDLListener {
       data,
     };
 
-    this.result.push(result);
+    this.resultList.push(result);
   };
 
   // 删除规则
@@ -279,7 +295,7 @@ export class LKDLTreeWalker extends LKDLListener {
       data,
     };
 
-    this.result.push(result);
+    this.resultList.push(result);
   };
 
   // 添加抽象规则
@@ -307,7 +323,7 @@ export class LKDLTreeWalker extends LKDLListener {
       data,
     };
 
-    this.result.push(result);
+    this.resultList.push(result);
   };
 
   // 删除抽象规则
@@ -335,7 +351,7 @@ export class LKDLTreeWalker extends LKDLListener {
       data,
     };
 
-    this.result.push(result);
+    this.resultList.push(result);
   };
 
   // 推理
@@ -366,7 +382,7 @@ export class LKDLTreeWalker extends LKDLListener {
       data,
     };
 
-    this.result.push(result);
+    this.resultList.push(result);
   };
 
   // 语义问答
@@ -392,6 +408,25 @@ export class LKDLTreeWalker extends LKDLListener {
       data,
     };
 
-    this.result.push(result);
+    this.resultList.push(result);
+  };
+
+  // 路径查询
+  exitPathSearchStat = (ctx: PathSearchStatContext) => {
+    const head = ctx.ID(0).getText();
+    const tail = ctx.ID(1).getText();
+
+    const data = {
+      head,
+      rel: "->",
+      tail,
+    };
+
+    const result = {
+      op: "pathSearch",
+      data,
+    };
+
+    this.resultList.push(result);
   };
 }
