@@ -18,12 +18,12 @@ import LKDLParser, {
   SearchExprContext,
   SearchStatContext,
   YuanListContext,
-} from "./parser/LKDLParser";
-import LKDLListener from "./parser/LKDLListener";
-import { parseSearchExprToSearchSequnce } from "./utils/my-parser";
-import { parseSequnceToExcuteFormat } from "./utils/op-rule";
-import { runCudYuan, runCudTuple, runSearch } from "./excutor";
-import { OP } from "./const";
+} from "./LKDLParser";
+import LKDLListener from "./LKDLListener";
+import { parseSearchExprToSearchSequnce } from "../utils/my-parser";
+import { parseSequnceToExcuteFormat } from "../utils/op-rule";
+import { runCudYuan, runCudTuple, runSearch } from "../excutor";
+import { OP } from "../const";
 
 export class LKDLTreeWalker extends LKDLListener {
   // 保存解析结果
@@ -185,7 +185,7 @@ export class LKDLTreeWalker extends LKDLListener {
     const data = runCudYuan(yuanList, OP.ADD);
 
     const result = {
-      op: "addYuan",
+      op: OP.ADD_YUAN,
       data,
     };
 
@@ -199,7 +199,7 @@ export class LKDLTreeWalker extends LKDLListener {
     const data = runCudYuan(yuanList, OP.DEL);
 
     const result = {
-      op: "delYuan",
+      op: OP.DEL_YUAN,
       data,
     };
 
@@ -239,7 +239,7 @@ export class LKDLTreeWalker extends LKDLListener {
     }
 
     const result = {
-      op: "search",
+      op: OP.SEARCH,
       data,
     };
 
@@ -265,7 +265,7 @@ export class LKDLTreeWalker extends LKDLListener {
     };
 
     const result = {
-      op: "addRule",
+      op: OP.ADD_RULE,
       data,
     };
 
@@ -291,7 +291,7 @@ export class LKDLTreeWalker extends LKDLListener {
     };
 
     const result = {
-      op: "delRule",
+      op: OP.DEL_RULE,
       data,
     };
 
@@ -319,7 +319,7 @@ export class LKDLTreeWalker extends LKDLListener {
     };
 
     const result = {
-      op: "addAbsRule",
+      op: OP.ADD_ABS_RULE,
       data,
     };
 
@@ -347,7 +347,7 @@ export class LKDLTreeWalker extends LKDLListener {
     };
 
     const result = {
-      op: "delAbsRule",
+      op: OP.DEL_ABS_RULE,
       data,
     };
 
@@ -392,7 +392,7 @@ export class LKDLTreeWalker extends LKDLListener {
     });
 
     const result = {
-      op: "infer",
+      op: OP.INFER,
       data,
     };
 
@@ -420,7 +420,7 @@ export class LKDLTreeWalker extends LKDLListener {
     }
 
     const result = {
-      op: "qa",
+      op: OP.QA,
       data,
     };
 
@@ -439,7 +439,7 @@ export class LKDLTreeWalker extends LKDLListener {
     };
 
     const result = {
-      op: "pathSearch",
+      op: OP.PATH_SEARCH,
       data,
     };
 

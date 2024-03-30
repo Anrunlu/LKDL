@@ -1,8 +1,8 @@
 import * as readline from "readline";
 import { CharStream, CommonTokenStream, ParseTreeWalker } from "antlr4";
-import { LKDLTreeWalker } from "./walker";
 import LKDLLexer from "./parser/LKDLLexer";
 import LKDLParser from "./parser/LKDLParser";
+import { LKDLTreeWalker } from "./parser/walker";
 
 // const input = `张三.(朋友.同学, 老乡.同学.老乡[距离==1公里, 时间==10年].老乡) += 李四.朋友;`;
 // const input = `张三.老乡.朋友.同学 += 李四.朋友;`;
@@ -47,22 +47,22 @@ const input = `infer {
 // const input = "?`被称为“乐圣”的音乐家是谁？`;";
 // const input = "张三->李四;";
 
-function test() {
-  const chars = new CharStream(input);
-  const lexer = new LKDLLexer(chars);
-  const tokens = new CommonTokenStream(lexer);
-  const parser = new LKDLParser(tokens);
-  const tree = parser.prog();
+// function test() {
+//   const chars = new CharStream(input);
+//   const lexer = new LKDLLexer(chars);
+//   const tokens = new CommonTokenStream(lexer);
+//   const parser = new LKDLParser(tokens);
+//   const tree = parser.prog();
 
-  const walker = new LKDLTreeWalker();
-  ParseTreeWalker.DEFAULT.walk(walker, tree);
+//   const walker = new LKDLTreeWalker();
+//   ParseTreeWalker.DEFAULT.walk(walker, tree);
 
-  const resultList = walker.getResult();
+//   const resultList = walker.getResult();
 
-  console.dir(resultList, { depth: Infinity });
-}
+//   console.dir(resultList, { depth: Infinity });
+// }
 
-test();
+// test();
 
 // function interactiveTest() {
 //   const rl = readline.createInterface({
@@ -99,3 +99,18 @@ test();
 // }
 
 // interactiveTest();
+
+export function parse(input: string) {
+  const chars = new CharStream(input);
+  const lexer = new LKDLLexer(chars);
+  const tokens = new CommonTokenStream(lexer);
+  const parser = new LKDLParser(tokens);
+  const tree = parser.prog();
+
+  const walker = new LKDLTreeWalker();
+  ParseTreeWalker.DEFAULT.walk(walker, tree);
+
+  const resultList = walker.getResult();
+
+  return resultList;
+}
