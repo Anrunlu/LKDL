@@ -12,8 +12,6 @@ export function runCudYuan(yuanList: [], op: OP) {
     result.push(res);
   });
 
-  // console.dir(result, { depth: Infinity });
-
   return result;
 }
 
@@ -67,9 +65,6 @@ export function runCudTuple(excuteFormatData: any) {
             result.push(res);
           });
         }
-
-        // TODO:数据库操作
-        // console.log(head, rel, tripleObj.op, tail);
       }
     }
   });
@@ -117,9 +112,6 @@ export function runSearch(excuteFormatData: any) {
   const result = resultTmp.filter(
     (res: any) => !(res.isTerminal && res.isYuan)
   );
-
-  // console.log(resultSequnce);
-  // console.dir(result, { depth: Infinity });
 
   return result;
 }
