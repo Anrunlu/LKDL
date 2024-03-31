@@ -20,26 +20,26 @@ import { LKDLTreeWalker } from "./parser/Walker";
 // const input = `战狼.演员 == $A && $A.国籍 == 中国;`;
 // const input = `张三.朋友==$A && $A.国籍==中国;`;
 // const input = `(张三,李四).朋友==$A;`;
-const input = `infer {
-  落霞镇.编号 == $A1
-  古井镇.编号 == $A2
-  荷花镇.编号 == $A3
-  浣溪镇.编号 == $A4
-  紫薇镇.编号 == $A5
-  落霞镇.有[程度==0] == 木塔
-  $B1.有[程度==1] == 木塔
-  $B1.编号 == 1
-  $B2.有[程度==1] == 木塔
-  $B2.编号 == 4
-  ---
-  |$A1-$A2|>=2;
-  |$A1-$A3|>=2;
-  |$A4-$A5|>=2;
-  |$A5-$A2|>=2;
-  |$A5-$A3|>=2;
-  $A1!=1;
-  $A1!=4;
-  };`;
+// const input = `infer {
+//   落霞镇.编号 == $A1
+//   古井镇.编号 == $A2
+//   荷花镇.编号 == $A3
+//   浣溪镇.编号 == $A4
+//   紫薇镇.编号 == $A5
+//   落霞镇.有[程度==0] == 木塔
+//   $B1.有[程度==1] == 木塔
+//   $B1.编号 == 1
+//   $B2.有[程度==1] == 木塔
+//   $B2.编号 == 4
+//   ---
+//   |$A1-$A2|>=2;
+//   |$A1-$A3|>=2;
+//   |$A4-$A5|>=2;
+//   |$A5-$A2|>=2;
+//   |$A5-$A3|>=2;
+//   $A1!=1;
+//   $A1!=4;
+//   };`;
 // const input =
 //   "r +=`被称为“乐圣”的音乐家是谁？`|`被称为(乐圣)的(音乐家)是(C)`|:=C.职业==B&&C.称号==A;";
 // const input = `规则 -= 学生 | 学生 :=（姓名，性别，学号，年级，学院）；`;
@@ -47,64 +47,27 @@ const input = `infer {
 // const input = "?`被称为“乐圣”的音乐家是谁？`;";
 // const input = "张三->李四;";
 
-// function test() {
-//   const chars = new CharStream(input);
-//   const lexer = new LKDLLexer(chars);
-//   const tokens = new CommonTokenStream(lexer);
-//   const parser = new LKDLParser(tokens);
-//   const tree = parser.prog();
-
-//   const walker = new LKDLTreeWalker();
-//   ParseTreeWalker.DEFAULT.walk(walker, tree);
-
-//   const resultList = walker.getResult();
-
-//   console.dir(resultList, { depth: Infinity });
-// }
-
-// test();
-
-// function interactiveTest() {
-//   const rl = readline.createInterface({
-//     input: process.stdin,
-//     output: process.stdout,
-//     prompt: "lkdl> ",
-//   });
-
-//   function waitForInput() {
-//     rl.question("lkdl>", (input) => {
-//       const chars = new CharStream(input);
-//       const lexer = new LKDLLexer(chars);
-//       const tokens = new CommonTokenStream(lexer);
-//       const parser = new LKDLParser(tokens);
-//       const tree = parser.prog();
-
-//       const walker = new LKDLTreeWalker();
-
-//       ParseTreeWalker.DEFAULT.walk(walker, tree);
-
-//       const result = walker.getResult();
-
-//       console.dir(result, { depth: Infinity });
-
-//       if (input.toLowerCase() === "exit") {
-//         rl.close();
-//       } else {
-//         waitForInput();
-//       }
-//     });
-//   }
-
-//   waitForInput();
-// }
-
-// interactiveTest();
-
 export function parse(input: string) {
   const chars = new CharStream(input);
   const lexer = new LKDLLexer(chars);
+
+  lexer.removeErrorListeners();
+  lexer.addErrorListener({
+    syntaxError(recognizer, offendingSymbol, line, column, msg, e) {
+      throw new Error(`line ${line}:${column} ${msg}`);
+    },
+  });
+
   const tokens = new CommonTokenStream(lexer);
+
   const parser = new LKDLParser(tokens);
+  parser.removeErrorListeners();
+  parser.addErrorListener({
+    syntaxError(recognizer, offendingSymbol, line, column, msg, e) {
+      throw new Error(`line ${line}:${column} ${msg}`);
+    },
+  });
+
   const tree = parser.prog();
 
   const walker = new LKDLTreeWalker();
@@ -114,3 +77,29 @@ export function parse(input: string) {
 
   return resultList;
 }
+
+function interactiveTest() {
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+    prompt: "lkdl> ",
+  });
+
+  function waitForInput() {
+    rl.question("lkdl>", (input) => {
+      const result = parse(input);
+
+      console.dir(result, { depth: Infinity });
+
+      if (input.toLowerCase() === "exit") {
+        rl.close();
+      } else {
+        waitForInput();
+      }
+    });
+  }
+
+  waitForInput();
+}
+
+interactiveTest();
