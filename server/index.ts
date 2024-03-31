@@ -1,6 +1,7 @@
 import express from "express";
 import { parse } from "../index";
 import { http } from "./http";
+import { SERVER_PORT } from "./config";
 const app = express();
 
 app.use(express.json());
@@ -22,6 +23,6 @@ app.post("/parse", (req, res) => {
   });
 });
 
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
+app.listen(SERVER_PORT, () => {
+  console.log(`Server is running on port ${SERVER_PORT}`);
 });
