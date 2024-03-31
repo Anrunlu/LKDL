@@ -2,9 +2,12 @@ import express from "express";
 import { parse } from "../index";
 import { http } from "./http";
 import { SERVER_PORT } from "./config";
+import cors from "cors";
 const app = express();
 
 app.use(express.json());
+
+app.use(cors());
 
 app.post("/parse", (req, res) => {
   const data = req.body.data;
