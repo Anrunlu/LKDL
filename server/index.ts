@@ -17,9 +17,7 @@ app.post("/parse", (req, res) => {
   if (errors.length > 0) {
     res.send({
       code: 4000,
-      data: {},
-      error: errors.length,
-      message: errors,
+      errors,
     });
 
     return;
