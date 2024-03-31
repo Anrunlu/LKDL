@@ -1,4 +1,4 @@
-import { OP, VAR_PREFIX } from "./const";
+import { OP, VAR_PREFIX } from "../const";
 
 // 添加删除元
 export function runCudYuan(yuanList: [], op: OP) {

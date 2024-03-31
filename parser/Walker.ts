@@ -22,7 +22,7 @@ import LKDLParser, {
 import LKDLListener from "./LKDLListener";
 import { parseSearchExprToSearchSequnce } from "../utils/my-parser";
 import { parseSequnceToExcuteFormat } from "../utils/op-rule";
-import { runCudYuan, runCudTuple, runSearch } from "../excutor";
+import { runCudYuan, runCudTuple, runSearch } from "./Runner";
 import { OP } from "../const";
 
 export class LKDLTreeWalker extends LKDLListener {
