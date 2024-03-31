@@ -21,6 +21,8 @@ app.post("/parse", (req, res) => {
       error: errors.length,
       message: errors,
     });
+
+    return;
   }
 
   http.post("/", { data: resultList }).then((response) => {
