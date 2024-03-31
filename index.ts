@@ -3,6 +3,7 @@ import { CharStream, CommonTokenStream, ParseTreeWalker } from "antlr4";
 import LKDLLexer from "./parser/LKDLLexer";
 import LKDLParser from "./parser/LKDLParser";
 import { LKDLTreeWalker } from "./parser/Walker";
+import LKDLErrorListener, { ILKDLError } from "./LKDLErrorListener";
 
 // const input = `张三.(朋友.同学, 老乡.同学.老乡[距离==1公里, 时间==10年].老乡) += 李四.朋友;`;
 // const input = `张三.老乡.朋友.同学 += 李四.朋友;`;
@@ -47,26 +48,20 @@ import { LKDLTreeWalker } from "./parser/Walker";
 // const input = "?`被称为“乐圣”的音乐家是谁？`;";
 // const input = "张三->李四;";
 
-export function parse(input: string) {
+export function parse(input: string): { resultList: []; errors: ILKDLError[] } {
   const chars = new CharStream(input);
   const lexer = new LKDLLexer(chars);
 
   lexer.removeErrorListeners();
-  lexer.addErrorListener({
-    syntaxError(recognizer, offendingSymbol, line, column, msg, e) {
-      throw new Error(`line ${line}:${column} ${msg}`);
-    },
-  });
+
+  const errorListener = new LKDLErrorListener();
+  lexer.addErrorListener(errorListener);
 
   const tokens = new CommonTokenStream(lexer);
 
   const parser = new LKDLParser(tokens);
   parser.removeErrorListeners();
-  parser.addErrorListener({
-    syntaxError(recognizer, offendingSymbol, line, column, msg, e) {
-      throw new Error(`line ${line}:${column} ${msg}`);
-    },
-  });
+  parser.addErrorListener(errorListener);
 
   const tree = parser.prog();
 
@@ -75,7 +70,9 @@ export function parse(input: string) {
 
   const resultList = walker.getResult();
 
-  return resultList;
+  const errors = errorListener.getErrors();
+
+  return { resultList, errors };
 }
 
 function interactiveTest() {

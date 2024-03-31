@@ -11,16 +11,26 @@ app.use(cors());
 
 app.post("/parse", (req, res) => {
   const data = req.body.data;
-  const resList = parse(data);
 
-  http.post("/", { data: resList }).then((response) => {
+  const { resultList, errors } = parse(data);
+
+  if (errors.length > 0) {
+    res.send({
+      code: 4000,
+      data: {},
+      error: errors.length,
+      message: errors,
+    });
+  }
+
+  http.post("/", { data: resultList }).then((response) => {
     const serverRes = response.data;
 
     res.send({
       code: 2000,
       data: {
         serverRes,
-        parserRes: resList,
+        parserRes: resultList,
       },
     });
   });
