@@ -2,7 +2,7 @@ import * as readline from "readline";
 import { CharStream, CommonTokenStream, ParseTreeWalker } from "antlr4";
 import LKDLLexer from "./parser/LKDLLexer";
 import LKDLParser from "./parser/LKDLParser";
-import { LKDLTreeWalker } from "./parser/walker";
+import { LKDLTreeWalker } from "./parser/Walker";
 
 // const input = `张三.(朋友.同学, 老乡.同学.老乡[距离==1公里, 时间==10年].老乡) += 李四.朋友;`;
 // const input = `张三.老乡.朋友.同学 += 李四.朋友;`;
