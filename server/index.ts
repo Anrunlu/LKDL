@@ -12,6 +12,20 @@ app.use(cors());
 app.post("/parse", (req, res) => {
   const data = req.body.data;
 
+  // 如果data不是字符串，返回错误
+  if (typeof data !== "string") {
+    res.send({
+      code: 4000,
+      errors: [
+        {
+          message: "data should be a string",
+        },
+      ],
+    });
+
+    return;
+  }
+
   const { resultList, errors } = parse(data);
 
   if (errors.length > 0) {
