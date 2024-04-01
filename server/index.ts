@@ -63,6 +63,38 @@ app.get("/count", (req, res) => {
   });
 });
 
+app.get("/tupleList", (req, res) => {
+  const page = req.query.page;
+  const limit = req.query.limit;
+
+  http.get(`/data_page?page=${page}&limit=${limit}`).then((response) => {
+    const serverRes = response.data;
+
+    res.send({
+      code: 2000,
+      data: {
+        serverRes,
+      },
+    });
+  });
+});
+
+app.get("/ruleList", (req, res) => {
+  const page = req.query.page;
+  const limit = req.query.limit;
+
+  http.get(`/rule_page?page=${page}&limit=${limit}`).then((response) => {
+    const serverRes = response.data;
+
+    res.send({
+      code: 2000,
+      data: {
+        serverRes,
+      },
+    });
+  });
+});
+
 app.listen(SERVER_PORT, () => {
   console.log(`Server is running on port ${SERVER_PORT}`);
 });
