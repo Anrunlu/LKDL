@@ -403,7 +403,7 @@ export class LKDLTreeWalker extends LKDLListener {
 
   // 语义问答
   exitQa = (ctx: QaContext) => {
-    const text = ctx.ID().getText().replace(/`/g, "");
+    const text = ctx.ID()?.getText().replace(/`/g, "");
 
     // 使用正则检测text中是否有()，如果有，则是 with rule_head 查询，否则是自然语言查询
     const reg = /\(.*\)/;

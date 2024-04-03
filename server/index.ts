@@ -28,6 +28,8 @@ app.post("/parse", (req, res) => {
 
   const { resultList, errors } = parse(data);
 
+  console.dir(resultList, { depth: Infinity });
+
   if (errors.length > 0) {
     res.send({
       code: 4000,
