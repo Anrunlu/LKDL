@@ -42,6 +42,20 @@ app.post("/parse", (req, res) => {
   http.post("/", { data: resultList }).then((response) => {
     const serverRes = response.data;
 
+    // 内容不存在
+    if (serverRes.code == 4005) {
+      res.send({
+        code: 4005,
+        errors: [
+          {
+            message: serverRes.message,
+          },
+        ],
+      });
+
+      return;
+    }
+
     res.send({
       code: 2000,
       data: {
