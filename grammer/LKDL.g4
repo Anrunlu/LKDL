@@ -17,7 +17,7 @@ searchStat
 	| searchExpr ATTR HAS
 	| searchExpr ATTR ISA
 	| lhs = searchExpr EQ rhs = searchExpr
-	| searchExpr
+//	| searchExpr
 	;
 
 cudStat
@@ -140,7 +140,7 @@ ALL: [Aa][Ll][Ll]
 
 // 定义实体
 fragment ENTITY
-	: '`' ~[`|]* '`'		// 用反引号包裹的字符串，不包括 ` |
+	: '`' ~[`/|]* '`'		// 用反引号包裹的字符串，不包括 ` |
 	| '"' ~[ \t\r\n"]* '"'	// 或者引号包裹的字符串
 	| ~(
 		' '
