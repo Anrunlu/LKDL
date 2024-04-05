@@ -444,11 +444,42 @@ all 查询作用在元本体上，表示查询并返回该元本体所关联的*
 }
 ```
 
+## isa 查询
+
+// TODO:作用待描述
+
+### 语法
+
+`(yuan, [...yuan]).isa == VAR;`
+
+### 语法举例
+
+`张三.isa == $A;`
+
+`(张三, 李四).isa == $A;`
+
+### 语法解析
+
+```js
+// 张三.isa == $A;
+{
+  op: "search",
+  data: [
+    {
+      head: "张三",
+      rel: "isa",
+      tail: "$A",
+      relAttrList: [],
+    }
+  ],
+}
+```
+
 ## 推理查询
 
 ### 语法
 
-`(推理|infer|i) { searchExpr* --- conditionExpr*};`
+`(推理|infer) { searchExpr* --- conditionExpr*};`
 
 ### 语法举例
 

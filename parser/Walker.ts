@@ -230,7 +230,6 @@ export class LKDLTreeWalker extends LKDLListener {
     if (
       parentCtxText?.includes("推理") ||
       parentCtxText?.includes("infer") ||
-      parentCtxText?.includes("i") ||
       parentCtxText?.includes("rule") ||
       parentCtxText?.includes("r") ||
       parentCtxText?.includes("规则")

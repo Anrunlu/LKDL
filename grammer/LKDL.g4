@@ -13,10 +13,7 @@ stat
 	;
 
 searchStat
-	: searchExpr ATTR ALL
-	| searchExpr ATTR HAS
-	| searchExpr ATTR ISA
-	| lhs = searchExpr EQ rhs = searchExpr
+	: lhs = searchExpr EQ rhs = searchExpr
 	//	| searchExpr
 	;
 
@@ -65,6 +62,7 @@ relExpr
 	: lhs = ALL rhs = relAttrList?
 	| lhs = ID rhs = relAttrList?
 	| lhs = HAS
+	| lhs = ISA
 	;
 
 relAttrList
@@ -82,7 +80,7 @@ YUAN: '元' | 'y'
 	;
 RULE: '规则' | 'rule' | 'r'
 	;
-INFER: '推理' | 'infer' | 'i'
+INFER: '推理' | 'infer'
 	;
 // 定义换行符
 NEWLINE: ';' | '；'
