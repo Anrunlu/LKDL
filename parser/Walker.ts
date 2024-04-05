@@ -258,7 +258,7 @@ export class LKDLTreeWalker extends LKDLListener {
       .join("&&");
 
     const data = {
-      op: OP.ADD,
+      op: OP.ADD_RULE,
       ruleNLText,
       ruleHead,
       ruleBody,
@@ -284,7 +284,7 @@ export class LKDLTreeWalker extends LKDLListener {
       .join("&&");
 
     const data = {
-      op: OP.DEL,
+      op: OP.DEL_RULE,
       ruleNLText,
       ruleHead,
       ruleBody,
@@ -312,7 +312,7 @@ export class LKDLTreeWalker extends LKDLListener {
       .join(",");
 
     const data = {
-      op: OP.ADD,
+      op: OP.ADD_ABS_RULE,
       ruleNLText,
       ruleHead,
       ruleBody,
@@ -340,7 +340,7 @@ export class LKDLTreeWalker extends LKDLListener {
       .join(",");
 
     const data = {
-      op: OP.DEL,
+      op: OP.DEL_ABS_RULE,
       ruleNLText,
       ruleHead,
       ruleBody,

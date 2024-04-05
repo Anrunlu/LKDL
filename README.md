@@ -199,7 +199,7 @@
 {
   op: "addRule",
   data: {
-    op: "add",
+    op: "addRule",
     ruleNLText: "被称为“乐圣”的音乐家是谁？",
     ruleHead: "被称为(乐圣)的(音乐家)是(C)",
     ruleBody: "C.职业==B&&C.称号==A",
@@ -224,7 +224,7 @@
 {
   op: "delRule",
   data: {
-    op: "del",
+    op: "delRule",
     ruleNLText: "被称为“乐圣”的音乐家是谁？",
     ruleHead: "被称为(乐圣)的(音乐家)是(C)",
     ruleBody: "C.职业==B&&C.称号==A",
@@ -249,7 +249,7 @@
 {
   op: "addAbsRule",
   data: {
-    op: "add",
+    op: "addAbsRule",
     ruleNLText: "学生",
     ruleHead: "学生",
     ruleBody: "姓名,性别,学号,年级,学院",
@@ -274,7 +274,7 @@
 {
   op: "delAbsRule",
   data: {
-    op: "del",
+    op: "delAbsRule",
     ruleNLText: "学生",
     ruleHead: "学生",
     ruleBody: "姓名,性别,学号,年级,学院",
