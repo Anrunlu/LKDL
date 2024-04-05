@@ -17,7 +17,7 @@ searchStat
 	| searchExpr ATTR HAS
 	| searchExpr ATTR ISA
 	| lhs = searchExpr EQ rhs = searchExpr
-//	| searchExpr
+	//	| searchExpr
 	;
 
 cudStat
@@ -43,13 +43,11 @@ inferStat
 	: INFER OPEN_BRACE searchStat* '---' .*? CLOSE_BRACE # infer
 	;
 
-qaStat
-    : QUESTION_MARK ID # qa
-    ;
+qaStat: QUESTION_MARK ID # qa
+	;
 
-pathSearchStat
-    : ID '->' ID
-    ;
+pathSearchStat: ID '->' ID
+	;
 
 searchExpr: yuanList (ATTR relExprList)?
 	;
@@ -128,7 +126,7 @@ DELEQ: '-='
 RULEDEF: ':='
 	;
 QUESTION_MARK: '?' | '？'
-    ;
+	;
 ISA: [Ii][Ss][Aa]
 	; // 不区分大小写的 'isa'
 HAS: [Hh][Aa][Ss]
