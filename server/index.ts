@@ -10,6 +10,7 @@ app.use(express.json());
 app.use(cors());
 
 app.post("/parse", (req, res) => {
+  const step = req.query.step;
   const data = req.body.data;
 
   // 如果data不是字符串，返回错误
@@ -28,8 +29,6 @@ app.post("/parse", (req, res) => {
 
   const { resultList, errors } = parse(data);
 
-  console.dir(resultList, { depth: Infinity });
-
   if (errors.length > 0) {
     res.send({
       code: 4000,
@@ -39,7 +38,18 @@ app.post("/parse", (req, res) => {
     return;
   }
 
-  http.post("/", { data: resultList }).then((response) => {
+  const payload: any = {
+    data: resultList,
+  };
+
+  if (step) {
+    payload["id"] = req.query.id;
+    payload["next"] = req.query.next;
+  }
+
+  console.dir(payload, { depth: Infinity });
+
+  http.post("/", payload).then((response) => {
     const serverRes = response.data;
 
     // 内容不存在
