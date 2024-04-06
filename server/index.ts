@@ -38,14 +38,16 @@ app.post("/parse", (req, res) => {
     return;
   }
 
+  if (step) {
+    resultList.forEach((item: any) => {
+      item.id = req.query.id;
+      item.next = req.query.next;
+    });
+  }
+
   const payload: any = {
     data: resultList,
   };
-
-  if (step) {
-    payload["id"] = req.query.id;
-    payload["next"] = req.query.next;
-  }
 
   console.dir(payload, { depth: Infinity });
 
