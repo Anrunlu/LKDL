@@ -39,7 +39,7 @@ export class LKDLTreeWalker extends LKDLListener {
     const yuanList: string[] = [];
 
     ctx.getTokens(LKDLParser.ID).forEach((id) => {
-      yuanList.push(id.getText());
+      yuanList.push(id.getText().replace(/`/g, ""));
     });
 
     (ctx as any)["LKDLYuanList"] = yuanList;

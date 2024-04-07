@@ -99,4 +99,4 @@ function interactiveTest() {
   waitForInput();
 }
 
-// interactiveTest();
+interactiveTest();
