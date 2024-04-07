@@ -1,9 +1,11 @@
 import LKDLParser, {
   AddAbsRuleContext,
+  AddQARuleContext,
   AddRuleContext,
   AddTupleContext,
   AddYuanContext,
   DelAbsRuleContext,
+  DelQARuleContext,
   DelRuleContext,
   DelTupleContext,
   DelYuanContext,
@@ -245,8 +247,8 @@ export class LKDLTreeWalker extends LKDLListener {
     this.resultList.push(result);
   };
 
-  // 添加规则
-  exitAddRule = (ctx: AddRuleContext) => {
+  // 添加语义问答
+  exitAddQARule = (ctx: AddQARuleContext) => {
     const ruleNLText = ctx._nltext.text.replace(/`/g, "");
     const ruleHead = ctx._ruleHead.text.replace(/`/g, "");
     const ruleBody = ctx
@@ -257,9 +259,61 @@ export class LKDLTreeWalker extends LKDLListener {
       .join("&&");
 
     const data = {
-      op: OP.ADD_RULE,
+      op: OP.ADD_QA_RULE,
       ruleNLText,
       ruleHead,
+      ruleBody,
+    };
+
+    const result = {
+      op: OP.ADD_QA_RULE,
+      data,
+    };
+
+    this.resultList.push(result);
+  };
+
+  // 删除语义问答
+  exitDelQARule = (ctx: DelQARuleContext) => {
+    const ruleNLText = ctx._nltext.text.replace(/`/g, "");
+    const ruleHead = ctx._ruleHead.text.replace(/`/g, "");
+    const ruleBody = ctx
+      .searchStat_list()
+      .map((searchStat) => {
+        return searchStat.getText();
+      })
+      .join("&&");
+
+    const data = {
+      op: OP.DEL_QA_RULE,
+      ruleNLText,
+      ruleHead,
+      ruleBody,
+    };
+
+    const result = {
+      op: OP.DEL_QA_RULE,
+      data,
+    };
+
+    this.resultList.push(result);
+  };
+
+  // 添加关系规则
+  exitAddRule = (ctx: AddRuleContext) => {
+    const ruleHead1 = ctx._ruleHead1.getText();
+    const ruleHead2 = ctx._ruleHead2.text.replace(/`/g, "");
+    const ruleBody = ctx
+      .searchStat_list()
+      .map((searchStat) => {
+        return searchStat.getText();
+      })
+      .join("&&");
+
+    const data = {
+      op: OP.ADD_RULE,
+      ruleNLText: ruleHead1,
+      ruleHead: ruleHead2,
       ruleBody,
     };
 
@@ -271,10 +325,10 @@ export class LKDLTreeWalker extends LKDLListener {
     this.resultList.push(result);
   };
 
-  // 删除规则
+  // 删除关系规则
   exitDelRule = (ctx: DelRuleContext) => {
-    const ruleNLText = ctx._nltext.text.replace(/`/g, "");
-    const ruleHead = ctx._ruleHead.text.replace(/`/g, "");
+    const ruleHead1 = ctx._ruleHead1.getText();
+    const ruleHead2 = ctx._ruleHead2.text.replace(/`/g, "");
     const ruleBody = ctx
       .searchStat_list()
       .map((searchStat) => {
@@ -284,8 +338,8 @@ export class LKDLTreeWalker extends LKDLListener {
 
     const data = {
       op: OP.DEL_RULE,
-      ruleNLText,
-      ruleHead,
+      ruleNLText: ruleHead1,
+      ruleHead: ruleHead2,
       ruleBody,
     };
 

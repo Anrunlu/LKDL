@@ -9,6 +9,8 @@ export enum OP {
   DEL_TUPLE = "delTuple",
   ADD_RULE = "addRule",
   DEL_RULE = "delRule",
+  ADD_QA_RULE = "addQARule",
+  DEL_QA_RULE = "delQARule",
   ADD_ABS_RULE = "addAbsRule",
   DEL_ABS_RULE = "delAbsRule",
   SEARCH = "search",

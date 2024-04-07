@@ -26,12 +26,18 @@ cudStat
 	;
 
 cudRuleStat
-	: RULE ADDEQ nltext = ID '|' ruleHead = ID '|' searchStat? RULEDEF searchStat (
+	: RULE ADDEQ ruleHead1 = searchStat '|' ruleHead2 = ID '|' searchStat? RULEDEF searchStat (
 		AND searchStat
 	)* # addRule
+	| RULE DELEQ ruleHead1 = searchStat '|' ruleHead2 = ID '|' searchStat? RULEDEF searchStat (
+		AND searchStat
+	)* # delRule
+	| RULE ADDEQ nltext = ID '|' ruleHead = ID '|' searchStat? RULEDEF searchStat (
+		AND searchStat
+	)* # addQARule
 	| RULE DELEQ nltext = ID '|' ruleHead = ID '|' searchStat? RULEDEF searchStat (
 		AND searchStat
-	)*															# delRule
+	)*															# delQARule
 	| RULE ADDEQ nltext = ID '|' ruleHead = ID RULEDEF yuanList	# addAbsRule
 	| RULE DELEQ nltext = ID '|' ruleHead = ID RULEDEF yuanList	# delAbsRule
 	;

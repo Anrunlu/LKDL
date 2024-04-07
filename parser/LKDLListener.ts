@@ -13,6 +13,8 @@ import { AddYuanContext } from "./LKDLParser";
 import { DelYuanContext } from "./LKDLParser";
 import { AddRuleContext } from "./LKDLParser";
 import { DelRuleContext } from "./LKDLParser";
+import { AddQARuleContext } from "./LKDLParser";
+import { DelQARuleContext } from "./LKDLParser";
 import { AddAbsRuleContext } from "./LKDLParser";
 import { DelAbsRuleContext } from "./LKDLParser";
 import { InferContext } from "./LKDLParser";
@@ -146,6 +148,30 @@ export default class LKDLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitDelRule?: (ctx: DelRuleContext) => void;
+	/**
+	 * Enter a parse tree produced by the `addQARule`
+	 * labeled alternative in `LKDLParser.cudRuleStat`.
+	 * @param ctx the parse tree
+	 */
+	enterAddQARule?: (ctx: AddQARuleContext) => void;
+	/**
+	 * Exit a parse tree produced by the `addQARule`
+	 * labeled alternative in `LKDLParser.cudRuleStat`.
+	 * @param ctx the parse tree
+	 */
+	exitAddQARule?: (ctx: AddQARuleContext) => void;
+	/**
+	 * Enter a parse tree produced by the `delQARule`
+	 * labeled alternative in `LKDLParser.cudRuleStat`.
+	 * @param ctx the parse tree
+	 */
+	enterDelQARule?: (ctx: DelQARuleContext) => void;
+	/**
+	 * Exit a parse tree produced by the `delQARule`
+	 * labeled alternative in `LKDLParser.cudRuleStat`.
+	 * @param ctx the parse tree
+	 */
+	exitDelQARule?: (ctx: DelQARuleContext) => void;
 	/**
 	 * Enter a parse tree produced by the `addAbsRule`
 	 * labeled alternative in `LKDLParser.cudRuleStat`.
