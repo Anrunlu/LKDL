@@ -21,26 +21,27 @@ import LKDLErrorListener, { ILKDLError } from "./LKDLErrorListener";
 // const input = `战狼.演员 == $A && $A.国籍 == 中国;`;
 // const input = `张三.朋友==$A && $A.国籍==中国;`;
 // const input = `(张三,李四).朋友==$A;`;
-// const input = `infer {
-//   落霞镇.编号 == $A1
-//   古井镇.编号 == $A2
-//   荷花镇.编号 == $A3
-//   浣溪镇.编号 == $A4
-//   紫薇镇.编号 == $A5
-//   落霞镇.有[程度==0] == 木塔
-//   $B1.有[程度==1] == 木塔
-//   $B1.编号 == 1
-//   $B2.有[程度==1] == 木塔
-//   $B2.编号 == 4
-//   ---
-//   |$A1-$A2|>=2;
-//   |$A1-$A3|>=2;
-//   |$A4-$A5|>=2;
-//   |$A5-$A2|>=2;
-//   |$A5-$A3|>=2;
-//   $A1!=1;
-//   $A1!=4;
-//   };`;
+const input = `infer {
+  落霞镇.编号 == $A1
+  古井镇.编号 == $A2
+  荷花镇.编号 == $A3
+  浣溪镇.编号 == $A4
+  紫薇镇.编号 == $A5
+  落霞镇.有[程度==0] == 木塔
+  $B1.有[程度==1] == 木塔
+  $B1.编号 == 1
+  $B2.有[程度==1] == 木塔
+  $B2.编号 == 4
+  ---
+  |$A1-$A2|>=2;
+  |$A1-$A3|>=2;
+  |$A4-$A5|>=2;
+  |$A5-$A2|>=2;
+  |$A5-$A3|>=2;
+  $A1!=1;
+  $A1!=4;
+  maxnums=0;
+  };`;
 // const input =
 //   "r +=`被称为“乐圣”的音乐家是谁？`|`被称为(乐圣)的(音乐家)是(C)`|:=C.职业==B&&C.称号==A;";
 // const input = `规则 -= 学生 | 学生 :=（姓名，性别，学号，年级，学院）；`;
@@ -65,7 +66,7 @@ export function parse(input: string): { resultList: []; errors: ILKDLError[] } {
 
   const tree = parser.prog();
 
-  const walker = new LKDLTreeWalker();
+  const walker = new LKDLTreeWalker(errorListener);
   ParseTreeWalker.DEFAULT.walk(walker, tree);
 
   const resultList = walker.getResult();
@@ -99,4 +100,12 @@ function interactiveTest() {
   waitForInput();
 }
 
+function test() {
+  const { resultList, errors } = parse(input);
+  console.dir(resultList, { depth: Infinity });
+  console.dir(errors, { depth: Infinity });
+}
+
 // interactiveTest();
+
+// test();

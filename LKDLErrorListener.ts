@@ -32,4 +32,8 @@ export default class LKDLErrorListener implements ErrorListener<any> {
   getErrors(): ILKDLError[] {
     return this.errors;
   }
+
+  pushError(error: ILKDLError) {
+    this.errors.push(error);
+  }
 }

@@ -26,10 +26,19 @@ import { parseSearchExprToSearchSequnce } from "../utils/my-parser";
 import { parseSequnceToExcuteFormat } from "../utils/op-rule";
 import { runCudYuan, runCudTuple, runSearch } from "./Runner";
 import { OP } from "../const";
+import LKDLErrorListener from "../LKDLErrorListener";
 
 export class LKDLTreeWalker extends LKDLListener {
   // 保存解析结果
   private resultList: any = [];
+
+  // 保存错误信息
+  private errorListener: LKDLErrorListener | undefined;
+
+  constructor(errorListener: LKDLErrorListener) {
+    super();
+    this.errorListener = errorListener;
+  }
 
   // 获取结果
   getResult = () => {
@@ -428,7 +437,34 @@ export class LKDLTreeWalker extends LKDLListener {
 
     const conditionArray = conditionText.split(";").filter((item) => item);
 
+    // 从 conditionArray 中提取键为 maxnums 的值
+    const maxnums = conditionArray
+      .find((item) => item.includes("maxnums"))
+      ?.split("=")[1]
+      .trim();
+
+    // 如果 maxnums 不存在，则报错
+    if (!maxnums) {
+      this.errorListener?.pushError({
+        startLineNumber: ctx.start.line,
+        startColumn: ctx.start.column,
+        endLineNumber: ctx.start.line + 1,
+        endColumn: ctx.start.column + 1,
+        message: "请在 condition 中填写 maxnums 参数，如 maxnums=1;",
+        code: "4000",
+      });
+
+      return;
+    }
+
+    // 删除 conditionArray 中的 maxnums
+    conditionArray.splice(
+      conditionArray.findIndex((item) => item.includes("maxnums")),
+      1
+    );
+
     data.conditions = conditionArray;
+    data.maxnums = parseInt(maxnums || "0");
 
     // 统计所有 conditions 中的变量个数，使用 Set 去重
     const varSet = new Set();
@@ -444,12 +480,12 @@ export class LKDLTreeWalker extends LKDLListener {
       }
     });
 
+    data.varnums = varSet.size;
+
     const result = {
       op: OP.INFER,
       data,
     };
-
-    data.round = varSet.size;
 
     this.resultList.push(result);
   };
