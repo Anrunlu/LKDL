@@ -174,13 +174,13 @@
 }
 ```
 
-## 添加规则
+## 添加语义问答类规则
 
 ### 语法
 
-`(规则|rule|r) += [NLText|] ruleHead | [ruleBodyAlias] := ruleBody;  `
+`(规则|rule|r) += NLText| ruleHead | [ruleBodyAlias] := ruleBody;  `
 
-`NLText`可选，表示自然语言文本，需使用一对反引号 **``** 包裹。
+`NLText`必填，表示规则头文本，需使用一对反引号 **``** 包裹。
 
 `ruleHead`必填，表示规则头文本，需使用一对反引号 **``** 包裹。
 
@@ -197,9 +197,9 @@
 ```js
 // r += `被称为“乐圣”的音乐家是谁？`|`被称为(乐圣)的(音乐家)是(C)`|:=C.职业==B&&C.称号==A;
 {
-  op: "addRule",
+  op: "addQARule",
   data: {
-    op: "addRule",
+    op: "addQARule",
     ruleNLText: "被称为“乐圣”的音乐家是谁？",
     ruleHead: "被称为(乐圣)的(音乐家)是(C)",
     ruleBody: "C.职业==B&&C.称号==A",
@@ -207,11 +207,11 @@
 }
 ```
 
-## 删除规则
+## 删除语义问答类规则
 
 ### 语法
 
-`(规则|rule|r) -= [NLText|] ruleHead | [ruleBodyAlias] := ruleBody;  `
+`(规则|rule|r) -= NLText| ruleHead | [ruleBodyAlias] := ruleBody;  `
 
 ### 语法举例
 
@@ -222,9 +222,9 @@
 ```js
 // r -= `被称为“乐圣”的音乐家是谁？`|`被称为(乐圣)的(音乐家)是(C)`|:=C.职业==B&&C.称号==A;
 {
-  op: "delRule",
+  op: "delQARule",
   data: {
-    op: "delRule",
+    op: "delQARule",
     ruleNLText: "被称为“乐圣”的音乐家是谁？",
     ruleHead: "被称为(乐圣)的(音乐家)是(C)",
     ruleBody: "C.职业==B&&C.称号==A",
@@ -232,7 +232,65 @@
 }
 ```
 
-## 添加抽象规则
+## 添加关系实体规则
+
+### 语法
+
+`(规则|rule|r) += ruleHead1 | ruleHead2 := ruleBody;`
+
+`ruleHead1`必填，表示规则头文本类型一。
+
+`ruleHead2`必填，表示规则头文本类型二，需使用一对反引号 **``** 包裹，必须为包含(变量)的自然语言形式。
+
+`ruleBodyAlias`可选，表示规则体别名。
+
+`ruleBody`必填，表示规则体。
+
+### 语法举例
+
+`` 规则 += A.老乡==B | `(A)老乡是(B)` |:=A.籍贯==C&&B.籍贯==C; ``
+
+### 语法解析
+
+```js
+// 规则 += A.老乡==B | `(A)老乡是(B)` |:=A.籍贯==C&&B.籍贯==C;
+{
+  op: "addRule",
+  data: {
+    op: "addRule",
+    ruleNLText: "A.老乡==B",
+    ruleHead: "(A)老乡是(B)",
+    ruleBody: "A.老乡==B&&A.籍贯==C&&B.籍贯==C",
+  },
+}
+```
+
+## 删除关系实体规则
+
+### 语法
+
+`(规则|rule|r) -= ruleHead1 | ruleHead2 := ruleBody;`
+
+### 语法举例
+
+`` 规则 += A.老乡==B | `(A)老乡是(B)` |:=A.籍贯==C&&B.籍贯==C; ``
+
+### 语法解析
+
+```js
+// 规则 -= A.老乡==B | `(A)老乡是(B)` |:=A.籍贯==C&&B.籍贯==C;
+{
+  op: "delRule",
+  data: {
+    op: "delRule",
+    ruleNLText: "A.老乡==B",
+    ruleHead: "(A)老乡是(B)",
+    ruleBody: "A.老乡==B&&A.籍贯==C&&B.籍贯==C",
+  },
+}
+```
+
+## 添加抽象实体规则
 
 ### 语法
 
@@ -257,7 +315,7 @@
 }
 ```
 
-## 删除抽象规则
+## 删除抽象实体规则
 
 ### 语法
 
