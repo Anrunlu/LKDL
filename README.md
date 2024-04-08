@@ -260,7 +260,7 @@
     op: "addRule",
     ruleNLText: "A.老乡==B",
     ruleHead: "(A)老乡是(B)",
-    ruleBody: "A.老乡==B&&A.籍贯==C&&B.籍贯==C",
+    ruleBody: "A.籍贯==C&&B.籍贯==C",
   },
 }
 ```
@@ -285,7 +285,7 @@
     op: "delRule",
     ruleNLText: "A.老乡==B",
     ruleHead: "(A)老乡是(B)",
-    ruleBody: "A.老乡==B&&A.籍贯==C&&B.籍贯==C",
+    ruleBody: "A.籍贯==C&&B.籍贯==C",
   },
 }
 ```
