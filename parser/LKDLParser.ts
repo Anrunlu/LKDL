@@ -404,7 +404,7 @@ export default class LKDLParser extends Parser {
 				this.state = 98;
 				this.match(LKDLParser.RULEDEF);
 				this.state = 99;
-				this.searchStat();
+				(localctx as AddRuleContext)._ruleBody = this.searchStat();
 				this.state = 104;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
@@ -452,7 +452,7 @@ export default class LKDLParser extends Parser {
 				this.state = 116;
 				this.match(LKDLParser.RULEDEF);
 				this.state = 117;
-				this.searchStat();
+				(localctx as DelRuleContext)._ruleBody = this.searchStat();
 				this.state = 122;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
@@ -1535,6 +1535,7 @@ export class DelQARuleContext extends CudRuleStatContext {
 export class AddRuleContext extends CudRuleStatContext {
 	public _ruleHead1!: SearchStatContext;
 	public _ruleHead2!: Token;
+	public _ruleBody!: SearchStatContext;
 	constructor(parser: LKDLParser, ctx: CudRuleStatContext) {
 		super(parser, ctx.parentCtx, ctx.invokingState);
 		super.copyFrom(ctx);
@@ -1577,6 +1578,7 @@ export class AddRuleContext extends CudRuleStatContext {
 export class DelRuleContext extends CudRuleStatContext {
 	public _ruleHead1!: SearchStatContext;
 	public _ruleHead2!: Token;
+	public _ruleBody!: SearchStatContext;
 	constructor(parser: LKDLParser, ctx: CudRuleStatContext) {
 		super(parser, ctx.parentCtx, ctx.invokingState);
 		super.copyFrom(ctx);

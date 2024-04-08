@@ -26,10 +26,10 @@ cudStat
 	;
 
 cudRuleStat
-	: RULE ADDEQ ruleHead1 = searchStat '|' ruleHead2 = ID '|' searchStat? RULEDEF searchStat (
+	: RULE ADDEQ ruleHead1 = searchStat '|' ruleHead2 = ID '|' searchStat? RULEDEF ruleBody = searchStat (
 		AND searchStat
 	)* # addRule
-	| RULE DELEQ ruleHead1 = searchStat '|' ruleHead2 = ID '|' searchStat? RULEDEF searchStat (
+	| RULE DELEQ ruleHead1 = searchStat '|' ruleHead2 = ID '|' searchStat? RULEDEF ruleBody = searchStat (
 		AND searchStat
 	)* # delRule
 	| RULE ADDEQ nltext = ID '|' ruleHead = ID '|' searchStat? RULEDEF searchStat (

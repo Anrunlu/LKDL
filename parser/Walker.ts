@@ -314,6 +314,8 @@ export class LKDLTreeWalker extends LKDLListener {
     const ruleHead2 = ctx._ruleHead2.text.replace(/`/g, "");
     const ruleBody = ctx
       .searchStat_list()
+      // 除去第一个 searchStat（因为第一个是 ruleHead1）
+      .slice(1)
       .map((searchStat) => {
         return searchStat.getText();
       })
@@ -340,6 +342,8 @@ export class LKDLTreeWalker extends LKDLListener {
     const ruleHead2 = ctx._ruleHead2.text.replace(/`/g, "");
     const ruleBody = ctx
       .searchStat_list()
+      // 除去第一个 searchStat（因为第一个是 ruleHead1）
+      .slice(1)
       .map((searchStat) => {
         return searchStat.getText();
       })
