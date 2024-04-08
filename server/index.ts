@@ -123,6 +123,22 @@ app.get("/ruleList", (req, res) => {
   });
 });
 
+app.get("/QAList", (req, res) => {
+  const page = req.query.page;
+  const limit = req.query.limit;
+
+  http.get(`/rule_q_page?page=${page}&limit=${limit}`).then((response) => {
+    const serverRes = response.data;
+
+    res.send({
+      code: 2000,
+      data: {
+        serverRes,
+      },
+    });
+  });
+});
+
 app.listen(SERVER_PORT, () => {
   console.log(`Server is running on port ${SERVER_PORT}`);
 });
