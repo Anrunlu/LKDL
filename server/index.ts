@@ -139,6 +139,22 @@ app.get("/QAList", (req, res) => {
   });
 });
 
+app.get("/infer_questions", (req, res) => {
+  const page = req.query.page;
+  const limit = req.query.limit;
+
+  http.get(`/question_page?page=${page}&limit=${limit}`).then((response) => {
+    const serverRes = response.data;
+
+    res.send({
+      code: 2000,
+      data: {
+        serverRes,
+      },
+    });
+  });
+});
+
 app.listen(SERVER_PORT, () => {
   console.log(`Server is running on port ${SERVER_PORT}`);
 });
