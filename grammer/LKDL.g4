@@ -129,7 +129,7 @@ DELEQ: '-='
 	;
 RULEDEF: ':='
 	;
-QUESTION_MARK: '?' | '？'
+QUESTION_MARK: 'qa'
 	;
 ISA: [Ii][Ss][Aa]
 	; // 不区分大小写的 'isa'

@@ -76,7 +76,8 @@ export default class LKDLParser extends Parser {
                                                             null, null, 
                                                             null, "'{'", 
                                                             "'}'", "'+='", 
-                                                            "'-='", "':='" ];
+                                                            "'-='", "':='", 
+                                                            "'qa'" ];
 	public static readonly symbolicNames: (string | null)[] = [ null, null, 
                                                              null, null, 
                                                              "YUAN", "RULE", 
