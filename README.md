@@ -178,7 +178,7 @@
 
 ### 语法
 
-`(规则|rule|r) += NLText| ruleHead | [ruleBodyAlias] := ruleBody;  `
+`(规则|rule) += NLText| ruleHead | [ruleBodyAlias] := ruleBody;  `
 
 `NLText`必填，表示规则头文本，需使用一对反引号 **``** 包裹。
 
@@ -190,12 +190,12 @@
 
 ### 语法举例
 
-`` r +=`被称为“乐圣”的音乐家是谁？`|`被称为(乐圣)的(音乐家)是(C)`|:=C.职业==B&&C.称号==A;  ``
+`` rule +=`被称为“乐圣”的音乐家是谁？`|`被称为(乐圣)的(音乐家)是(C)`|:=C.职业==B&&C.称号==A;  ``
 
 ### 语法解析
 
 ```js
-// r += `被称为“乐圣”的音乐家是谁？`|`被称为(乐圣)的(音乐家)是(C)`|:=C.职业==B&&C.称号==A;
+// rule += `被称为“乐圣”的音乐家是谁？`|`被称为(乐圣)的(音乐家)是(C)`|:=C.职业==B&&C.称号==A;
 {
   op: "addQARule",
   data: {
@@ -211,16 +211,16 @@
 
 ### 语法
 
-`(规则|rule|r) -= NLText| ruleHead | [ruleBodyAlias] := ruleBody;  `
+`(规则|rule) -= NLText| ruleHead | [ruleBodyAlias] := ruleBody;  `
 
 ### 语法举例
 
-`` r -=`被称为“乐圣”的音乐家是谁？`|`被称为(乐圣)的(音乐家)是(C)`|:=C.职业==B&&C.称号==A;  ``
+`` rule -=`被称为“乐圣”的音乐家是谁？`|`被称为(乐圣)的(音乐家)是(C)`|:=C.职业==B&&C.称号==A;  ``
 
 ### 语法解析
 
 ```js
-// r -= `被称为“乐圣”的音乐家是谁？`|`被称为(乐圣)的(音乐家)是(C)`|:=C.职业==B&&C.称号==A;
+// rule -= `被称为“乐圣”的音乐家是谁？`|`被称为(乐圣)的(音乐家)是(C)`|:=C.职业==B&&C.称号==A;
 {
   op: "delQARule",
   data: {
@@ -236,7 +236,7 @@
 
 ### 语法
 
-`(规则|rule|r) += ruleHead1 | ruleHead2 := ruleBody;`
+`(规则|rule) += ruleHead1 | ruleHead2 := ruleBody;`
 
 `ruleHead1`必填，表示规则头文本类型一。
 
@@ -269,7 +269,7 @@
 
 ### 语法
 
-`(规则|rule|r) -= ruleHead1 | ruleHead2 := ruleBody;`
+`(规则|rule) -= ruleHead1 | ruleHead2 := ruleBody;`
 
 ### 语法举例
 
@@ -294,7 +294,7 @@
 
 ### 语法
 
-`(规则|rule|r) += NLText | ruleHead := ruleBody;`
+`(规则|rule) += NLText | ruleHead := ruleBody;`
 
 ### 语法举例
 
@@ -319,7 +319,7 @@
 
 ### 语法
 
-`(规则|rule|r) -= NLText | ruleHead := ruleBody;`
+`(规则|rule) -= NLText | ruleHead := ruleBody;`
 
 ### 语法举例
 
