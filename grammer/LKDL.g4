@@ -84,7 +84,7 @@ yuanList: ID | OPEN_PAREN ID ( COMMA ID)* CLOSE_PAREN
 
 YUAN: '元' | 'y'
 	;
-RULE: '规则' | 'rule' | 'r'
+RULE: '规则' | 'rule'
 	;
 INFER: '推理' | 'infer'
 	;

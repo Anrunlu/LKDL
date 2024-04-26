@@ -236,13 +236,20 @@ export class LKDLTreeWalker extends LKDLListener {
 
     const parentCtxText = ctx.parentCtx?.getText();
 
-    // 如果 parentCtxText 包含 "推理" 或 "infer" 或 "i" 或 "rule" 或 "r" 或 "规则"，则不添加到 result 中
+    // 如果 parentCtxText 包含 "推理" 或 "infer" 或 "i" 或 "rule" 或 "规则"，则不添加到 result 中
+
+    // FIXME：
+    // 这里是为了避免执行器那边重复执行导致出问题的不优雅的处理方式，因为到最外层之后形成的解析结果是一个完整的列表，
+    // 这个列表会包含一些嵌套的重复的语句（比如推理语句中会包含 searchExpr，本质上是语言设计时的问题，
+    // 不过出于成本考虑暂时只能这样做）
+
+    // 这种做法导致的结果：search 语句的 ID 中如果包含了下面这些关键字，则 search 语句的解析结果为空
+    // 因此，目前的做法是尽量在数据中避免使用这些关键字
 
     if (
       parentCtxText?.includes("推理") ||
       parentCtxText?.includes("infer") ||
       parentCtxText?.includes("rule") ||
-      parentCtxText?.includes("r") ||
       parentCtxText?.includes("规则")
     ) {
       return;

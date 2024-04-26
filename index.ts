@@ -106,6 +106,6 @@ function test() {
   console.dir(errors, { depth: Infinity });
 }
 
-// interactiveTest();
+interactiveTest();
 
 // test();
