@@ -1,130 +1,130 @@
-# LKDL 语法描述
+## LKDL Syntax Description
 
-## 增加元
+## Add Yuan (Entity)
 
-### 语法
+### Syntax
 
-`(元|y) += (yuan, [...yuan]);`
+`(yuan|y) += (yuan, [...yuan]);`
 
-当只有一个 `yuan` 时,`()` 可省略。
+When there is only one `yuan`, the parentheses `()` can be omitted.
 
-> 注意
+> Note
 >
-> - LKDL 语言**不区分**全角和半角符号，但推荐在操作中使用半角符号。
-> - LKDL 语言**大小写不敏感**。
-> - LKDL 语言每条语句必须以`;`结束。
+>   - The LKDL language **does not distinguish** between full-width and half-width symbols, but using half-width symbols in operations is recommended.
+>   - The LKDL language is **case-insensitive**.
+>   - Every LKDL statement must end with a `;`.
 
-### 语法举例
+### Syntax Examples
 
-`元 += 张三;`
+`yuan += ZhangSan;`
 
-`y += 张三;`
+`y += ZhangSan;`
 
-`元 += (张三, 李四);`
+`yuan += (ZhangSan, LiSi);`
 
-`元 += （张三， 李四）;`
+`yuan += (ZhangSan, LiSi);`
 
-### 语法解析
+### Syntax Parsing
 
 ```js
-// 元 += (张三, 李四, 王五);
+// yuan += (ZhangSan, LiSi, WangWu);
 {
   op: "addYuan",
   data: [
     {
-      yuan: "张三",
+      yuan: "ZhangSan",
       op: "add",
     }, {
-      yuan: "李四",
+      yuan: "LiSi",
       op: "add",
     }, {
-      yuan: "王五",
+      yuan: "WangWu",
       op: "add",
     }
   ],
 }
 ```
 
-## 删除元
+## Delete Yuan (Entity)
 
-### 语法
+### Syntax
 
-`(元|y) -= (yuan, [...yuan]);`
+`(yuan|y) -= (yuan, [...yuan]);`
 
-### 语法举例
+### Syntax Examples
 
-`元 -= 张三;`
+`yuan -= ZhangSan;`
 
-`y -= 张三;`
+`y -= ZhangSan;`
 
-`元 -= (张三, 李四);`
+`yuan -= (ZhangSan, LiSi);`
 
-### 语法解析
+### Syntax Parsing
 
 ```js
-// 元 -= (张三, 李四, 王五);
+// yuan -= (ZhangSan, LiSi, WangWu);
 {
   op: "delYuan",
   data: [
     {
-      yuan: "张三",
+      yuan: "ZhangSan",
       op: "del",
     }, {
-      yuan: "李四",
+      yuan: "LiSi",
       op: "del",
     }, {
-      yuan: "王五",
+      yuan: "WangWu",
       op: "del",
     }
   ],
 }
 ```
 
-## 增加多元组
+## Add Multi-ary Tuple
 
-### 语法
+### Syntax
 
 `(yuan, [...yuan]).(relName[relAttrList], [...relName[relAttrList]]) += (yuan, [...yuan])`
 
-### 语法举例
+### Syntax Examples
 
-`张三.朋友 += 李四;`
+`ZhangSan.friend += LiSi;`
 
-`张三.朋友[程度=1] += 李四;`
+`ZhangSan.friend[degree=1] += LiSi;`
 
-`(张三, 李四).朋友 += (李四, 王五);`
+`(ZhangSan, LiSi).friend += (LiSi, WangWu);`
 
-`(张三, 李四).(朋友, 老乡) += (李四, 王五);`
+`(ZhangSan, LiSi).(friend, fellowVillager) += (LiSi, WangWu);`
 
-`(张三, 李四).(朋友[程度=1], 老乡[程度=1]) += (李四, 王五);`
+`(ZhangSan, LiSi).(friend[degree=1], fellowVillager[degree=1]) += (LiSi, WangWu);`
 
-### 语法解析
+### Syntax Parsing
 
 ```js
-// 张三.朋友[程度=1] += (李四, 王五);
+// ZhangSan.friend[degree=1] += (LiSi, WangWu);
 {
   op: "addTuple",
   data: [
     {
-      head: "张三",
-      rel: "朋友",
-      tail: "李四",
+      head: "ZhangSan",
+      rel: "friend",
+      tail: "LiSi",
       op: "add",
       relAttrList: [
         {
-          attr: "程度",
+          attr: "degree",
           val: "1",
           op: "=",
         }
       ],
     }, {
-      head: "张三",
-      rel: "朋友",
-      tail: "王五",
+      head: "ZhangSan",
+      rel: "friend",
+      tail: "WangWu",
       op: "add",
       relAttrList: [
         {
-          attr: "程度",
+          attr: "degree",
           val: "1",
           op: "=",
         }
@@ -134,39 +134,39 @@
 }
 ```
 
-## 删除多元组
+## Delete Multi-ary Tuple
 
-### 语法
+### Syntax
 
 `(yuan, [...yuan]).(relName, [...relName]) -= (yuan, [...yuan])`
 
-### 语法举例
+### Syntax Examples
 
-`张三.朋友 -= 李四;`
+`ZhangSan.friend -= LiSi;`
 
-`张三.朋友 -= 李四;`
+`ZhangSan.friend -= LiSi;`
 
-`(张三, 李四).朋友 -= (李四, 王五);`
+`(ZhangSan, LiSi).friend -= (LiSi, WangWu);`
 
-`(张三, 李四).(朋友, 老乡) -= (李四, 王五);`
+`(ZhangSan, LiSi).(friend, fellowVillager) -= (LiSi, WangWu);`
 
-### 语法解析
+### Syntax Parsing
 
 ```js
-// 张三.朋友 -= (李四, 王五);
+// ZhangSan.friend -= (LiSi, WangWu);
 {
   op: "delTuple",
   data: [
     {
-      head: "张三",
-      rel: "朋友",
-      tail: "李四",
+      head: "ZhangSan",
+      rel: "friend",
+      tail: "LiSi",
       op: "del",
       relAttrList: [],
     }, {
-      head: "张三",
-      rel: "朋友",
-      tail: "王五",
+      head: "ZhangSan",
+      rel: "friend",
+      tail: "WangWu",
       op: "del",
       relAttrList: [],
     }
@@ -174,243 +174,243 @@
 }
 ```
 
-## 添加语义问答类规则
+## Add Semantic Q\&A Rule
 
-### 语法
+### Syntax
 
-`(规则|rule) += NLText| ruleHead | [ruleBodyAlias] := ruleBody;  `
+`(rule|rule) += NLText| ruleHead | [ruleBodyAlias] := ruleBody;`
 
-`NLText`必填，表示规则头文本，需使用一对反引号 **``** 包裹。
+`NLText` is mandatory, represents the natural language text of the rule, and must be wrapped in a pair of backticks **\`\`**.
 
-`ruleHead`必填，表示规则头文本，需使用一对反引号 **``** 包裹。
+`ruleHead` is mandatory, represents the rule head text, and must be wrapped in a pair of backticks **\`\`**.
 
-`ruleBodyAlias`可选，表示规则体别名。
+`ruleBodyAlias` is optional, represents the rule body alias.
 
-`ruleBody`必填，表示规则体。
+`ruleBody` is mandatory, represents the rule body.
 
-### 语法举例
+### Syntax Examples
 
-`` rule +=`被称为“乐圣”的音乐家是谁？`|`被称为(乐圣)的(音乐家)是(C)`|:=C.职业==B&&C.称号==A;  ``
+`` rule +=`Who is the musician called “Yuesheng”?`|`The (musician) called (Yuesheng) is (C)`|:=C.profession==B&&C.title==A;  ``
 
-### 语法解析
+### Syntax Parsing
 
 ```js
-// rule += `被称为“乐圣”的音乐家是谁？`|`被称为(乐圣)的(音乐家)是(C)`|:=C.职业==B&&C.称号==A;
+// rule += `Who is the musician called “Yuesheng”?`|`The (musician) called (Yuesheng) is (C)`|:=C.profession==B&&C.title==A;
 {
   op: "addQARule",
   data: {
     op: "addQARule",
-    ruleNLText: "被称为“乐圣”的音乐家是谁？",
-    ruleHead: "被称为(乐圣)的(音乐家)是(C)",
-    ruleBody: "C.职业==B&&C.称号==A",
+    ruleNLText: "Who is the musician called “Yuesheng”?",
+    ruleHead: "The (musician) called (Yuesheng) is (C)",
+    ruleBody: "C.profession==B&&C.title==A",
   },
 }
 ```
 
-## 删除语义问答类规则
+## Delete Semantic Q\&A Rule
 
-### 语法
+### Syntax
 
-`(规则|rule) -= NLText| ruleHead | [ruleBodyAlias] := ruleBody;  `
+`(rule|rule) -= NLText| ruleHead | [ruleBodyAlias] := ruleBody;`
 
-### 语法举例
+### Syntax Examples
 
-`` rule -=`被称为“乐圣”的音乐家是谁？`|`被称为(乐圣)的(音乐家)是(C)`|:=C.职业==B&&C.称号==A;  ``
+`` rule -=`Who is the musician called “Yuesheng”?`|`The (musician) called (Yuesheng) is (C)`|:=C.profession==B&&C.title==A;  ``
 
-### 语法解析
+### Syntax Parsing
 
 ```js
-// rule -= `被称为“乐圣”的音乐家是谁？`|`被称为(乐圣)的(音乐家)是(C)`|:=C.职业==B&&C.称号==A;
+// rule -= `Who is the musician called “Yuesheng”?`|`The (musician) called (Yuesheng) is (C)`|:=C.profession==B&&C.title==A;
 {
   op: "delQARule",
   data: {
     op: "delQARule",
-    ruleNLText: "被称为“乐圣”的音乐家是谁？",
-    ruleHead: "被称为(乐圣)的(音乐家)是(C)",
-    ruleBody: "C.职业==B&&C.称号==A",
+    ruleNLText: "Who is the musician called “Yuesheng”?",
+    ruleHead: "The (musician) called (Yuesheng) is (C)",
+    ruleBody: "C.profession==B&&C.title==A",
   },
 }
 ```
 
-## 添加关系实体规则
+## Add Relational Entity Rule
 
-### 语法
+### Syntax
 
-`(规则|rule) += ruleHead1 | ruleHead2 := ruleBody;`
+`(rule|rule) += ruleHead1 | ruleHead2 := ruleBody;`
 
-`ruleHead1`必填，表示规则头文本类型一。
+`ruleHead1` is mandatory, represents Rule Head Type One text.
 
-`ruleHead2`必填，表示规则头文本类型二，需使用一对反引号 **``** 包裹，必须为包含(变量)的自然语言形式。
+`ruleHead2` is mandatory, represents Rule Head Type Two text, must be wrapped in a pair of backticks **\`\`**, and must be in natural language form containing (variables).
 
-`ruleBodyAlias`可选，表示规则体别名。
+`ruleBodyAlias` is optional, represents the rule body alias.
 
-`ruleBody`必填，表示规则体。
+`ruleBody` is mandatory, represents the rule body.
 
-### 语法举例
+### Syntax Examples
 
-`` 规则 += A.老乡==B | `(A)老乡是(B)` |:=A.籍贯==C&&B.籍贯==C; ``
+``rule += A.fellowVillager==B | `(A)'s fellow villager is (B)` |:=A.hometown==C&&B.hometown==C;``
 
-### 语法解析
+### Syntax Parsing
 
 ```js
-// 规则 += A.老乡==B | `(A)老乡是(B)` |:=A.籍贯==C&&B.籍贯==C;
+// rule += A.fellowVillager==B | `(A)'s fellow villager is (B)` |:=A.hometown==C&&B.hometown==C;
 {
   op: "addRule",
   data: {
     op: "addRule",
-    ruleNLText: "A.老乡==B",
-    ruleHead: "(A)老乡是(B)",
-    ruleBody: "A.籍贯==C&&B.籍贯==C",
+    ruleNLText: "A.fellowVillager==B",
+    ruleHead: "(A)'s fellow villager is (B)",
+    ruleBody: "A.hometown==C&&B.hometown==C",
   },
 }
 ```
 
-## 删除关系实体规则
+## Delete Relational Entity Rule
 
-### 语法
+### Syntax
 
-`(规则|rule) -= ruleHead1 | ruleHead2 := ruleBody;`
+`(rule|rule) -= ruleHead1 | ruleHead2 := ruleBody;`
 
-### 语法举例
+### Syntax Examples
 
-`` 规则 += A.老乡==B | `(A)老乡是(B)` |:=A.籍贯==C&&B.籍贯==C; ``
+``rule -= A.fellowVillager==B | `(A)'s fellow villager is (B)` |:=A.hometown==C&&B.hometown==C;``
 
-### 语法解析
+### Syntax Parsing
 
 ```js
-// 规则 -= A.老乡==B | `(A)老乡是(B)` |:=A.籍贯==C&&B.籍贯==C;
+// rule -= A.fellowVillager==B | `(A)'s fellow villager is (B)` |:=A.hometown==C&&B.hometown==C;
 {
   op: "delRule",
   data: {
     op: "delRule",
-    ruleNLText: "A.老乡==B",
-    ruleHead: "(A)老乡是(B)",
-    ruleBody: "A.籍贯==C&&B.籍贯==C",
+    ruleNLText: "A.fellowVillager==B",
+    ruleHead: "(A)'s fellow villager is (B)",
+    ruleBody: "A.hometown==C&&B.hometown==C",
   },
 }
 ```
 
-## 添加抽象实体规则
+## Add Abstract Entity Rule
 
-### 语法
+### Syntax
 
-`(规则|rule) += NLText | ruleHead := ruleBody;`
+`(rule|rule) += NLText | ruleHead := ruleBody;`
 
-### 语法举例
+### Syntax Examples
 
-`规则 += 学生 | 学生 :=(姓名, 性别, 学号, 年级, 学院);`
+`rule += Student | Student :=(name, gender, studentID, grade, college);`
 
-### 语法解析
+### Syntax Parsing
 
 ```js
-// 规则 += 学生 | 学生 :=（姓名，性别，学号，年级，学院）;
+// rule += Student | Student :=(name, gender, studentID, grade, college);
 {
   op: "addAbsRule",
   data: {
     op: "addAbsRule",
-    ruleNLText: "学生",
-    ruleHead: "学生",
-    ruleBody: "姓名,性别,学号,年级,学院",
+    ruleNLText: "Student",
+    ruleHead: "Student",
+    ruleBody: "name,gender,studentID,grade,college",
   },
 }
 ```
 
-## 删除抽象实体规则
+## Delete Abstract Entity Rule
 
-### 语法
+### Syntax
 
-`(规则|rule) -= NLText | ruleHead := ruleBody;`
+`(rule|rule) -= NLText | ruleHead := ruleBody;`
 
-### 语法举例
+### Syntax Examples
 
-`规则 -= 学生 | 学生 :=(姓名, 性别, 学号, 年级, 学院);`
+`rule -= Student | Student :=(name, gender, studentID, grade, college);`
 
-### 语法解析
+### Syntax Parsing
 
 ```js
-// 规则 -= 学生 | 学生 :=（姓名，性别，学号，年级，学院）;
+// rule -= Student | Student :=(name, gender, studentID, grade, college);
 {
   op: "delAbsRule",
   data: {
     op: "delAbsRule",
-    ruleNLText: "学生",
-    ruleHead: "学生",
-    ruleBody: "姓名,性别,学号,年级,学院",
+    ruleNLText: "Student",
+    ruleHead: "Student",
+    ruleBody: "name,gender,studentID,grade,college",
   },
 }
 ```
 
-## 基本查询
+## Basic Query
 
-### 语法
+### Syntax
 
 `((yuan, [...yuan]) | VAR).(relName[relAttrList], [...relName[relAttrList]]) == ((yuan, [...yuan]) | VAR)`
 
-> 注意
+> Note
 >
-> - 在下文中将这种语法形式称为 `searchExpr`。
+>   - This syntax form is referred to as `searchExpr` in the following text.
 
-### 语法举例
+### Syntax Examples
 
-`张三.朋友 == $A;` 这条语句将输出 `$A` 所代表的结果集合。
+`ZhangSan.friend == $A;` This statement will output the result set represented by `$A`.
 
-> 注意
+> Note
 >
-> - 在 LKDL 中，一切以 `$` 开头的标识都将被视为变量(VAR)。
-> - VAR 仅在查询语句中有效。
+>   - In LKDL, all identifiers starting with `$` are considered variables (VAR).
+>   - VAR is only valid in query statements.
 
-`$A.朋友 == 张三;`
+`$A.friend == ZhangSan;`
 
-`张三.(朋友, 老乡) == $A;`
+`ZhangSan.(friend, fellowVillager) == $A;`
 
-`(张三, 李四).朋友 == $A`
+`(ZhangSan, LiSi).friend == $A`
 
-### 语法解析
+### Syntax Parsing
 
 ```js
-// 张三.朋友 == $A;
+// ZhangSan.friend == $A;
 {
   op: "search",
   data: [
     {
-      head: "张三",
-      rel: "朋友",
+      head: "ZhangSan",
+      rel: "friend",
       tail: "$A",
       relAttrList: [],
     }
   ],
 }
 
-// 张三.(朋友, 老乡) == $A;
+// ZhangSan.(friend, fellowVillager) == $A;
 {
   op: "search",
   data: [
     {
-      head: "张三",
-      rel: "朋友",
+      head: "ZhangSan",
+      rel: "friend",
       tail: "$A",
       relAttrList: [],
     }, {
-      head: "张三",
-      rel: "老乡",
+      head: "ZhangSan",
+      rel: "fellowVillager",
       tail: "$A",
       relAttrList: [],
     }
   ],
 }
 
-// (张三, 李四).朋友 == $A;
+// (ZhangSan, LiSi).friend == $A;
 {
   op: "search",
   data: [
     {
-      head: "张三",
-      rel: "朋友",
+      head: "ZhangSan",
+      rel: "friend",
       tail: "$A",
       relAttrList: [],
     }, {
-      head: "李四",
-      rel: "朋友",
+      head: "LiSi",
+      rel: "friend",
       tail: "$A",
       relAttrList: [],
     }
@@ -418,39 +418,39 @@
 }
 ```
 
-## has 查询
+## has Query
 
-has 查询作用在元本体上，表示查询并返回该元本体所关联的所有**关系名称**的集合。
+The `has` query operates on the Yuan (Entity), retrieving and returning the set of all **relation names** associated with that Yuan.
 
-例如，假设存在以下三元组数据：
+For example, assuming the following tuple data exists:
 
 ```js
-(张三 朋友 李四)
-(张三 国籍 中国)
-(张三 校友 王五)
+(ZhangSan friend LiSi)
+(ZhangSan nationality China)
+(ZhangSan alumnus WangWu)
 ```
 
-对元本体 `张三` 执行 has 查询得到的结果为 `[朋友, 国籍, 校友]`。
+Executing a `has` query on Yuan `ZhangSan` yields the result `[friend, nationality, alumnus]`.
 
-### 语法
+### Syntax
 
 `(yuan, [...yuan]).has == VAR;`
 
-### 语法举例
+### Syntax Examples
 
-`张三.has == $A;`
+`ZhangSan.has == $A;`
 
-`(张三, 李四).has == $A;`
+`(ZhangSan, LiSi).has == $A;`
 
-### 语法解析
+### Syntax Parsing
 
 ```js
-// 张三.has == $A;
+// ZhangSan.has == $A;
 {
   op: "search",
   data: [
     {
-      head: "张三",
+      head: "ZhangSan",
       rel: "has",
       tail: "$A",
       relAttrList: [],
@@ -459,41 +459,41 @@ has 查询作用在元本体上，表示查询并返回该元本体所关联的�
 }
 ```
 
-## all 查询
+## all Query
 
-all 查询作用在元本体上，表示查询并返回该元本体所关联的**所有直接关系**的集合。
+The `all` query operates on the Yuan (Entity), retrieving and returning the set of **all direct relationships** associated with that Yuan.
 
-例如，假设存在以下三元组数据：
+For example, assuming the following tuple data exists:
 
 ```js
-(张三 朋友 李四)
-(张三 国籍 中国)
-(张三 校友 王五)
-(李四 老乡 张三)
-(赵六 朋友 张三)
+(ZhangSan friend LiSi)
+(ZhangSan nationality China)
+(ZhangSan alumnus WangWu)
+(LiSi fellowVillager ZhangSan)
+(ZhaoLiu friend ZhangSan)
 ```
 
-对元本体 `张三` 执行 all 查询得到的结果为 `[(张三 朋友 李四), (张三 国籍 中国), (张三 校友 王五)]`。
+Executing an `all` query on Yuan `ZhangSan` yields the result `[(ZhangSan friend LiSi), (ZhangSan nationality China), (ZhangSan alumnus WangWu)]`.
 
-### 语法
+### Syntax
 
 `(yuan, [...yuan]).all == VAR;`
 
-### 语法举例
+### Syntax Examples
 
-`张三.all == $A;`
+`ZhangSan.all == $A;`
 
-`(张三, 李四).all == $A;`
+`(ZhangSan, LiSi).all == $A;`
 
-### 语法解析
+### Syntax Parsing
 
 ```js
-// 张三.all == $A;
+// ZhangSan.all == $A;
 {
   op: "search",
   data: [
     {
-      head: "张三",
+      head: "ZhangSan",
       rel: "all",
       tail: "$A",
       relAttrList: [],
@@ -502,29 +502,29 @@ all 查询作用在元本体上，表示查询并返回该元本体所关联的*
 }
 ```
 
-## isa 查询
+## isa Query
 
-// TODO:作用待描述
+// TODO: Functionality description pending
 
-### 语法
+### Syntax
 
 `(yuan, [...yuan]).isa == VAR;`
 
-### 语法举例
+### Syntax Examples
 
-`张三.isa == $A;`
+`ZhangSan.isa == $A;`
 
-`(张三, 李四).isa == $A;`
+`(ZhangSan, LiSi).isa == $A;`
 
-### 语法解析
+### Syntax Parsing
 
 ```js
-// 张三.isa == $A;
+// ZhangSan.isa == $A;
 {
   op: "search",
   data: [
     {
-      head: "张三",
+      head: "ZhangSan",
       rel: "isa",
       tail: "$A",
       relAttrList: [],
@@ -533,26 +533,26 @@ all 查询作用在元本体上，表示查询并返回该元本体所关联的*
 }
 ```
 
-## 推理查询
+## Inference Query
 
-### 语法
+### Syntax
 
-`(推理|infer) { searchExpr* --- conditionExpr*};`
+`(infer|infer) { searchExpr* --- conditionExpr*};`
 
-### 语法举例
+### Syntax Examples
 
 ```
 infer {
-  落霞镇.编号 == $A1
-  古井镇.编号 == $A2
-  荷花镇.编号 == $A3
-  浣溪镇.编号 == $A4
-  紫薇镇.编号 == $A5
-  落霞镇.有[程度==0] == 木塔
-  $B1.有[程度==1] == 木塔
-  $B1.编号 == 1
-  $B2.有[程度==1] == 木塔
-  $B2.编号 == 4
+  LuoxiaTown.id == $A1
+  GujingTown.id == $A2
+  HehuaTown.id == $A3
+  HuanxiTown.id == $A4
+  ZiweiTown.id == $A5
+  LuoxiaTown.has[degree==0] == WoodPagoda
+  $B1.has[degree==1] == WoodPagoda
+  $B1.id == 1
+  $B2.has[degree==1] == WoodPagoda
+  $B2.id == 4
   ---
   |$A1-$A2|>=2;
   |$A1-$A3|>=2;
@@ -565,84 +565,84 @@ infer {
  };
 ```
 
-> 注意
+> Note
 >
-> - `maxnums` 为必填字段。
+>   - `maxnums` is a mandatory field.
 
-### 语法解析
+### Syntax Parsing
 
 ```js
-// 上方的语法举例的内容的解析结果如下
+// The parsing result for the example syntax above
 {
   op: "infer",
   data: {
     tuples: [
       {
-        head: "落霞镇",
-        rel: "编号",
+        head: "LuoxiaTown",
+        rel: "id",
         tail: "$A1",
         relAttrList: [],
       }, {
-        head: "古井镇",
-        rel: "编号",
+        head: "GujingTown",
+        rel: "id",
         tail: "$A2",
         relAttrList: [],
       }, {
-        head: "荷花镇",
-        rel: "编号",
+        head: "HehuaTown",
+        rel: "id",
         tail: "$A3",
         relAttrList: [],
       }, {
-        head: "浣溪镇",
-        rel: "编号",
+        head: "HuanxiTown",
+        rel: "id",
         tail: "$A4",
         relAttrList: [],
       }, {
-        head: "紫薇镇",
-        rel: "编号",
+        head: "ZiweiTown",
+        rel: "id",
         tail: "$A5",
         relAttrList: [],
       }, {
-        head: "落霞镇",
-        rel: "有",
-        tail: "木塔",
+        head: "LuoxiaTown",
+        rel: "has",
+        tail: "WoodPagoda",
         relAttrList: [
           {
-            attr: "程度",
+            attr: "degree",
             val: "0",
             op: "==",
           }
         ],
       }, {
         head: "$B1",
-        rel: "有",
-        tail: "木塔",
+        rel: "has",
+        tail: "WoodPagoda",
         relAttrList: [
           {
-            attr: "程度",
+            attr: "degree",
             val: "1",
             op: "==",
           }
         ],
       }, {
         head: "$B1",
-        rel: "编号",
+        rel: "id",
         tail: "1",
         relAttrList: [],
       }, {
         head: "$B2",
-        rel: "有",
-        tail: "木塔",
+        rel: "has",
+        tail: "WoodPagoda",
         relAttrList: [
           {
-            attr: "程度",
+            attr: "degree",
             val: "1",
             op: "==",
           }
         ],
       }, {
         head: "$B2",
-        rel: "编号",
+        rel: "id",
         tail: "4",
         relAttrList: [],
       }
@@ -650,66 +650,66 @@ infer {
     conditions: [ "|$A1-$A2|>=2", "|$A1-$A3|>=2", "|$A4-$A5|>=2",
       "|$A5-$A2|>=2", "|$A5-$A3|>=2", "$A1!=1", "$A1!=4"
     ],
-    varnums: 5, // conditions 变量的个数
+    varnums: 5, // The number of variables in conditions
     maxnums: 5
   },
 }
 ```
 
-## 语义问答
+## Semantic Q\&A
 
-### 语法
+### Syntax
 
-`` qa `(ruleNLText|ruleHead)`;  ``
+``qa `(ruleNLText|ruleHead)`;``
 
-### 语法举例
+### Syntax Examples
 
-`` qa `被称为“乐圣”的音乐家是谁？`;  ``
+``qa `Who is the musician called “Yuesheng”?`;``
 
-`` qa `被称为（乐圣）的（音乐家）是（C）`;  ``
+``qa `The (musician) called (Yuesheng) is (C)`;``
 
-### 语法解析
+### Syntax Parsing
 
 ```js
-// ? `被称为“乐圣”的音乐家是谁？`;
+// ? `Who is the musician called “Yuesheng”?`;
 {
   op: "qa",
   data: {
     op: "rule-search",
-    ruleNLText: "被称为“乐圣”的音乐家是谁？",
+    ruleNLText: "Who is the musician called “Yuesheng”?",
   },
 }
 
-// ? `被称为（乐圣）的（音乐家）是（C）`;
+// ? `The (musician) called (Yuesheng) is (C)`;
 {
   op: "qa",
   data: {
     op: "rule-search",
-    ruleNLText: "被称为（乐圣）的（音乐家）是（C）",
+    ruleNLText: "The (musician) called (Yuesheng) is (C)",
   },
 }
 ```
 
-## 路径查询
+## Path Query
 
-### 语法
+### Syntax
 
 `yuan -> yuan;`
 
-### 语法举例
+### Syntax Examples
 
-`张三->王五;`
+`ZhangSan->WangWu;`
 
-### 语法解析
+### Syntax Parsing
 
 ```js
-// 张三->王五;
+// ZhangSan->WangWu;
 {
   op: "pathSearch",
   data: {
-    head: "张三",
+    head: "ZhangSan",
     rel: "->",
-    tail: "李四",
+    tail: "WangWu",
   },
 }
 ```

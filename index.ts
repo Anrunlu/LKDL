@@ -45,9 +45,11 @@ import LKDLErrorListener, { ILKDLError } from "./LKDLErrorListener";
 // const input =
 //   "r +=`被称为“乐圣”的音乐家是谁？`|`被称为(乐圣)的(音乐家)是(C)`|:=C.职业==B&&C.称号==A;";
 // const input = `规则 -= 学生 | 学生 :=（姓名，性别，学号，年级，学院）；`;
-const input = "规则 += A.老乡==B | `(A)老乡是(B)` |:=A.籍贯==C&&B.籍贯==C;";
+// const input = "规则 += A.老乡==B | `(A)老乡是(B)` |:=A.籍贯==C&&B.籍贯==C;";
 // const input = "?`被称为“乐圣”的音乐家是谁？`;";
 // const input = "张三->李四;";
+
+const input = `Tom.friends += (Jerry, Bob);`;
 
 export function parse(input: string): { resultList: []; errors: ILKDLError[] } {
   const chars = new CharStream(input);
@@ -108,4 +110,4 @@ function test() {
 
 // interactiveTest();
 
-// test();
+test();
